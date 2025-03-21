@@ -4,6 +4,9 @@ namespace App\Tests;
 
 use App\Entity\Theme;
 use App\Imports\Themes\ExtractService;
+use App\Imports\Themes\ThemeReader;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ExtractServiceTest extends KernelTestCase
@@ -11,6 +14,8 @@ class ExtractServiceTest extends KernelTestCase
     private $entityManager;
     private $themeRepository;
     private $projectDir;
+    private ?Worksheet $sheet;
+    private $extract_service;
 
     protected function setUp(): void
     {
@@ -20,6 +25,13 @@ class ExtractServiceTest extends KernelTestCase
         $this->entityManager = $container->get('doctrine.orm.entity_manager');
         $this->themeRepository = $this->entityManager->getRepository(Theme::class);
         $this->projectDir = $container->getParameter('kernel.project_dir');
+        $excel_file = $this->projectDir.'/tests/Imports/Themes/test-themes.xlsx';
+        if (!file_exists($excel_file)) {
+            throw new \Exception('file does not exist');
+        }
+        $spreadsheet = IOFactory::load($excel_file);
+        $this->sheet = $spreadsheet->getActiveSheet();
+        $this->extract_service = new ExtractService($this->entityManager, $this->sheet);
     }
 
     protected function tearDown(): void
@@ -34,12 +46,10 @@ class ExtractServiceTest extends KernelTestCase
 
     public function testImportThemeSave(): void
     {
-        $ExtractServices = new ExtractService($this->entityManager);
-        // TODO: change this to inject the spreadsheet so that we can test the integration more easily.
-        $excel_file = $this->projectDir.'/tests/Imports/Themes/test-themes.xlsx';
-        $themes = $ExtractServices->GetThemesFromExcelFile($excel_file);
-        $preparedThemes = $ExtractServices->PrepareThemesForDatabase($themes);
-        $savedThemesCount = $ExtractServices->SaveThemesOnDatabase($preparedThemes);
+        $read_themes = new ThemeReader($this->sheet);
+        $themes = $read_themes->extract();
+        $preparedThemes = $this->extract_service->PrepareThemesForDatabase($themes);
+        $savedThemesCount = $this->extract_service->SaveThemesOnDatabase($preparedThemes);
 
         $this->assertEquals(
             $savedThemesCount,

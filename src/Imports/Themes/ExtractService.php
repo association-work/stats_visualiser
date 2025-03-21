@@ -4,49 +4,19 @@ namespace App\Imports\Themes;
 
 use App\Entity\Theme;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ExtractService
 {
     private $entityManager;
     private $themeRepository;
+    private $worksheet;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, Worksheet $worksheet)
     {
         $this->entityManager = $entityManager;
         $this->themeRepository = $entityManager->getRepository(Theme::class);
-    }
-
-    /**
-     * Get Themes From Excel File.
-     *
-     * @return array themes import from the excel file
-     */
-    public function GetThemesFromExcelFile(string $excel_file): array
-    {
-        $themes = [];
-        if (!file_exists($excel_file)) {
-            throw new FileNotFoundException(sprintf('Excel file "%s" not found', $excel_file));
-        }
-        $spreadsheet = IOFactory::load($excel_file);
-        $sheet = $spreadsheet->getActiveSheet();
-
-        foreach ($sheet->getRowIterator() as $row) {
-            $rowIndex = $row->getRowIndex();
-            $name = $sheet->getCell('A'.$rowIndex)->getValue();
-            $external_id = $sheet->getCell('B'.$rowIndex)->getValue();
-            if (null !== $name && null !== $external_id) {
-                if ($rowIndex > 2) {
-                    $themes[] = [
-                        'externalId' => $external_id,
-                        'name' => $name,
-                    ];
-                }
-            }
-        }
-
-        return $themes;
+        $this->worksheet = $worksheet;
     }
 
     private function getParentExternalId(string $externalId): ?string
