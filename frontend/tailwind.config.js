@@ -10,6 +10,11 @@ const colors = {
   grey: "#A5A5A5",
 };
 
+const sizes = {
+  l: "24px",
+  m: "12px",
+};
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -25,12 +30,22 @@ export default {
         bodyLg: "22px",
       },
       spacing: {
-        m: "12px",
-        l: "16px",
+        ...sizes,
       },
       borderRadius: {
-        m: "8px",
-        l: "16px",
+        ...sizes,
+      },
+      height: {
+        ...sizes,
+      },
+      width: {
+        ...sizes,
+      },
+      minHeight: {
+        ...sizes,
+      },
+      minWidth: {
+        ...sizes,
       },
     },
   },

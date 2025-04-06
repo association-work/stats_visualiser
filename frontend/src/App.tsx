@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import reactLogo from "./assets/react.svg";
+import { SectionData } from "./shared/Section/SectionData";
 import { SectionTitle } from "./shared/Section/SectionTitle";
 import viteLogo from "/vite.svg";
 
@@ -19,10 +20,13 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <SectionTitle
-          onClick={() => setCount((count) => count + 1)}
-          label={`count is ${count}`}
-        />
+        <div className="flex flex-col gap-m">
+          <SectionTitle
+            onClick={() => setCount((count) => count + 1)}
+            label="Increase count"
+          />
+          <SectionData label={`count is ${count}`} onClick={() => {}} />
+        </div>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
