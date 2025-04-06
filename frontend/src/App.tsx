@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import reactLogo from "./assets/react.svg";
-import { Typography } from "./shared/Typography/Typography";
+import { SectionTitle } from "./shared/Section/SectionTitle";
 import viteLogo from "/vite.svg";
 
 function App() {
@@ -19,14 +19,10 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button
+        <SectionTitle
           onClick={() => setCount((count) => count + 1)}
-          className="bg-primary-500 font-base"
-        >
-          <Typography.BodyLg className="text-primary-900">
-            count is {count}
-          </Typography.BodyLg>
-        </button>
+          label={`count is ${count}`}
+        />
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

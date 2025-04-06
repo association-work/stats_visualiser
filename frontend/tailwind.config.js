@@ -6,6 +6,8 @@ const colors = {
     700: "#0B26BA",
     900: "#0A1863",
   },
+  white: "#FFFFFF",
+  grey: "#A5A5A5",
 };
 
 /** @type {import('tailwindcss').Config} */
@@ -21,6 +23,14 @@ export default {
         caption: "16px",
         body: "18px",
         bodyLg: "22px",
+      },
+      spacing: {
+        m: "12px",
+        l: "16px",
+      },
+      borderRadius: {
+        m: "8px",
+        l: "16px",
       },
     },
   },
