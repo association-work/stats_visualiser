@@ -17,6 +17,11 @@ export default {
       fontFamily: {
         base: ["Patrick Hand", "sans-serif"],
       },
+      fontSize: {
+        caption: "16px",
+        body: "18px",
+        bodyLg: "22px",
+      },
     },
   },
   plugins: [],

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import reactLogo from "./assets/react.svg";
+import { Typography } from "./shared/Typography/Typography";
 import viteLogo from "/vite.svg";
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
           onClick={() => setCount((count) => count + 1)}
           className="bg-primary-500 font-base"
         >
-          count is {count}
+          <Typography.BodyLg className="text-primary-900">
+            count is {count}
+          </Typography.BodyLg>
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
