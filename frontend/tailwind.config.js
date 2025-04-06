@@ -14,6 +14,9 @@ export default {
   theme: {
     extend: {
       colors,
+      fontFamily: {
+        base: ["Patrick Hand", "sans-serif"],
+      },
     },
   },
   plugins: [],
