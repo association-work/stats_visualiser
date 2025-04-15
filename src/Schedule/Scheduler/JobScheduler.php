@@ -1,13 +1,11 @@
-<?Php 
+<?php
 
 namespace App\Schedule\Scheduler;
 
-use App\Schedule\Service\Job; 
+use App\Schedule\Service\Job;
 
 class JobScheduler implements JobSchedulerInterface
 {
-
-
     public function __construct(private Job $jobService)
     {
         $this->jobService = $jobService;

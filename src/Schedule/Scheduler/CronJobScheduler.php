@@ -1,11 +1,9 @@
-<?php 
+<?php
 
 namespace App\Schedule\Scheduler;
 
-use App\Schedule\Scheduler\JobSchedulerInterface;
 class CronJobScheduler implements JobSchedulerInterface
 {
-
     public function __construct(private JobSchedulerInterface $jobScheduler)
     {
         $this->jobScheduler = $jobScheduler;

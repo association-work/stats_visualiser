@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-namespace App\Schedule\Adapter;
+namespace App\DataAdapters;
+
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -21,20 +22,19 @@ class XLSDataAdapter implements DataAdapterInterface
         // In a real-world scenario, you would use PhpSpreadsheet to read data from the XLS file.
         $data = [];
 
-        foreach ($this->spreadsheet->getWorksheetIterator() as $worksheet) {
-            foreach ($worksheet->getRowIterator() as $row) {
-                $rowData = [];
-                foreach ($row->getCellIterator() as $cell) {
-                    $rowData[] = $cell->getValue();
-                }
-                $data[] = $rowData;
-            }
+        // Vérifications des conditions
+        if (empty($this->filePath)) {
+            throw new \InvalidArgumentException('File path cannot be empty.');
         }
 
-        return [
-            'source' => 'Sample data from XLS source',
-            'data' => $data,
-        ];
-    }
+        if (!file_exists($this->filePath)) {
+            throw new \RuntimeException('File does not exist.');
+        }
 
+        if (!is_readable($this->filePath)) {
+            throw new \RuntimeException('File is not readable.');
+        }
+
+        return $data;
+    }
 }
