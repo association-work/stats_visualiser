@@ -25,4 +25,10 @@ class ThemeRepository extends ServiceEntityRepository
 
         return $themesByParentId;
     }
+
+    public function saveTheme(array $array): void
+    {
+        // $this->_em->persist($theme);
+        // $this->_em->flush();
+    }
 }
