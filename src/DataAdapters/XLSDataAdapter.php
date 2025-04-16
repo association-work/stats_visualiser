@@ -32,7 +32,12 @@ class XLSDataAdapter implements DataAdapterInterface
             throw new \RuntimeException('File is not readable.');
         }
 
-        return $this->getSpreadsheet($this->file_path, ['category', 'category_id'], 2);
+        $func_theme = new ThemesFunction();
+        $sheet = $this->getSpreadsheet($this->file_path, ['name', 'externalId'], 2);
+        $themes = [];
+        $themes = $func_theme->getThemes($sheet);
+
+        return $themes;
     }
 
     public function getSpreadsheet(string $file_Path, array $column, int $rowIndex = 0): array

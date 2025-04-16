@@ -30,8 +30,17 @@ class XLSDataAdapterTest extends KernelTestCase
     {
         $xls_file = $this->projectDir.'/var/file/test-themes.xlsx';
         $this->adapter = new XLSDataAdapter($xls_file);
-        $data = $this->adapter->getSpreadsheet($xls_file, ['category', 'category_id']);
+        $data = $this->adapter->getSpreadsheet($xls_file, ['name', 'externalId']);
         $this->assertIsArray($data, 'Data should be an array');
-        // Add more assertions based on the expected data structure
+    }
+
+    public function testgetThemes(): void
+    {
+        $xls_file = $this->projectDir.'/var/file/test-themes.xlsx';
+        $this->adapter = new XLSDataAdapter($xls_file);
+        $themes = $this->adapter->fetchData();
+        $this->assertIsArray($themes, 'themes should be an array');
+        $this->assertEquals('Emissions GES', $themes[0]['name'], 'Name should be "Emissions GES"');
+        $this->assertEquals('V0', $themes[0]['externalId'], 'External ID should be "V0"');
     }
 }

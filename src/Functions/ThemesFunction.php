@@ -27,4 +27,29 @@ class ThemesFunction
 
         return $columns;
     }
+
+    private function getParentExternalId(string $externalId): ?string
+    {
+        $check_dot = strpos($externalId, '.');
+        if (false !== $check_dot) {
+            $level_array = explode('.', $externalId);
+            array_pop($level_array);
+
+            return implode('.', $level_array);
+        } else {
+            return null;
+        }
+    }
+
+    public function getThemes(array $themes): array
+    {
+        return array_map(function ($theme) {
+            return [
+                'name' => $theme['name'],
+                'externalId' => $theme['externalId'],
+                'isSection' => true,
+                'parentExternalId' => $this->getParentExternalId($theme['externalId']),
+            ];
+        }, $themes);
+    }
 }
