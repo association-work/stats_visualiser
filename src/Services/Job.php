@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Schedule\Service;
+namespace App\Services;
 
 use App\DataAdapters\DataAdapterInterface;
 use App\Repository\ThemeRepository;
@@ -12,8 +12,8 @@ class Job
         private DataAdapterInterface $data_adapter,
         private StatRepository $stat_repository,
         private ThemeRepository $theme_repository,
-    ) {
-    }
+        private string $file_path, 
+    ) {}
 
     public function execute(array $array): void
     {

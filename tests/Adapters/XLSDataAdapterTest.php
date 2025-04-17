@@ -17,15 +17,6 @@ class XLSDataAdapterTest extends KernelTestCase
         $this->projectDir = self::$kernel->getProjectDir();
     }
 
-    public function testFetchData(): void
-    {
-        $xls_file = $this->projectDir.'/var/file/test-themes.xlsx';
-        $this->adapter = new XLSDataAdapter($xls_file);
-        $data = $this->adapter->fetchData();
-        $this->assertIsArray($data, 'Data should be an array');
-        // Add more assertions based on the expected data structure
-    }
-
     public function testgetSpreadsheet(): void
     {
         $xls_file = $this->projectDir.'/var/file/test-themes.xlsx';
@@ -34,7 +25,7 @@ class XLSDataAdapterTest extends KernelTestCase
         $this->assertIsArray($data, 'Data should be an array');
     }
 
-    public function testgetThemes(): void
+    public function testFetchData(): void
     {
         $xls_file = $this->projectDir.'/var/file/test-themes.xlsx';
         $this->adapter = new XLSDataAdapter($xls_file);

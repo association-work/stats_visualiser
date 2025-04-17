@@ -28,7 +28,7 @@ class ThemesFunction
         return $columns;
     }
 
-    private function getParentExternalId(string $externalId): ?string
+    public function getParentExternalId(string $externalId): ?string
     {
         $check_dot = strpos($externalId, '.');
         if (false !== $check_dot) {
