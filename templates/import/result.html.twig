@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultat de l'import{% endblock %}
+
+{% block body %}
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-3xl mx-auto">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Résultat de l'import</h2>
+        
+        {% if success %}
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+                <p class="font-bold">Import réussi!</p>
+                <p>{{ count }} thèmes ont été importés sur un total de {{ totalThemes }} thèmes dans le fichier.</p>
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ path('app_import') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Retour à la page d'import
+                </a>
+            </div>
+        {% else %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+                <p class="font-bold">L'import a échoué</p>
+                {% if error is defined %}
+                    <p>{{ error }}</p>
+                {% endif %}
+            </div>
+            
+            {% if errors is defined and errors|length > 0 %}
+                <div class="mt-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Erreurs détectées:</h3>
+                    <ul class="list-disc pl-5 space-y-1 text-red-600">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            
+            <div class="mt-6">
+                <a href="{{ path('app_import') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Retour à la page d'import
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

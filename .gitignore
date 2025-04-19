@@ -38,6 +38,7 @@ phpunit.xml.old
 ###< symfony/asset-mapper ###
 
 public/File/emissions_GES_structure.xlsx
+var/import-data/emissions_GES_structure.xlsx
 
-
+migrations/Version20250419114016.php
 
