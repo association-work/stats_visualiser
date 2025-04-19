@@ -12,8 +12,9 @@ class Job
         private DataAdapterInterface $data_adapter,
         private StatRepository $stat_repository,
         private ThemeRepository $theme_repository,
-        private string $file_path, 
-    ) {}
+        private string $file_path,
+    ) {
+    }
 
     public function execute(array $array): void
     {
