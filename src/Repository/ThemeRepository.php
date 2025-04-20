@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repository;
 
 use App\Entity\Theme;
@@ -17,29 +16,42 @@ class ThemeRepository extends ServiceEntityRepository
     {
         $themes = $this->findAll();
         
-        // Organiser par ID
-        $themesById = [];
+        // Organiser par externalId
+        $themesByExternalId = [];
         foreach ($themes as $theme) {
-            $themesById[$theme->getId()] = [
+            // Récupérer les valeurs annuelles
+            $values = [];
+            foreach ($theme->getValues() as $themeValue) {
+                $values[$themeValue->getYear()] = $themeValue->getValue();
+            }
+            
+            $themesByExternalId[$theme->getExternalId()] = [
                 'id' => $theme->getId(),
                 'name' => $theme->getName(),
                 'parentId' => $theme->getParentId(),
                 'externalId' => $theme->getExternalId(),
+                'isSection' => $theme->getIsSection(),
+                'source' => $theme->getSource(),
+                'link' => $theme->getLink(),
+                'geography' => $theme->getGeography(),
+                'unit' => $theme->getUnit(),
+                'values' => $values,
                 'children' => []
             ];
         }
         
-        // Construire l'arborescence
+        // Construire l'arborescence en utilisant l'externalId
         $tree = [];
-        foreach ($themesById as $id => &$themeData) {
-            $parentId = $themeData['parentId'];
+        foreach ($themesByExternalId as $externalId => &$themeData) {
+            // Déterminer le parent basé sur l'externalId
+            $parentExternalId = $this->getParentExternalId($externalId);
             
-            if ($parentId === null) {
+            if (!$parentExternalId || !isset($themesByExternalId[$parentExternalId])) {
                 // C'est un nœud racine
-                $tree[$id] = &$themeData;
-            } else if (isset($themesById[$parentId])) {
+                $tree[$externalId] = &$themeData;
+            } else {
                 // Ajouter comme enfant de son parent
-                $themesById[$parentId]['children'][$id] = &$themeData;
+                $themesByExternalId[$parentExternalId]['children'][$externalId] = &$themeData;
             }
         }
         
@@ -59,5 +71,48 @@ class ThemeRepository extends ServiceEntityRepository
         }
         
         return array_values($tree);
+    }
+    
+    private function getParentExternalId(string $externalId): ?string
+    {
+        $parts = explode('.', $externalId);
+        if (count($parts) > 1) {
+            array_pop($parts);
+            return implode('.', $parts);
+        }
+        return null;
+    }
+    
+    /**
+     * Récupère tous les thèmes avec leurs valeurs, sans structure hiérarchique
+     */
+    public function findAllWithValues(): array
+    {
+        $themes = $this->findAll();
+        $result = [];
+        
+        foreach ($themes as $theme) {
+            $themeData = [
+                'id' => $theme->getId(),
+                'name' => $theme->getName(),
+                'parentId' => $theme->getParentId(),
+                'externalId' => $theme->getExternalId(),
+                'isSection' => $theme->getIsSection(),
+                'source' => $theme->getSource(),
+                'link' => $theme->getLink(),
+                'geography' => $theme->getGeography(),
+                'unit' => $theme->getUnit(),
+                'values' => []
+            ];
+            
+            // Récupérer les valeurs annuelles
+            foreach ($theme->getValues() as $themeValue) {
+                $themeData['values'][$themeValue->getYear()] = $themeValue->getValue();
+            }
+            
+            $result[] = $themeData;
+        }
+        
+        return $result;
     }
 }

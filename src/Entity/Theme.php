@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\ThemeRepository;
@@ -19,7 +18,7 @@ class Theme
     #[ORM\Column(nullable: true)]
     private ?int $parentId = null;
     
-    #[ORM\Column(length: 255, nullable: false, unique: true)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $name;
     
     #[ORM\Column(nullable: false)]
@@ -28,26 +27,17 @@ class Theme
     #[ORM\Column(length: 255, nullable: false, unique: true)]
     private ?string $externalId;
     
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $categorieId = null;
-    
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $categorieV01 = null;
-    
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $categorieV02 = null;
-    
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $source = null;
     
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $lien = null;
+    private ?string $link = null;
     
     #[ORM\Column(length: 100, nullable: true)]
-    private ?string $geographie = null;
+    private ?string $geography = null;
     
     #[ORM\Column(length: 50, nullable: true)]
-    private ?string $unite = null;
+    private ?string $unit = null;
     
     /**
      * @var Collection<int, ThemeValue>
@@ -132,50 +122,14 @@ class Theme
         return $this;
     }
     
-    public function setExternalId(?string $externalId): static
-    {
-        $this->externalId = $externalId;
-        
-        return $this;
-    }
-    
     public function getExternalId(): ?string
     {
         return $this->externalId;
     }
     
-    public function getCategorieId(): ?string
+    public function setExternalId(?string $externalId): static
     {
-        return $this->categorieId;
-    }
-    
-    public function setCategorieId(?string $categorieId): static
-    {
-        $this->categorieId = $categorieId;
-        
-        return $this;
-    }
-    
-    public function getCategorieV01(): ?string
-    {
-        return $this->categorieV01;
-    }
-    
-    public function setCategorieV01(?string $categorieV01): static
-    {
-        $this->categorieV01 = $categorieV01;
-        
-        return $this;
-    }
-    
-    public function getCategorieV02(): ?string
-    {
-        return $this->categorieV02;
-    }
-    
-    public function setCategorieV02(?string $categorieV02): static
-    {
-        $this->categorieV02 = $categorieV02;
+        $this->externalId = $externalId;
         
         return $this;
     }
@@ -192,38 +146,38 @@ class Theme
         return $this;
     }
     
-    public function getLien(): ?string
+    public function getLink(): ?string
     {
-        return $this->lien;
+        return $this->link;
     }
     
-    public function setLien(?string $lien): static
+    public function setLink(?string $link): static
     {
-        $this->lien = $lien;
+        $this->link = $link;
         
         return $this;
     }
     
-    public function getGeographie(): ?string
+    public function getGeography(): ?string
     {
-        return $this->geographie;
+        return $this->geography;
     }
     
-    public function setGeographie(?string $geographie): static
+    public function setGeography(?string $geography): static
     {
-        $this->geographie = $geographie;
+        $this->geography = $geography;
         
         return $this;
     }
     
-    public function getUnite(): ?string
+    public function getUnit(): ?string
     {
-        return $this->unite;
+        return $this->unit;
     }
     
-    public function setUnite(?string $unite): static
+    public function setUnit(?string $unit): static
     {
-        $this->unite = $unite;
+        $this->unit = $unit;
         
         return $this;
     }
