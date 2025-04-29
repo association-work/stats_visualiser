@@ -10,15 +10,18 @@ class XLSDataAdapter implements DataAdapterInterface
 {
     private string $file_path;
     private Spreadsheet $spreadsheet;
+    private string $entity_name;
 
-    public function __construct(string $file_path)
+    public function __construct(string $file_path, string $entity_name = '')
     {
         $this->file_path = $file_path;
         $this->spreadsheet = IOFactory::load($this->file_path);
+        $this->entity_name = $entity_name;
     }
 
     public function fetchData(): array
     {
+        $data = [];
         // Vérifications des conditions
         if (empty($this->file_path)) {
             throw new \InvalidArgumentException('File path cannot be empty.');
@@ -32,18 +35,17 @@ class XLSDataAdapter implements DataAdapterInterface
             throw new \RuntimeException('File is not readable.');
         }
 
-        $func_theme = new ThemesFunction();
-        $sheet = $this->getSpreadsheet($this->file_path, ['name', 'externalId'], 2);
-        $themes = [];
-        $themes = $func_theme->getThemes($sheet);
+        if ('theme' == $this->entity_name) {
+            $func_theme = new ThemesFunction();
+            $sheet = $func_theme->getSpreadsheetTheme($this->file_path, ['name', 'externalId'], 2);
+            $data = $func_theme->getThemes($sheet);
+        }
 
-        return $themes;
+        return $data;
     }
 
-    public function getSpreadsheet(string $file_Path, array $column, int $rowIndex = 0): array
+    public function getEntity_name(): string
     {
-        $func_theme = new ThemesFunction();
-
-        return $func_theme->getSpreadsheetTheme($file_Path, $column, $rowIndex);
+        return $this->entity_name;
     }
 }

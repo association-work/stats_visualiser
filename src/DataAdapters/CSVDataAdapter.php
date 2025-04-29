@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Schedule\Adapter;
+namespace App\DataAdapters;
 
 class CSVDataAdapter implements DataAdapterInterface
 {
@@ -12,5 +12,11 @@ class CSVDataAdapter implements DataAdapterInterface
             'source' => 'Sample data from CSV source',
             'data' => [],
         ];
+    }
+
+    public function getEntity_name(): string
+    {
+        // Return a sample entity name
+        return 'CSVEntity';
     }
 }

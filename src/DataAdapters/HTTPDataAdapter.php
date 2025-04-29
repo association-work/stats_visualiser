@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Schedule\Adapter;
+namespace App\DataAdapters;
 
 class HTTPDataAdapter implements DataAdapterInterface
 {
@@ -12,5 +12,11 @@ class HTTPDataAdapter implements DataAdapterInterface
             'source' => 'Sample data from HTTP source',
             'data' => [],
         ];
+    }
+
+    public function getEntity_name(): string
+    {
+        // Return a placeholder entity name
+        return 'HTTPDataEntity';
     }
 }

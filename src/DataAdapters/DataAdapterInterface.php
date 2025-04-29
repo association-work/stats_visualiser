@@ -10,4 +10,9 @@ interface DataAdapterInterface
      * @return array the fetched data
      */
     public function fetchData(): array;
+
+    /**
+     * Get the entity name.
+     */
+    public function getEntity_name(): string;
 }

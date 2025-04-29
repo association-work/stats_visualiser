@@ -30,11 +30,13 @@ class ThemeRepository extends ServiceEntityRepository
     public function saveTheme(array $arrayThemes): int
     {
         if (empty($arrayThemes)) {
-            return 0;
+            throw new \RuntimeException('array themes is empty');
         }
+        // if (empty($arrayThemes)) { return 0;}
 
         $themes_func = new ThemesFunction();
         foreach ($arrayThemes as $theme) {
+            // Vérifiez les données de chaque thème
             $existing_theme = $this->findOneBy(['externalId' => $theme['externalId']]);
             $theme_to_write = $existing_theme ?? (new Theme())->setExternalId($theme['externalId']);
             $external_id = $theme_to_write->getExternalId();
@@ -51,6 +53,6 @@ class ThemeRepository extends ServiceEntityRepository
 
         $this->getEntityManager()->flush();
 
-        return count($arrayThemes);
+        return count($this->findAll());
     }
 }

@@ -91,4 +91,27 @@ class ThemeRepositoryTest extends KernelTestCase
         $midParentId = $themes[$topParentId][0]['id'];
         $this->assertEquals('Sea Level Rise', $themes[$midParentId][0]['name']);
     }
+
+    public function testSaveTheme(): void
+    {
+        $themes = [
+            [
+                'name' => 'Emissions GES',
+                'externalId' => 'V0',
+                'isSection' => true,
+                'parentExternalId' => null,
+            ],
+            [
+                'name' => 'par gaz à effet de serre',
+                'externalId' => 'V0.1',
+                'isSection' => true,
+                'parentExternalId' => 'V0',
+            ],
+        ];
+
+        $savedCount = $this->themeRepository->saveTheme($themes);
+        $this->assertEquals(2, $savedCount);
+        $savedThemes = $this->themeRepository->findAll();
+        $this->assertEquals(2, count($savedThemes));
+    }
 }
