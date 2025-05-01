@@ -22,6 +22,9 @@ services:
     App\Command\CommandExtractService:
         bind:
             $projectDir: '%kernel.project_dir%'
+    App\Command\CronJobSchedulerXLSCommand:
+        bind:
+            $projectDir: '%kernel.project_dir%'
     
     
         

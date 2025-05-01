@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Schedule\Scheduler;
+namespace App\Schedule;
 
 interface JobSchedulerInterface
 {

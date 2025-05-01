@@ -9,8 +9,6 @@ class Job
     private $adapter;
     private $repository;
     private ThemeRepository $theme_repository;
-    private $entityManager;
-
     private $count_Saved;
 
     public function __construct($adapter, $repository = null, ?ThemeRepository $themeRepository = null)
@@ -18,7 +16,6 @@ class Job
         $this->theme_repository = $themeRepository;
         $this->repository = $repository;
         $this->adapter = $adapter;
-        // $this->themeRepository = $this->entityManager->getRepository(Theme::class);
     }
 
     public function execute(): bool
@@ -28,7 +25,6 @@ class Job
         if (empty($this->adapter)) {
             throw new \InvalidArgumentException('Data adapter interface cannot be empty.');
         }
-
         switch ($this->getNameClass($this->adapter)) {
             case 'XLSDataAdapter':
                 if ('theme' == $this->adapter->getEntity_name()) {
@@ -37,7 +33,6 @@ class Job
                     if (empty($themes)) {
                         throw new \RuntimeException('No data fetched.');
                     }
-
                     $savedThemes = $this->theme_repository->SaveTheme($themes);
 
                     if ($savedThemes > 0) {

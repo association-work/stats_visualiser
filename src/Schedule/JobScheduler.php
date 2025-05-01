@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Schedule\Scheduler;
+namespace App\Scheduler;
 
-use App\Schedule\Service\Job;
+// Ensure the Job class exists in the specified namespace
+use App\Schedule\JobSchedulerInterface;
+use App\Services\Job;
 
 class JobScheduler implements JobSchedulerInterface
 {
@@ -13,7 +15,6 @@ class JobScheduler implements JobSchedulerInterface
 
     public function schedule(): void
     {
-        // Logic to schedule a job using the job service
-        $this->jobService->schedule();
+        $this->jobService->execute();
     }
 }

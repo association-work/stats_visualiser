@@ -39,7 +39,6 @@ class JobTest extends KernelTestCase
         $this->projectDir = __DIR__.'/test-themes.xlsx';
         $this->adapter = new XLSDataAdapter($this->projectDir, 'theme');
         $this->theme_repository = $this->entity_manager->getRepository(Theme::class);
-
         // =========================================
         $job = new Job($this->adapter, '', $this->theme_repository);
         $executed = $job->execute();
