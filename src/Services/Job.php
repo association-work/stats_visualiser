@@ -33,6 +33,7 @@ class Job
                     if (empty($themes)) {
                         throw new \RuntimeException('No data fetched.');
                     }
+                    dd($themes);
                     $savedThemes = $this->theme_repository->SaveTheme($themes);
 
                     if ($savedThemes > 0) {

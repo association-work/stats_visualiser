@@ -37,7 +37,10 @@ phpunit.xml.old
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
-public/File/emissions_GES_structure.xlsx
+
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
 
 
 

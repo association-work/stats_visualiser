@@ -37,7 +37,8 @@ class CronJobSchedulerXLSCommand extends Command
         $io->title('Cron Job Scheduler for XLS');
         $io->text('This command allows you to execute cron jobs scheduler.');
 
-        $file = $this->projectDir.'/var/file/emissions_GES_structure.xlsx';
+        // $file = $this->projectDir.'/var/file/emissions_GES_structure.xlsx';
+        $file = $this->projectDir.'/var/file/Classeur1.xlsx';
         if (!file_exists($file)) {
             $io->error('File does not exist: '.$file);
 

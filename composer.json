@@ -65,10 +65,10 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "lint" :"php-cs-fixer fix --diff --verbose",
-        "lint-last" :"php-cs-fixer fix --dry-run --diff --verbose",
-        "test" :"phpunit --colors=always --filter ",
-        "test-all" :"phpunit --colors=always"
+        "lint":"php-cs-fixer fix --diff --verbose",
+        "lint-last":"php-cs-fixer fix --dry-run --diff --verbose",
+        "test":"phpunit --colors=always --filter ",
+        "test-all":"phpunit --colors=always"
         
     },
     "conflict": {
