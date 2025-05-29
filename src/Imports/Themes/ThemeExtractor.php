@@ -336,58 +336,39 @@ class ThemeExtractor extends BaseExtractor
             }
         }
         
-// Remplacer la section de création des valeurs dans saveToDatabase() :
-
-    // Troisième passe: créer les valeurs
-    $valueCount = 0;
-    $batchSize = 20;
-
-    foreach ($themesByExternalId as $externalId => $data) {
-        $theme = $data['theme'];
+        // Troisième passe: créer les valeurs
+        $valueCount = 0;
+        $batchSize = 20;
         
-        // IMPORTANT: Vider la collection des valeurs existantes
-        // pour éviter les doublons après la suppression SQL
-        $theme->getValues()->clear();
-        
-        foreach ($data['years'] as $year => $value) {
-            if ($value !== null && $value !== '') {
-                $themeValue = new ThemeValue();
-                $themeValue->setYear((int)$year);
-                $themeValue->setValue((float)$value);
-                
-                // IMPORTANT: Utiliser addValue() pour gérer la relation bidirectionnelle
-                $theme->addValue($themeValue);
-                
-                // Persister la ThemeValue
-                $this->entityManager->persist($themeValue);
-                $valueCount++;
-                
-                if ($valueCount % $batchSize === 0) {
-                    $this->entityManager->flush();
-                    return $theme->getId();
+        foreach ($themesByExternalId as $externalId => $data) {
+            $theme = $data['theme'];
+            
+            foreach ($data['years'] as $year => $value) {
+                if ($value !== null && $value !== '') {
+                    $themeValue = new ThemeValue();
+                    $themeValue->setTheme($theme);
+                    $themeValue->setYear((int)$year);
+                    $themeValue->setValue((float)$value);
+                    
+                    $this->entityManager->persist($themeValue);
+                    $valueCount++;
+                    
+                    if ($valueCount % $batchSize === 0) {
+                        $this->entityManager->flush();
+                    }
                 }
             }
         }
-    }
-
-    // Flush final
-    if ($valueCount % $batchSize !== 0) {
-        $this->entityManager->flush();
-        return $theme->getId();
-    }
-
-    // IMPORTANT: Clear et recharger pour s'assurer que les relations sont bien à jour
-    $this->entityManager->clear();
-
-    // Recharger les thèmes pour avoir les valeurs à jour
-    foreach ($themesByExternalId as $externalId => $data) {
-        $theme = $themeRepo->findOneBy(['externalId' => $externalId]);
-        if ($theme) {
-            // Forcer le chargement des valeurs
-            $theme->getValues()->count();
+        
+        // Flush final
+        if ($valueCount % $batchSize !== 0) {
+            $this->entityManager->flush();
         }
+        
+        $this->logger->log("Importation terminée: {$valueCount} valeurs créées");
+        
+        return count($themes);
     }
-}
     
     /**
      * Met à jour une entité Theme existante
