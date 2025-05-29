@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="bg-white shadow-lg rounded-lg p-8 max-w-3xl mx-auto">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Import des données thématiques</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Import des données</h2>
         
         {% for message in app.flashes('error') %}
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -13,6 +13,19 @@
         {% endfor %}
         
         <form action="{{ path('app_import_process') }}" method="post" enctype="multipart/form-data" class="space-y-6">
+            <div>
+                <label for="extractorType" class="block text-sm font-medium text-gray-700 mb-2">
+                    Type de données à importer
+                </label>
+                <select name="extractorType" id="extractorType" 
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
+                               focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    {% for key, name in extractors %}
+                        <option value="{{ key }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
             <div>
                 <label for="excelFile" class="block text-sm font-medium text-gray-700 mb-2">
                     Fichier Excel (.xlsx, .xls)
@@ -24,48 +37,66 @@
                                   focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
                 <p class="mt-2 text-sm text-gray-500">
-                    Le fichier doit contenir les colonnes suivantes: Catégorie, Catégorie_id, Parent, Parent_id, Data/Section, Source, Lien, Géographie, Unité, suivies des colonnes d'années (1990, 1991, etc.)
+                    Sélectionnez le type de données à importer puis chargez le fichier Excel correspondant.
                 </p>
             </div>
             
-            <div class="bg-gray-50 p-4 rounded-lg">
-                <h3 class="text-lg font-medium text-gray-900 mb-2">Format attendu</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 text-xs">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="px-2 py-1 text-left">Catégorie</th>
-                                <th class="px-2 py-1 text-left">Catégorie_id</th>
-                                <th class="px-2 py-1 text-left">Parent</th>
-                                <th class="px-2 py-1 text-left">Parent_id</th>
-                                <th class="px-2 py-1 text-left">Data/Section</th>
-                                <th class="px-2 py-1 text-left">Source</th>
-                                <th class="px-2 py-1 text-left">Lien</th>
-                                <th class="px-2 py-1 text-left">Géographie</th>
-                                <th class="px-2 py-1 text-left">Unité</th>
-                                <th class="px-2 py-1 text-left">1990</th>
-                                <th class="px-2 py-1 text-left">1991</th>
-                                <th class="px-2 py-1 text-left">...</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            <tr>
-                                <td class="px-2 py-1">Exemple</td>
-                                <td class="px-2 py-1">V01</td>
-                                <td class="px-2 py-1">Thème</td>
-                                <td class="px-2 py-1">parent1</td>
-                                <td class="px-2 py-1">Data</td>
-                                <td class="px-2 py-1">CITEPA</td>
-                                <td class="px-2 py-1">http://...</td>
-                                <td class="px-2 py-1">France</td>
-                                <td class="px-2 py-1">Mt CO2e</td>
-                                <td class="px-2 py-1">123.4</td>
-                                <td class="px-2 py-1">125.6</td>
-                                <td class="px-2 py-1">...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            {# Section format attendu conditionnelle basée sur le type d'extracteur #}
+            <div id="formatGuidelines" class="bg-gray-50 p-4 rounded-lg">
+                {# Format par défaut pour les thèmes (affiché au chargement initial) #}
+                <div id="format-themes" class="format-section">
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Format attendu pour les thèmes</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 text-xs">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-2 py-1 text-left">Catégorie</th>
+                                    <th class="px-2 py-1 text-left">Catégorie_id</th>
+                                    <th class="px-2 py-1 text-left">Data/Section</th>
+                                    <th class="px-2 py-1 text-left">Source</th>
+                                    <th class="px-2 py-1 text-left">Lien</th>
+                                    <th class="px-2 py-1 text-left">Géographie</th>
+                                    <th class="px-2 py-1 text-left">Géographie_id</th>
+                                    <th class="px-2 py-1 text-left">Unité</th>
+                                    <th class="px-2 py-1 text-left">Data sommables/ratio</th>
+                                    <th class="px-2 py-1 text-left">1990</th>
+                                    <th class="px-2 py-1 text-left">1991</th>
+                                    <th class="px-2 py-1 text-left">...</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-2 py-1">Émissions GES</td>
+                                    <td class="px-2 py-1">D0</td>
+                                    <td class="px-2 py-1">S</td>
+                                    <td class="px-2 py-1">CITEPA</td>
+                                    <td class="px-2 py-1">https://www.citepa.org/...</td>
+                                    <td class="px-2 py-1">France</td>
+                                    <td class="px-2 py-1">G0</td>
+                                    <td class="px-2 py-1">Mt CO2e</td>
+                                    <td class="px-2 py-1">sommable</td>
+                                    <td class="px-2 py-1">521</td>
+                                    <td class="px-2 py-1">541</td>
+                                    <td class="px-2 py-1">...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500">
+                        <strong>Notes:</strong> 
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>La colonne "Data/Section" doit contenir "S" pour une section ou être vide pour des données.</li>
+                            <li>Les ID hiérarchiques doivent suivre le format parent.enfant (exemple: D0.1, D0.1.1).</li>
+                            <li>Les années commencent à la colonne J et sont automatiquement détectées.</li>
+                            <li>"Data sommables/ratio" indique si les valeurs peuvent être additionnées ("sommable") ou non.</li>
+                        </ul>
+                    </p>
                 </div>
+                
+                {# Section pour les autres types d'extracteurs (à ajouter au besoin) #}
+                {# <div id="format-another_type" class="format-section" style="display: none;">
+                    ... contenu pour un autre type ...
+                </div> #}
             </div>
             
             <div>
@@ -75,4 +106,35 @@
             </div>
         </form>
     </div>
+    
+    <script>
+        // Script pour changer l'affichage du format attendu en fonction du type d'extracteur sélectionné
+        document.addEventListener('DOMContentLoaded', function() {
+            const extractorSelect = document.getElementById('extractorType');
+            const formatSections = document.querySelectorAll('.format-section');
+            
+            // Fonction pour afficher la section de format appropriée
+            function updateFormatSection() {
+                const selectedType = extractorSelect.value;
+                
+                // Cacher toutes les sections
+                formatSections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Afficher la section correspondante
+                const selectedSection = document.getElementById('format-' + selectedType);
+                if (selectedSection) {
+                    selectedSection.style.display = 'block';
+                } else {
+                    // Si aucune section spécifique n'existe pour ce type, afficher la section par défaut (thèmes)
+                    document.getElementById('format-themes').style.display = 'block';
+                }
+            }
+            
+            // Initialisation et gestionnaire d'événements
+            updateFormatSection();
+            extractorSelect.addEventListener('change', updateFormatSection);
+        });
+    </script>
 {% endblock %}

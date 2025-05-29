@@ -12,6 +12,9 @@ class ThemeRepository extends ServiceEntityRepository
         parent::__construct($registry, Theme::class);
     }
 
+    /**
+     * Récupère tous les thèmes avec leur structure hiérarchique
+     */
     public function findAllHierarchical(): array
     {
         $themes = $this->findAll();
@@ -22,7 +25,10 @@ class ThemeRepository extends ServiceEntityRepository
             // Récupérer les valeurs annuelles
             $values = [];
             foreach ($theme->getValues() as $themeValue) {
-                $values[$themeValue->getYear()] = $themeValue->getValue();
+                $values[] = [
+                    'year' => $themeValue->getYear(),
+                    'value' => $themeValue->getValue()
+                ];
             }
             
             $themesByExternalId[$theme->getExternalId()] = [
@@ -34,7 +40,9 @@ class ThemeRepository extends ServiceEntityRepository
                 'source' => $theme->getSource(),
                 'link' => $theme->getLink(),
                 'geography' => $theme->getGeography(),
+                'geographyId' => $theme->getGeographyId(),
                 'unit' => $theme->getUnit(),
+                'isSummable' => $theme->getIsSummable(),
                 'values' => $values,
                 'children' => []
             ];
@@ -73,6 +81,9 @@ class ThemeRepository extends ServiceEntityRepository
         return array_values($tree);
     }
     
+    /**
+     * Détermine l'externalId du parent à partir de l'externalId de l'enfant
+     */
     private function getParentExternalId(string $externalId): ?string
     {
         $parts = explode('.', $externalId);
@@ -92,6 +103,14 @@ class ThemeRepository extends ServiceEntityRepository
         $result = [];
         
         foreach ($themes as $theme) {
+            $values = [];
+            foreach ($theme->getValues() as $themeValue) {
+                $values[] = [
+                    'year' => $themeValue->getYear(),
+                    'value' => $themeValue->getValue()
+                ];
+            }
+            
             $themeData = [
                 'id' => $theme->getId(),
                 'name' => $theme->getName(),
@@ -101,18 +120,75 @@ class ThemeRepository extends ServiceEntityRepository
                 'source' => $theme->getSource(),
                 'link' => $theme->getLink(),
                 'geography' => $theme->getGeography(),
+                'geographyId' => $theme->getGeographyId(),
                 'unit' => $theme->getUnit(),
-                'values' => []
+                'isSummable' => $theme->getIsSummable(),
+                'values' => $values
             ];
-            
-            // Récupérer les valeurs annuelles
-            foreach ($theme->getValues() as $themeValue) {
-                $themeData['values'][$themeValue->getYear()] = $themeValue->getValue();
-            }
             
             $result[] = $themeData;
         }
         
         return $result;
+    }
+    
+    /**
+     * Trouve des thèmes par leur source
+     */
+    public function findBySource(string $source): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.source = :source')
+            ->setParameter('source', $source)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    /**
+     * Trouve des thèmes par leur unité
+     */
+    public function findByUnit(string $unit): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.unit = :unit')
+            ->setParameter('unit', $unit)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    /**
+     * Trouve des thèmes par leur géographie
+     */
+    public function findByGeography(string $geography): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.geography = :geography')
+            ->setParameter('geography', $geography)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    /**
+     * Trouve des thèmes par leur ID de géographie
+     */
+    public function findByGeographyId(string $geographyId): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.geographyId = :geographyId')
+            ->setParameter('geographyId', $geographyId)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    /**
+     * Trouve des thèmes sommables
+     */
+    public function findSummableThemes(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.isSummable = :isSummable')
+            ->setParameter('isSummable', true)
+            ->getQuery()
+            ->getResult();
     }
 }

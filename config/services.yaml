@@ -26,7 +26,7 @@ services:
             $projectDir: '%kernel.project_dir%'
     
     # Assurez-vous que le service ExtractService est correctement configuré
-    App\Imports\Themes\ExtractService:
+    App\Imports\ExtractService:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
     

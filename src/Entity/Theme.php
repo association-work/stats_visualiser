@@ -36,8 +36,14 @@ class Theme
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $geography = null;
     
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $geographyId = null;
+    
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $unit = null;
+    
+    #[ORM\Column(nullable: true)]
+    private ?bool $isSummable = false;
     
     /**
      * @var Collection<int, ThemeValue>
@@ -66,6 +72,7 @@ class Theme
         $this->children = new ArrayCollection();
         $this->values = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+        $this->isSummable = false;
     }
     
     #[ORM\PreUpdate]
@@ -170,6 +177,18 @@ class Theme
         return $this;
     }
     
+    public function getGeographyId(): ?string
+    {
+        return $this->geographyId;
+    }
+    
+    public function setGeographyId(?string $geographyId): static
+    {
+        $this->geographyId = $geographyId;
+        
+        return $this;
+    }
+    
     public function getUnit(): ?string
     {
         return $this->unit;
@@ -182,77 +201,14 @@ class Theme
         return $this;
     }
     
-    /**
-     * @return Collection<int, ThemeValue>
-     */
-    public function getValues(): Collection
+    public function getIsSummable(): ?bool
     {
-        return $this->values;
+        return $this->isSummable;
     }
     
-    public function addValue(ThemeValue $value): static
+    public function setIsSummable(?bool $isSummable): static
     {
-        if (!$this->values->contains($value)) {
-            $this->values->add($value);
-            $value->setTheme($this);
-        }
-        
-        return $this;
-    }
-    
-    public function removeValue(ThemeValue $value): static
-    {
-        if ($this->values->removeElement($value)) {
-            if ($value->getTheme() === $this) {
-                $value->setTheme(null);
-            }
-        }
-        
-        return $this;
-    }
-    
-    public function getValueForYear(int $year): ?float
-    {
-        foreach ($this->values as $value) {
-            if ($value->getYear() === $year) {
-                return $value->getValue();
-            }
-        }
-        
-        return null;
-    }
-    
-    public function setValueForYear(int $year, float $value): static
-    {
-        $found = false;
-        
-        foreach ($this->values as $themeValue) {
-            if ($themeValue->getYear() === $year) {
-                $themeValue->setValue($value);
-                $found = true;
-                break;
-            }
-        }
-        
-        if (!$found) {
-            $themeValue = new ThemeValue();
-            $themeValue->setYear($year);
-            $themeValue->setValue($value);
-            $themeValue->setTheme($this);
-            $this->values->add($themeValue);
-        }
-        
-        return $this;
-    }
-    
-    public function getParent(): ?self
-    {
-        return $this->parent;
-    }
-    
-    public function setParent(?self $parent): static
-    {
-        $this->parent = $parent;
+        $this->isSummable = $isSummable;
         
         return $this;
     }
@@ -280,6 +236,92 @@ class Theme
         if ($this->children->removeElement($child)) {
             if ($child->getParent() === $this) {
                 $child->setParent(null);
+            }
+        }
+        
+        return $this;
+    }
+    
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+    
+    public function setParent(?self $parent): static
+    {
+        $this->parent = $parent;
+        
+        return $this;
+    }
+    
+    /**
+     * @return Collection<int, ThemeValue>
+     */
+    public function getValues(): Collection
+    {
+        return $this->values;
+    }
+    
+    /**
+     * Récupère la valeur pour une année spécifique
+     */
+    public function getValueForYear(int $year): ?float
+    {
+        foreach ($this->values as $value) {
+            if ($value->getYear() === $year) {
+                return $value->getValue();
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Définit ou met à jour la valeur pour une année spécifique
+     */
+    public function setValueForYear(int $year, float $value): static
+    {
+        // Délégué à la classe ThemeValue
+        $valueObj = $this->findOrCreateValueForYear($year);
+        $valueObj->setValue($value);
+        
+        return $this;
+    }
+    
+    /**
+     * Trouve ou crée un objet ThemeValue pour une année donnée
+     */
+    private function findOrCreateValueForYear(int $year): ThemeValue
+    {
+        foreach ($this->values as $themeValue) {
+            if ($themeValue->getYear() === $year) {
+                return $themeValue;
+            }
+        }
+        
+        $themeValue = new ThemeValue();
+        $themeValue->setYear($year);
+        $themeValue->setTheme($this);
+        $this->values->add($themeValue);
+        
+        return $themeValue;
+    }
+    
+    public function addValue(ThemeValue $value): static
+    {
+        if (!$this->values->contains($value)) {
+            $this->values->add($value);
+            $value->setTheme($this);
+        }
+        
+        return $this;
+    }
+    
+    public function removeValue(ThemeValue $value): static
+    {
+        if ($this->values->removeElement($value)) {
+            if ($value->getTheme() === $this) {
+                $value->setTheme(null);
             }
         }
         
