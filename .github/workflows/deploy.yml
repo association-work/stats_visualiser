@@ -37,13 +37,6 @@ jobs:
             sudo systemctl restart nginx
           EOF
 
-      - name: Deploy Frontend
-        run: |
-          # ssh deployer@165.232.69.153 << 'EOF'
-          #   rm -rf ${{ env.DEPLOY_PATH }}/public/dist
-          # EOF
-          scp -r frontend/dist/ deployer@${{ env.DOMAIN }}:${{ env.DEPLOY_PATH }}/public/dist
-
       - name: Deploy Backend and dependencies
         run: |
           ssh deployer@165.232.69.153 << 'EOF'
