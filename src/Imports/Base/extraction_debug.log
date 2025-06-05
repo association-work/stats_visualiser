@@ -1,0 +1,470 @@
+2025-06-05 13:17:57 - Début de l'analyse du fichier: .\var\import-data\Z_CITEPA_emissions_GES_structure_1.4_v4.xlsx
+2025-06-05 13:17:59 - Feuille active: Z_CITEPA_emissions_GES_structur
+2025-06-05 13:17:59 - En-têtes détectés: {"A":"Categorie","B":"Categorie_id","C":"Data \/ Section","D":"Source","E":"Lien","F":"G\u00e9ographie","G":"G\u00e9ographie_id","H":"Unit\u00e9","I":"Data sommables \/ ratio","J":1990,"K":1991,"L":1992,"M":1993,"N":1994,"O":1995,"P":1996,"Q":1997,"R":1998,"S":1999,"T":2000,"U":2001,"V":2002,"W":2003,"X":2004,"Y":2005,"Z":2006,"AA":2007,"AB":2008,"AC":2009,"AD":2010,"AE":2011,"AF":2012,"AG":2013,"AH":2014,"AI":2015,"AJ":2016,"AK":2017,"AL":2018,"AM":2019,"AN":2020,"AO":2021,"AP":2022,"AQ":2023}
+2025-06-05 13:17:59 - Détection des colonnes d'années...
+2025-06-05 13:17:59 - Colonne J: année 1990 détectée
+2025-06-05 13:17:59 - Colonne K: année 1991 détectée
+2025-06-05 13:17:59 - Colonne L: année 1992 détectée
+2025-06-05 13:17:59 - Colonne M: année 1993 détectée
+2025-06-05 13:17:59 - Colonne N: année 1994 détectée
+2025-06-05 13:17:59 - Colonne O: année 1995 détectée
+2025-06-05 13:17:59 - Colonne P: année 1996 détectée
+2025-06-05 13:17:59 - Colonne Q: année 1997 détectée
+2025-06-05 13:17:59 - Colonne R: année 1998 détectée
+2025-06-05 13:17:59 - Colonne S: année 1999 détectée
+2025-06-05 13:17:59 - Colonne T: année 2000 détectée
+2025-06-05 13:17:59 - Colonne U: année 2001 détectée
+2025-06-05 13:17:59 - Colonne V: année 2002 détectée
+2025-06-05 13:17:59 - Colonne W: année 2003 détectée
+2025-06-05 13:17:59 - Colonne X: année 2004 détectée
+2025-06-05 13:17:59 - Colonne Y: année 2005 détectée
+2025-06-05 13:17:59 - Colonne Z: année 2006 détectée
+2025-06-05 13:17:59 - Colonne AA: année 2007 détectée
+2025-06-05 13:17:59 - Colonne AB: année 2008 détectée
+2025-06-05 13:17:59 - Colonne AC: année 2009 détectée
+2025-06-05 13:17:59 - Colonne AD: année 2010 détectée
+2025-06-05 13:17:59 - Colonne AE: année 2011 détectée
+2025-06-05 13:17:59 - Colonne AF: année 2012 détectée
+2025-06-05 13:17:59 - Colonne AG: année 2013 détectée
+2025-06-05 13:17:59 - Colonne AH: année 2014 détectée
+2025-06-05 13:17:59 - Colonne AI: année 2015 détectée
+2025-06-05 13:17:59 - Colonne AJ: année 2016 détectée
+2025-06-05 13:17:59 - Colonne AK: année 2017 détectée
+2025-06-05 13:17:59 - Colonne AL: année 2018 détectée
+2025-06-05 13:17:59 - Colonne AM: année 2019 détectée
+2025-06-05 13:17:59 - Colonne AN: année 2020 détectée
+2025-06-05 13:17:59 - Colonne AO: année 2021 détectée
+2025-06-05 13:17:59 - Colonne AP: année 2022 détectée
+2025-06-05 13:17:59 - Colonne AQ: année 2023 détectée
+2025-06-05 13:17:59 - Total années détectées: 34
+2025-06-05 13:17:59 - Mapping des colonnes: {"category":"A","externalId":"B","isData":"C","source":"D","link":"E","geography":"F","geographyId":"G","unit":"H","dataSum":"I","yearColumns":{"J":1990,"K":1991,"L":1992,"M":1993,"N":1994,"O":1995,"P":1996,"Q":1997,"R":1998,"S":1999,"T":2000,"U":2001,"V":2002,"W":2003,"X":2004,"Y":2005,"Z":2006,"AA":2007,"AB":2008,"AC":2009,"AD":2010,"AE":2011,"AF":2012,"AG":2013,"AH":2014,"AI":2015,"AJ":2016,"AK":2017,"AL":2018,"AM":2019,"AN":2020,"AO":2021,"AP":2022,"AQ":2023}}
+2025-06-05 13:17:59 - Ligne 3: Catégorie 'Emissions GES' (ID: D0)
+2025-06-05 13:17:59 - Ligne 4: Catégorie 'par gaz à effet de serre' (ID: D0.1)
+2025-06-05 13:17:59 - Ligne 5: Catégorie 'par secteur' (ID: D0.2)
+2025-06-05 13:17:59 - Ligne 6: Catégorie 'par combustible' (ID: D0.3)
+2025-06-05 13:17:59 - Ligne 7: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 8: Catégorie 'Dioxyde de carbone - CO2' (ID: D0.1.1)
+2025-06-05 13:17:59 - Ligne 9: Catégorie 'Méthane - CH4' (ID: D0.1.2)
+2025-06-05 13:17:59 - Ligne 10: Catégorie 'Protoxydes d'azote - N2O' (ID: D0.1.3)
+2025-06-05 13:17:59 - Ligne 11: Catégorie 'Hydrofluorocarbures - HFC' (ID: D0.1.4)
+2025-06-05 13:17:59 - Ligne 12: Catégorie 'Perfluorocarbures - PFC' (ID: D0.1.5)
+2025-06-05 13:17:59 - Ligne 13: Catégorie 'Hexafluorure de soufre - SF6' (ID: D0.1.6)
+2025-06-05 13:17:59 - Ligne 14: Catégorie 'Trifluorure d'azote - NF3' (ID: D0.1.7)
+2025-06-05 13:17:59 - Ligne 15: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 16: Catégorie 'Industrie de l'énergie' (ID: D0.2.1)
+2025-06-05 13:17:59 - Ligne 17: Catégorie 'Industrie manufacturière et construction' (ID: D0.2.2)
+2025-06-05 13:17:59 - Ligne 18: Catégorie 'Traitement centralisé des déchets' (ID: D0.2.3)
+2025-06-05 13:17:59 - Ligne 19: Catégorie 'Usage des bâtiments et activités résidentiels/tertiaires' (ID: D0.2.4)
+2025-06-05 13:17:59 - Ligne 20: Catégorie 'Agriculture / sylviculture' (ID: D0.2.5)
+2025-06-05 13:17:59 - Ligne 21: Catégorie 'Transports' (ID: D0.2.6)
+2025-06-05 13:17:59 - Ligne 22: Catégorie 'UTCATF' (ID: D0.2.7)
+2025-06-05 13:17:59 - Ligne 23: Catégorie 'Hors total' (ID: D0.2.8)
+2025-06-05 13:17:59 - Ligne 24: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 25: Catégorie 'Combustibles solides' (ID: D0.3.1)
+2025-06-05 13:17:59 - Ligne 26: Catégorie 'Combustibles liquides' (ID: D0.3.2)
+2025-06-05 13:17:59 - Ligne 27: Catégorie 'Combustibles gazeux' (ID: D0.3.3)
+2025-06-05 13:17:59 - Ligne 28: Catégorie 'Agro-carburants et autres produits de la biomasse' (ID: D0.3.4)
+2025-06-05 13:17:59 - Ligne 29: Catégorie 'Emissions non liées aux combustibles - hors UTCATF' (ID: D0.3.5)
+2025-06-05 13:17:59 - Ligne 30: Catégorie 'UTCATF' (ID: D0.3.6)
+2025-06-05 13:17:59 - Ligne 31: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 32: Catégorie 'Production d'électricité' (ID: D0.2.1.1)
+2025-06-05 13:17:59 - Ligne 33: Catégorie 'Chauffage urbain' (ID: D0.2.1.2)
+2025-06-05 13:17:59 - Ligne 34: Catégorie 'Raffinage du pétrole' (ID: D0.2.1.3)
+2025-06-05 13:17:59 - Ligne 35: Catégorie 'Transformation des combustibles minéraux solides' (ID: D0.2.1.4)
+2025-06-05 13:17:59 - Ligne 36: Catégorie 'Extraction et distribution de combustibles solides' (ID: D0.2.1.5)
+2025-06-05 13:17:59 - Ligne 37: Catégorie 'Extraction et distribution de combustibles liquides' (ID: D0.2.1.6)
+2025-06-05 13:17:59 - Ligne 38: Catégorie 'Extraction et distribution de combustibles gazeux' (ID: D0.2.1.7)
+2025-06-05 13:17:59 - Ligne 39: Catégorie 'Fabrication de charbon de bois par pyrolyse' (ID: D0.2.1.8)
+2025-06-05 13:17:59 - Ligne 40: Catégorie 'Valorisation énergétique des déchets' (ID: D0.2.1.9)
+2025-06-05 13:17:59 - Ligne 41: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 42: Catégorie 'Chimie' (ID: D0.2.2.1)
+2025-06-05 13:17:59 - Ligne 43: Catégorie 'Construction' (ID: D0.2.2.2)
+2025-06-05 13:17:59 - Ligne 44: Catégorie 'Biens d'équipements, matériels de transport' (ID: D0.2.2.3)
+2025-06-05 13:17:59 - Ligne 45: Catégorie 'Agro-alimentaire' (ID: D0.2.2.4)
+2025-06-05 13:17:59 - Ligne 46: Catégorie 'Métallurgie des métaux ferreux' (ID: D0.2.2.5)
+2025-06-05 13:17:59 - Ligne 47: Catégorie 'Métallurgie des métaux non-ferreux' (ID: D0.2.2.6)
+2025-06-05 13:17:59 - Ligne 48: Catégorie 'Minéraux non-métalliques, matériaux de construction' (ID: D0.2.2.7)
+2025-06-05 13:17:59 - Ligne 49: Catégorie 'Papier, carton' (ID: D0.2.2.8)
+2025-06-05 13:17:59 - Ligne 50: Catégorie 'Autres industries manufacturières' (ID: D0.2.2.9)
+2025-06-05 13:17:59 - Ligne 51: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 52: Catégorie 'Stockage des déchets' (ID: D0.2.3.1)
+2025-06-05 13:17:59 - Ligne 53: Catégorie 'Incinération sans récupération d'énergie' (ID: D0.2.3.2)
+2025-06-05 13:17:59 - Ligne 54: Catégorie 'Autres traitements des déchets solides' (ID: D0.2.3.3)
+2025-06-05 13:17:59 - Ligne 55: Catégorie 'Traitement des eaux usées' (ID: D0.2.3.4)
+2025-06-05 13:17:59 - Ligne 56: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 57: Catégorie 'sous-total Usage des bâtiments résidentiels et activités domestiques' (ID: D0.2.4.1)
+2025-06-05 13:17:59 - Ligne 58: Catégorie 'sous-total Usage des bâtiments tertiaires et activités tertiaires' (ID: D0.2.4.2)
+2025-06-05 13:17:59 - Ligne 59: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 60: Catégorie 'Chauffage, eau chaude sanitaire et cuisson domestique' (ID: D0.2.4.1.1)
+2025-06-05 13:17:59 - Ligne 61: Catégorie 'Climatisation domestique' (ID: D0.2.4.1.2)
+2025-06-05 13:17:59 - Ligne 62: Catégorie 'Réfrigération domestique' (ID: D0.2.4.1.3)
+2025-06-05 13:17:59 - Ligne 63: Catégorie 'Utilisation de produits domestiques (y.c. peintures, aérosols)' (ID: D0.2.4.1.4)
+2025-06-05 13:17:59 - Ligne 64: Catégorie 'Engins (y.c. jardinage) domestiques' (ID: D0.2.4.1.5)
+2025-06-05 13:17:59 - Ligne 65: Catégorie 'Déchets et brûlage domestiques et eaux usées' (ID: D0.2.4.1.6)
+2025-06-05 13:17:59 - Ligne 66: Catégorie 'Autres activités domestiques (tabac et feux d’artifices)' (ID: D0.2.4.1.7)
+2025-06-05 13:17:59 - Ligne 67: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 68: Catégorie 'Chauffage, eau chaude sanitaire et cuisson tertiaire' (ID: D0.2.4.2.1)
+2025-06-05 13:17:59 - Ligne 69: Catégorie 'Climatisation tertiaire' (ID: D0.2.4.2.2)
+2025-06-05 13:17:59 - Ligne 70: Catégorie 'Réfrigération tertiaire' (ID: D0.2.4.2.3)
+2025-06-05 13:17:59 - Ligne 71: Catégorie 'Utilisation de produits tertiaires (y.c. solvants, peintures, aérosols, anesthésie)' (ID: D0.2.4.2.4)
+2025-06-05 13:17:59 - Ligne 72: Catégorie 'Autres activités tertiaires (y.c. feux d’artifices, activités militaires, crémation)' (ID: D0.2.4.2.5)
+2025-06-05 13:17:59 - Ligne 73: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 74: Catégorie 'sous-total Elevage' (ID: D0.2.5.1)
+2025-06-05 13:17:59 - Ligne 75: Catégorie 'sous-total  Culture' (ID: D0.2.5.2)
+2025-06-05 13:17:59 - Ligne 76: Catégorie 'sous-total  Engins, moteurs et chaudières' (ID: D0.2.5.3)
+2025-06-05 13:17:59 - Ligne 77: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 78: Catégorie 'Bovins' (ID: D0.2.5.1.1)
+2025-06-05 13:17:59 - Ligne 79: Catégorie 'Porcins' (ID: D0.2.5.1.2)
+2025-06-05 13:17:59 - Ligne 80: Catégorie 'Volailles' (ID: D0.2.5.1.3)
+2025-06-05 13:17:59 - Ligne 81: Catégorie 'Autres émissions de l'élevage' (ID: D0.2.5.1.4)
+2025-06-05 13:17:59 - Ligne 82: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 83: Catégorie 'Engrais et amendements minéraux' (ID: D0.2.5.2.1)
+2025-06-05 13:17:59 - Ligne 84: Catégorie 'Engrais et amendements organiques' (ID: D0.2.5.2.2)
+2025-06-05 13:17:59 - Ligne 85: Catégorie 'Pâture' (ID: D0.2.5.2.3)
+2025-06-05 13:17:59 - Ligne 86: Catégorie 'Brûlage de résidus agricoles' (ID: D0.2.5.2.4)
+2025-06-05 13:17:59 - Ligne 87: Catégorie 'Autres émissions des cultures' (ID: D0.2.5.2.5)
+2025-06-05 13:17:59 - Ligne 88: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 89: Catégorie 'Engins, moteurs et chaudières en agriculture' (ID: D0.2.5.3.1)
+2025-06-05 13:17:59 - Ligne 90: Catégorie 'Engins, moteurs et chaudières en sylviculture' (ID: D0.2.5.3.2)
+2025-06-05 13:17:59 - Ligne 91: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 92: Catégorie 'sous-total Transport routier' (ID: D0.2.6.1)
+2025-06-05 13:17:59 - Ligne 93: Catégorie 'sous-total Autres transports' (ID: D0.2.6.2)
+2025-06-05 13:17:59 - Ligne 94: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 95: Catégorie 'VP' (ID: D0.2.6.1.1)
+2025-06-05 13:17:59 - Ligne 96: Catégorie 'VUL' (ID: D0.2.6.1.2)
+2025-06-05 13:17:59 - Ligne 97: Catégorie 'PL de marchandises' (ID: D0.2.6.1.3)
+2025-06-05 13:17:59 - Ligne 98: Catégorie 'Bus et cars' (ID: D0.2.6.1.4)
+2025-06-05 13:17:59 - Ligne 99: Catégorie 'Deux roues' (ID: D0.2.6.1.5)
+2025-06-05 13:17:59 - Ligne 100: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 101: Catégorie 'VP diesel' (ID: D0.2.6.1.1.1)
+2025-06-05 13:17:59 - Ligne 102: Catégorie 'VP essence' (ID: D0.2.6.1.1.2)
+2025-06-05 13:17:59 - Ligne 103: Catégorie 'VP GPL' (ID: D0.2.6.1.1.3)
+2025-06-05 13:17:59 - Ligne 104: Catégorie 'VP GNV' (ID: D0.2.6.1.1.4)
+2025-06-05 13:17:59 - Ligne 105: Catégorie 'VP électriques' (ID: D0.2.6.1.1.5)
+2025-06-05 13:17:59 - Ligne 106: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 107: Catégorie 'VUL diesel' (ID: D0.2.6.1.2.1)
+2025-06-05 13:17:59 - Ligne 108: Catégorie 'VUL essence' (ID: D0.2.6.1.2.2)
+2025-06-05 13:17:59 - Ligne 109: Catégorie 'VUL GPL' (ID: D0.2.6.1.2.3)
+2025-06-05 13:17:59 - Ligne 110: Catégorie 'VUL GNV' (ID: D0.2.6.1.2.4)
+2025-06-05 13:17:59 - Ligne 111: Catégorie 'VUL électriques' (ID: D0.2.6.1.2.5)
+2025-06-05 13:17:59 - Ligne 112: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 113: Catégorie 'PL de marchandises diesel' (ID: D0.2.6.1.3.1)
+2025-06-05 13:17:59 - Ligne 114: Catégorie 'PL de marchandises essence' (ID: D0.2.6.1.3.2)
+2025-06-05 13:17:59 - Ligne 115: Catégorie 'PL de marchandises GNV' (ID: D0.2.6.1.3.3)
+2025-06-05 13:17:59 - Ligne 116: Catégorie 'PL de marchandises électriques' (ID: D0.2.6.1.3.4)
+2025-06-05 13:17:59 - Ligne 117: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 118: Catégorie 'Bus et cars diesel' (ID: D0.2.6.1.4.1)
+2025-06-05 13:17:59 - Ligne 119: Catégorie 'Bus et cars essence' (ID: D0.2.6.1.4.2)
+2025-06-05 13:17:59 - Ligne 120: Catégorie 'Bus et cars GNV' (ID: D0.2.6.1.4.3)
+2025-06-05 13:17:59 - Ligne 121: Catégorie 'Bus et cars électriques' (ID: D0.2.6.1.4.4)
+2025-06-05 13:17:59 - Ligne 122: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 123: Catégorie 'Deux roues essence' (ID: D0.2.6.1.5.1)
+2025-06-05 13:17:59 - Ligne 124: Catégorie 'Deux roues diesel' (ID: D0.2.6.1.5.2)
+2025-06-05 13:17:59 - Ligne 125: Catégorie 'Deux roues électriques' (ID: D0.2.6.1.5.3)
+2025-06-05 13:17:59 - Ligne 126: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 127: Catégorie 'Transport ferroviaire' (ID: D0.2.6.2.1)
+2025-06-05 13:17:59 - Ligne 128: Catégorie 'Transport fluvial de marchandises' (ID: D0.2.6.2.2)
+2025-06-05 13:17:59 - Ligne 129: Catégorie 'Transport maritime domestique' (ID: D0.2.6.2.3)
+2025-06-05 13:17:59 - Ligne 130: Catégorie 'Transport autres navigations' (ID: D0.2.6.2.4)
+2025-06-05 13:17:59 - Ligne 131: Catégorie 'Transport aérien français' (ID: D0.2.6.2.5)
+2025-06-05 13:17:59 - Ligne 132: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 133: Catégorie 'Forêts' (ID: D0.2.7.1)
+2025-06-05 13:17:59 - Ligne 134: Catégorie 'Terres cultivées' (ID: D0.2.7.2)
+2025-06-05 13:17:59 - Ligne 135: Catégorie 'Prairies' (ID: D0.2.7.3)
+2025-06-05 13:17:59 - Ligne 136: Catégorie 'Zones humides' (ID: D0.2.7.4)
+2025-06-05 13:17:59 - Ligne 137: Catégorie 'Zones artificialisées' (ID: D0.2.7.5)
+2025-06-05 13:17:59 - Ligne 138: Catégorie 'Autres terres' (ID: D0.2.7.6)
+2025-06-05 13:17:59 - Ligne 139: Catégorie 'Produits bois' (ID: D0.2.7.7)
+2025-06-05 13:17:59 - Ligne 140: Catégorie 'Barrages' (ID: D0.2.7.8)
+2025-06-05 13:17:59 - Ligne 141: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 142: Catégorie 'Transports - hors total' (ID: D0.2.8.1)
+2025-06-05 13:17:59 - Ligne 143: Catégorie 'Emissions naturelles' (ID: D0.2.8.2)
+2025-06-05 13:17:59 - Ligne 144: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 145: Catégorie 'Transport fluvial international - hors total national' (ID: D0.2.8.1.1)
+2025-06-05 13:17:59 - Ligne 146: Catégorie 'Transport maritime international - hors total national' (ID: D0.2.8.1.2)
+2025-06-05 13:17:59 - Ligne 147: Catégorie 'Transport aérien international - hors total national' (ID: D0.2.8.1.3)
+2025-06-05 13:17:59 - Ligne 148: Catégorie 'Autres engins hors total national' (ID: D0.2.8.1.4)
+2025-06-05 13:17:59 - Ligne 149: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 150: Catégorie 'Végétation (dont polluants des feux de forêt)' (ID: D0.2.8.2.1)
+2025-06-05 13:17:59 - Ligne 151: Catégorie 'Eaux' (ID: D0.2.8.2.2)
+2025-06-05 13:17:59 - Ligne 152: Catégorie 'Autres émissions naturelles (volcans, foudre…)' (ID: D0.2.8.2.3)
+2025-06-05 13:17:59 - Ligne 153: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 154: Catégorie 'CMS sauf lignite' (ID: D0.3.1.1)
+2025-06-05 13:17:59 - Ligne 155: Catégorie 'Lignite' (ID: D0.3.1.2)
+2025-06-05 13:17:59 - Ligne 156: Catégorie 'Bois' (ID: D0.3.1.3)
+2025-06-05 13:17:59 - Ligne 157: Catégorie 'Déchets industriels solides' (ID: D0.3.1.4)
+2025-06-05 13:17:59 - Ligne 158: Catégorie 'Déchets municipaux organiques' (ID: D0.3.1.5)
+2025-06-05 13:17:59 - Ligne 159: Catégorie 'Déchets municipaux  fossiles' (ID: D0.3.1.6)
+2025-06-05 13:17:59 - Ligne 160: Catégorie 'Ordures ménagères' (ID: D0.3.1.7)
+2025-06-05 13:17:59 - Ligne 161: Catégorie 'Autres combustibles solides' (ID: D0.3.1.8)
+2025-06-05 13:17:59 - Ligne 162: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 163: Catégorie 'Coke de pétrole' (ID: D0.3.2.1)
+2025-06-05 13:17:59 - Ligne 164: Catégorie 'Fioul lourd' (ID: D0.3.2.2)
+2025-06-05 13:17:59 - Ligne 165: Catégorie 'Fioul domestique' (ID: D0.3.2.3)
+2025-06-05 13:17:59 - Ligne 166: Catégorie 'Essence / super' (ID: D0.3.2.4)
+2025-06-05 13:17:59 - Ligne 167: Catégorie 'Gazole et GNR' (ID: D0.3.2.5)
+2025-06-05 13:17:59 - Ligne 168: Catégorie 'Carburéacteurs' (ID: D0.3.2.6)
+2025-06-05 13:17:59 - Ligne 169: Catégorie 'Huiles et solvants usagés' (ID: D0.3.2.7)
+2025-06-05 13:17:59 - Ligne 170: Catégorie 'Autres produits pétroliers' (ID: D0.3.2.8)
+2025-06-05 13:17:59 - Ligne 171: Catégorie 'Liqueurs noires' (ID: D0.3.2.9)
+2025-06-05 13:17:59 - Ligne 172: Catégorie 'Autres combustibles liquides' (ID: D0.3.2.10)
+2025-06-05 13:17:59 - Ligne 173: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 174: Catégorie 'Gaz naturel et GNV' (ID: D0.3.3.1)
+2025-06-05 13:17:59 - Ligne 175: Catégorie 'GPL et GPLc' (ID: D0.3.3.2)
+2025-06-05 13:17:59 - Ligne 176: Catégorie 'Gaz de cokerie' (ID: D0.3.3.3)
+2025-06-05 13:17:59 - Ligne 177: Catégorie 'Gaz de haut-fourneau' (ID: D0.3.3.4)
+2025-06-05 13:17:59 - Ligne 178: Catégorie 'Gaz industriels' (ID: D0.3.3.5)
+2025-06-05 13:17:59 - Ligne 179: Catégorie 'Gaz de raffinerie' (ID: D0.3.3.6)
+2025-06-05 13:17:59 - Ligne 180: Catégorie 'Biogaz' (ID: D0.3.3.7)
+2025-06-05 13:17:59 - Ligne 181: Catégorie 'Autres combustibles gazeux' (ID: D0.3.3.8)
+2025-06-05 13:17:59 - Ligne 182: Pas d'ID externe, ignorée
+2025-06-05 13:17:59 - Ligne 183: Catégorie 'Agro-carburant essence' (ID: D0.3.4.1)
+2025-06-05 13:17:59 - Ligne 184: Catégorie 'Agro-carburant diesel' (ID: D0.3.4.2)
+2025-06-05 13:17:59 - Ligne 185: Catégorie 'Agro-carburant Kérozène' (ID: D0.3.4.3)
+2025-06-05 13:17:59 - Ligne 186: Catégorie 'Agro-carburant fioul domestique' (ID: D0.3.4.4)
+2025-06-05 13:17:59 - Ligne 187: Catégorie 'Autres produits de la biomasse' (ID: D0.3.4.5)
+2025-06-05 13:17:59 - Analyse terminée:
+2025-06-05 13:17:59 - - 185 lignes traitées
+2025-06-05 13:17:59 - - 156 éléments extraits
+2025-06-05 13:17:59 - Exemple #1: {"externalId":"D0","name":"Emissions GES","parentId":null,"isSection":false,"source":"CITEPA","link":"https:\/\/www.citepa.org\/donnees-air-climat\/donnees-gaz-a-effet-de-serre\/secten\/","geography":"France","geographyId":"G0","unit":"Mt CO2e","isSummable":false,"years":{"1990":521.2052040272719,"1991":546.7229882421835,"1992":537.5784522771797,"1993":511.75165590828766,"1994":505.70880117165893,"1995":508.53456694100873,"1996":519.1622015857834,"1997":510.1717702707568,"1998":520.9909133404635,"1999":511.2186940613546,"2000":522.0240041214378,"2001":512.7700672607588,"2002":496.77377374414243,"2003":496.4206656773596,"2004":494.43727511623393,"2005":496.9119714192918,"2006":486.97958185679533,"2007":481.27074910255067,"2008":477.0095769821024,"2009":467.5958551018564,"2010":469.5096868217831,"2011":443.66273741851353,"2012":441.70082061650373,"2013":436.36601986754584,"2014":410.25545241565914,"2015":417.25886245249205,"2016":425.29727273117834,"2017":438.7437841211195,"2018":414.7101024975848,"2019":410.3951090403157,"2020":368.1321814835017,"2021":392.5802676729246,"2022":377.173993038191,"2023":352.2112217686705}}
+2025-06-05 13:17:59 - Exemple #2: {"externalId":"D0.1","name":"par gaz \u00e0 effet de serre","parentId":"D0","isSection":true,"source":"CITEPA","link":"https:\/\/www.citepa.org\/donnees-air-climat\/donnees-gaz-a-effet-de-serre\/secten\/","geography":"France","geographyId":"G0","unit":"Mt CO2e","isSummable":false,"years":[]}
+2025-06-05 13:17:59 - Exemple #3: {"externalId":"D0.2","name":"par secteur","parentId":"D0","isSection":true,"source":"CITEPA","link":"https:\/\/www.citepa.org\/donnees-air-climat\/donnees-gaz-a-effet-de-serre\/secten\/","geography":"France","geographyId":"G0","unit":"Mt CO2e","isSummable":false,"years":[]}
+2025-06-05 13:17:59 - Début de l'importation - 156 thèmes à importer
+2025-06-05 13:18:02 - Thèmes enregistrés: 0 créés, 156 mis à jour
+2025-06-05 13:18:02 - Relations parent-enfant établies
+2025-06-05 13:18:11 - Importation terminée: 5202 valeurs créées
+2025-06-05 13:20:29 - Début de l'analyse du fichier: .\var\import-data\Z_CITEPA_emissions_GES_structure_1.4_v4.xlsx
+2025-06-05 13:20:30 - Feuille active: Z_CITEPA_emissions_GES_structur
+2025-06-05 13:20:30 - En-têtes détectés: {"A":"Categorie","B":"Categorie_id","C":"Data \/ Section","D":"Source","E":"Lien","F":"G\u00e9ographie","G":"G\u00e9ographie_id","H":"Unit\u00e9","I":"Data sommables \/ ratio","J":1990,"K":1991,"L":1992,"M":1993,"N":1994,"O":1995,"P":1996,"Q":1997,"R":1998,"S":1999,"T":2000,"U":2001,"V":2002,"W":2003,"X":2004,"Y":2005,"Z":2006,"AA":2007,"AB":2008,"AC":2009,"AD":2010,"AE":2011,"AF":2012,"AG":2013,"AH":2014,"AI":2015,"AJ":2016,"AK":2017,"AL":2018,"AM":2019,"AN":2020,"AO":2021,"AP":2022,"AQ":2023}
+2025-06-05 13:20:30 - Détection des colonnes d'années...
+2025-06-05 13:20:30 - Colonne J: année 1990 détectée
+2025-06-05 13:20:30 - Colonne K: année 1991 détectée
+2025-06-05 13:20:30 - Colonne L: année 1992 détectée
+2025-06-05 13:20:30 - Colonne M: année 1993 détectée
+2025-06-05 13:20:30 - Colonne N: année 1994 détectée
+2025-06-05 13:20:30 - Colonne O: année 1995 détectée
+2025-06-05 13:20:30 - Colonne P: année 1996 détectée
+2025-06-05 13:20:30 - Colonne Q: année 1997 détectée
+2025-06-05 13:20:30 - Colonne R: année 1998 détectée
+2025-06-05 13:20:30 - Colonne S: année 1999 détectée
+2025-06-05 13:20:30 - Colonne T: année 2000 détectée
+2025-06-05 13:20:30 - Colonne U: année 2001 détectée
+2025-06-05 13:20:30 - Colonne V: année 2002 détectée
+2025-06-05 13:20:30 - Colonne W: année 2003 détectée
+2025-06-05 13:20:30 - Colonne X: année 2004 détectée
+2025-06-05 13:20:30 - Colonne Y: année 2005 détectée
+2025-06-05 13:20:30 - Colonne Z: année 2006 détectée
+2025-06-05 13:20:30 - Colonne AA: année 2007 détectée
+2025-06-05 13:20:30 - Colonne AB: année 2008 détectée
+2025-06-05 13:20:30 - Colonne AC: année 2009 détectée
+2025-06-05 13:20:30 - Colonne AD: année 2010 détectée
+2025-06-05 13:20:30 - Colonne AE: année 2011 détectée
+2025-06-05 13:20:30 - Colonne AF: année 2012 détectée
+2025-06-05 13:20:30 - Colonne AG: année 2013 détectée
+2025-06-05 13:20:30 - Colonne AH: année 2014 détectée
+2025-06-05 13:20:30 - Colonne AI: année 2015 détectée
+2025-06-05 13:20:30 - Colonne AJ: année 2016 détectée
+2025-06-05 13:20:30 - Colonne AK: année 2017 détectée
+2025-06-05 13:20:30 - Colonne AL: année 2018 détectée
+2025-06-05 13:20:30 - Colonne AM: année 2019 détectée
+2025-06-05 13:20:30 - Colonne AN: année 2020 détectée
+2025-06-05 13:20:30 - Colonne AO: année 2021 détectée
+2025-06-05 13:20:30 - Colonne AP: année 2022 détectée
+2025-06-05 13:20:30 - Colonne AQ: année 2023 détectée
+2025-06-05 13:20:30 - Total années détectées: 34
+2025-06-05 13:20:30 - Mapping des colonnes: {"category":"A","externalId":"B","isData":"C","source":"D","link":"E","geography":"F","geographyId":"G","unit":"H","dataSum":"I","yearColumns":{"J":1990,"K":1991,"L":1992,"M":1993,"N":1994,"O":1995,"P":1996,"Q":1997,"R":1998,"S":1999,"T":2000,"U":2001,"V":2002,"W":2003,"X":2004,"Y":2005,"Z":2006,"AA":2007,"AB":2008,"AC":2009,"AD":2010,"AE":2011,"AF":2012,"AG":2013,"AH":2014,"AI":2015,"AJ":2016,"AK":2017,"AL":2018,"AM":2019,"AN":2020,"AO":2021,"AP":2022,"AQ":2023}}
+2025-06-05 13:20:30 - Ligne 3: Catégorie 'Emissions GES' (ID: D0)
+2025-06-05 13:20:30 - Ligne 4: Catégorie 'par gaz à effet de serre' (ID: D0.1)
+2025-06-05 13:20:30 - Ligne 5: Catégorie 'par secteur' (ID: D0.2)
+2025-06-05 13:20:30 - Ligne 6: Catégorie 'par combustible' (ID: D0.3)
+2025-06-05 13:20:30 - Ligne 7: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 8: Catégorie 'Dioxyde de carbone - CO2' (ID: D0.1.1)
+2025-06-05 13:20:30 - Ligne 9: Catégorie 'Méthane - CH4' (ID: D0.1.2)
+2025-06-05 13:20:30 - Ligne 10: Catégorie 'Protoxydes d'azote - N2O' (ID: D0.1.3)
+2025-06-05 13:20:30 - Ligne 11: Catégorie 'Hydrofluorocarbures - HFC' (ID: D0.1.4)
+2025-06-05 13:20:30 - Ligne 12: Catégorie 'Perfluorocarbures - PFC' (ID: D0.1.5)
+2025-06-05 13:20:30 - Ligne 13: Catégorie 'Hexafluorure de soufre - SF6' (ID: D0.1.6)
+2025-06-05 13:20:30 - Ligne 14: Catégorie 'Trifluorure d'azote - NF3' (ID: D0.1.7)
+2025-06-05 13:20:30 - Ligne 15: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 16: Catégorie 'Industrie de l'énergie' (ID: D0.2.1)
+2025-06-05 13:20:30 - Ligne 17: Catégorie 'Industrie manufacturière et construction' (ID: D0.2.2)
+2025-06-05 13:20:30 - Ligne 18: Catégorie 'Traitement centralisé des déchets' (ID: D0.2.3)
+2025-06-05 13:20:30 - Ligne 19: Catégorie 'Usage des bâtiments et activités résidentiels/tertiaires' (ID: D0.2.4)
+2025-06-05 13:20:30 - Ligne 20: Catégorie 'Agriculture / sylviculture' (ID: D0.2.5)
+2025-06-05 13:20:30 - Ligne 21: Catégorie 'Transports' (ID: D0.2.6)
+2025-06-05 13:20:30 - Ligne 22: Catégorie 'UTCATF' (ID: D0.2.7)
+2025-06-05 13:20:30 - Ligne 23: Catégorie 'Hors total' (ID: D0.2.8)
+2025-06-05 13:20:30 - Ligne 24: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 25: Catégorie 'Combustibles solides' (ID: D0.3.1)
+2025-06-05 13:20:30 - Ligne 26: Catégorie 'Combustibles liquides' (ID: D0.3.2)
+2025-06-05 13:20:30 - Ligne 27: Catégorie 'Combustibles gazeux' (ID: D0.3.3)
+2025-06-05 13:20:30 - Ligne 28: Catégorie 'Agro-carburants et autres produits de la biomasse' (ID: D0.3.4)
+2025-06-05 13:20:30 - Ligne 29: Catégorie 'Emissions non liées aux combustibles - hors UTCATF' (ID: D0.3.5)
+2025-06-05 13:20:30 - Ligne 30: Catégorie 'UTCATF' (ID: D0.3.6)
+2025-06-05 13:20:30 - Ligne 31: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 32: Catégorie 'Production d'électricité' (ID: D0.2.1.1)
+2025-06-05 13:20:30 - Ligne 33: Catégorie 'Chauffage urbain' (ID: D0.2.1.2)
+2025-06-05 13:20:30 - Ligne 34: Catégorie 'Raffinage du pétrole' (ID: D0.2.1.3)
+2025-06-05 13:20:30 - Ligne 35: Catégorie 'Transformation des combustibles minéraux solides' (ID: D0.2.1.4)
+2025-06-05 13:20:30 - Ligne 36: Catégorie 'Extraction et distribution de combustibles solides' (ID: D0.2.1.5)
+2025-06-05 13:20:30 - Ligne 37: Catégorie 'Extraction et distribution de combustibles liquides' (ID: D0.2.1.6)
+2025-06-05 13:20:30 - Ligne 38: Catégorie 'Extraction et distribution de combustibles gazeux' (ID: D0.2.1.7)
+2025-06-05 13:20:30 - Ligne 39: Catégorie 'Fabrication de charbon de bois par pyrolyse' (ID: D0.2.1.8)
+2025-06-05 13:20:30 - Ligne 40: Catégorie 'Valorisation énergétique des déchets' (ID: D0.2.1.9)
+2025-06-05 13:20:30 - Ligne 41: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 42: Catégorie 'Chimie' (ID: D0.2.2.1)
+2025-06-05 13:20:30 - Ligne 43: Catégorie 'Construction' (ID: D0.2.2.2)
+2025-06-05 13:20:30 - Ligne 44: Catégorie 'Biens d'équipements, matériels de transport' (ID: D0.2.2.3)
+2025-06-05 13:20:30 - Ligne 45: Catégorie 'Agro-alimentaire' (ID: D0.2.2.4)
+2025-06-05 13:20:30 - Ligne 46: Catégorie 'Métallurgie des métaux ferreux' (ID: D0.2.2.5)
+2025-06-05 13:20:30 - Ligne 47: Catégorie 'Métallurgie des métaux non-ferreux' (ID: D0.2.2.6)
+2025-06-05 13:20:30 - Ligne 48: Catégorie 'Minéraux non-métalliques, matériaux de construction' (ID: D0.2.2.7)
+2025-06-05 13:20:30 - Ligne 49: Catégorie 'Papier, carton' (ID: D0.2.2.8)
+2025-06-05 13:20:30 - Ligne 50: Catégorie 'Autres industries manufacturières' (ID: D0.2.2.9)
+2025-06-05 13:20:30 - Ligne 51: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 52: Catégorie 'Stockage des déchets' (ID: D0.2.3.1)
+2025-06-05 13:20:30 - Ligne 53: Catégorie 'Incinération sans récupération d'énergie' (ID: D0.2.3.2)
+2025-06-05 13:20:30 - Ligne 54: Catégorie 'Autres traitements des déchets solides' (ID: D0.2.3.3)
+2025-06-05 13:20:30 - Ligne 55: Catégorie 'Traitement des eaux usées' (ID: D0.2.3.4)
+2025-06-05 13:20:30 - Ligne 56: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 57: Catégorie 'sous-total Usage des bâtiments résidentiels et activités domestiques' (ID: D0.2.4.1)
+2025-06-05 13:20:30 - Ligne 58: Catégorie 'sous-total Usage des bâtiments tertiaires et activités tertiaires' (ID: D0.2.4.2)
+2025-06-05 13:20:30 - Ligne 59: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 60: Catégorie 'Chauffage, eau chaude sanitaire et cuisson domestique' (ID: D0.2.4.1.1)
+2025-06-05 13:20:30 - Ligne 61: Catégorie 'Climatisation domestique' (ID: D0.2.4.1.2)
+2025-06-05 13:20:30 - Ligne 62: Catégorie 'Réfrigération domestique' (ID: D0.2.4.1.3)
+2025-06-05 13:20:30 - Ligne 63: Catégorie 'Utilisation de produits domestiques (y.c. peintures, aérosols)' (ID: D0.2.4.1.4)
+2025-06-05 13:20:30 - Ligne 64: Catégorie 'Engins (y.c. jardinage) domestiques' (ID: D0.2.4.1.5)
+2025-06-05 13:20:30 - Ligne 65: Catégorie 'Déchets et brûlage domestiques et eaux usées' (ID: D0.2.4.1.6)
+2025-06-05 13:20:30 - Ligne 66: Catégorie 'Autres activités domestiques (tabac et feux d’artifices)' (ID: D0.2.4.1.7)
+2025-06-05 13:20:30 - Ligne 67: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 68: Catégorie 'Chauffage, eau chaude sanitaire et cuisson tertiaire' (ID: D0.2.4.2.1)
+2025-06-05 13:20:30 - Ligne 69: Catégorie 'Climatisation tertiaire' (ID: D0.2.4.2.2)
+2025-06-05 13:20:30 - Ligne 70: Catégorie 'Réfrigération tertiaire' (ID: D0.2.4.2.3)
+2025-06-05 13:20:30 - Ligne 71: Catégorie 'Utilisation de produits tertiaires (y.c. solvants, peintures, aérosols, anesthésie)' (ID: D0.2.4.2.4)
+2025-06-05 13:20:30 - Ligne 72: Catégorie 'Autres activités tertiaires (y.c. feux d’artifices, activités militaires, crémation)' (ID: D0.2.4.2.5)
+2025-06-05 13:20:30 - Ligne 73: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 74: Catégorie 'sous-total Elevage' (ID: D0.2.5.1)
+2025-06-05 13:20:30 - Ligne 75: Catégorie 'sous-total  Culture' (ID: D0.2.5.2)
+2025-06-05 13:20:30 - Ligne 76: Catégorie 'sous-total  Engins, moteurs et chaudières' (ID: D0.2.5.3)
+2025-06-05 13:20:30 - Ligne 77: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 78: Catégorie 'Bovins' (ID: D0.2.5.1.1)
+2025-06-05 13:20:30 - Ligne 79: Catégorie 'Porcins' (ID: D0.2.5.1.2)
+2025-06-05 13:20:30 - Ligne 80: Catégorie 'Volailles' (ID: D0.2.5.1.3)
+2025-06-05 13:20:30 - Ligne 81: Catégorie 'Autres émissions de l'élevage' (ID: D0.2.5.1.4)
+2025-06-05 13:20:30 - Ligne 82: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 83: Catégorie 'Engrais et amendements minéraux' (ID: D0.2.5.2.1)
+2025-06-05 13:20:30 - Ligne 84: Catégorie 'Engrais et amendements organiques' (ID: D0.2.5.2.2)
+2025-06-05 13:20:30 - Ligne 85: Catégorie 'Pâture' (ID: D0.2.5.2.3)
+2025-06-05 13:20:30 - Ligne 86: Catégorie 'Brûlage de résidus agricoles' (ID: D0.2.5.2.4)
+2025-06-05 13:20:30 - Ligne 87: Catégorie 'Autres émissions des cultures' (ID: D0.2.5.2.5)
+2025-06-05 13:20:30 - Ligne 88: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 89: Catégorie 'Engins, moteurs et chaudières en agriculture' (ID: D0.2.5.3.1)
+2025-06-05 13:20:30 - Ligne 90: Catégorie 'Engins, moteurs et chaudières en sylviculture' (ID: D0.2.5.3.2)
+2025-06-05 13:20:30 - Ligne 91: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 92: Catégorie 'sous-total Transport routier' (ID: D0.2.6.1)
+2025-06-05 13:20:30 - Ligne 93: Catégorie 'sous-total Autres transports' (ID: D0.2.6.2)
+2025-06-05 13:20:30 - Ligne 94: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 95: Catégorie 'VP' (ID: D0.2.6.1.1)
+2025-06-05 13:20:30 - Ligne 96: Catégorie 'VUL' (ID: D0.2.6.1.2)
+2025-06-05 13:20:30 - Ligne 97: Catégorie 'PL de marchandises' (ID: D0.2.6.1.3)
+2025-06-05 13:20:30 - Ligne 98: Catégorie 'Bus et cars' (ID: D0.2.6.1.4)
+2025-06-05 13:20:30 - Ligne 99: Catégorie 'Deux roues' (ID: D0.2.6.1.5)
+2025-06-05 13:20:30 - Ligne 100: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 101: Catégorie 'VP diesel' (ID: D0.2.6.1.1.1)
+2025-06-05 13:20:30 - Ligne 102: Catégorie 'VP essence' (ID: D0.2.6.1.1.2)
+2025-06-05 13:20:30 - Ligne 103: Catégorie 'VP GPL' (ID: D0.2.6.1.1.3)
+2025-06-05 13:20:30 - Ligne 104: Catégorie 'VP GNV' (ID: D0.2.6.1.1.4)
+2025-06-05 13:20:30 - Ligne 105: Catégorie 'VP électriques' (ID: D0.2.6.1.1.5)
+2025-06-05 13:20:30 - Ligne 106: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 107: Catégorie 'VUL diesel' (ID: D0.2.6.1.2.1)
+2025-06-05 13:20:30 - Ligne 108: Catégorie 'VUL essence' (ID: D0.2.6.1.2.2)
+2025-06-05 13:20:30 - Ligne 109: Catégorie 'VUL GPL' (ID: D0.2.6.1.2.3)
+2025-06-05 13:20:30 - Ligne 110: Catégorie 'VUL GNV' (ID: D0.2.6.1.2.4)
+2025-06-05 13:20:30 - Ligne 111: Catégorie 'VUL électriques' (ID: D0.2.6.1.2.5)
+2025-06-05 13:20:30 - Ligne 112: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 113: Catégorie 'PL de marchandises diesel' (ID: D0.2.6.1.3.1)
+2025-06-05 13:20:30 - Ligne 114: Catégorie 'PL de marchandises essence' (ID: D0.2.6.1.3.2)
+2025-06-05 13:20:30 - Ligne 115: Catégorie 'PL de marchandises GNV' (ID: D0.2.6.1.3.3)
+2025-06-05 13:20:30 - Ligne 116: Catégorie 'PL de marchandises électriques' (ID: D0.2.6.1.3.4)
+2025-06-05 13:20:30 - Ligne 117: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 118: Catégorie 'Bus et cars diesel' (ID: D0.2.6.1.4.1)
+2025-06-05 13:20:30 - Ligne 119: Catégorie 'Bus et cars essence' (ID: D0.2.6.1.4.2)
+2025-06-05 13:20:30 - Ligne 120: Catégorie 'Bus et cars GNV' (ID: D0.2.6.1.4.3)
+2025-06-05 13:20:30 - Ligne 121: Catégorie 'Bus et cars électriques' (ID: D0.2.6.1.4.4)
+2025-06-05 13:20:30 - Ligne 122: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 123: Catégorie 'Deux roues essence' (ID: D0.2.6.1.5.1)
+2025-06-05 13:20:30 - Ligne 124: Catégorie 'Deux roues diesel' (ID: D0.2.6.1.5.2)
+2025-06-05 13:20:30 - Ligne 125: Catégorie 'Deux roues électriques' (ID: D0.2.6.1.5.3)
+2025-06-05 13:20:30 - Ligne 126: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 127: Catégorie 'Transport ferroviaire' (ID: D0.2.6.2.1)
+2025-06-05 13:20:30 - Ligne 128: Catégorie 'Transport fluvial de marchandises' (ID: D0.2.6.2.2)
+2025-06-05 13:20:30 - Ligne 129: Catégorie 'Transport maritime domestique' (ID: D0.2.6.2.3)
+2025-06-05 13:20:30 - Ligne 130: Catégorie 'Transport autres navigations' (ID: D0.2.6.2.4)
+2025-06-05 13:20:30 - Ligne 131: Catégorie 'Transport aérien français' (ID: D0.2.6.2.5)
+2025-06-05 13:20:30 - Ligne 132: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 133: Catégorie 'Forêts' (ID: D0.2.7.1)
+2025-06-05 13:20:30 - Ligne 134: Catégorie 'Terres cultivées' (ID: D0.2.7.2)
+2025-06-05 13:20:30 - Ligne 135: Catégorie 'Prairies' (ID: D0.2.7.3)
+2025-06-05 13:20:30 - Ligne 136: Catégorie 'Zones humides' (ID: D0.2.7.4)
+2025-06-05 13:20:30 - Ligne 137: Catégorie 'Zones artificialisées' (ID: D0.2.7.5)
+2025-06-05 13:20:30 - Ligne 138: Catégorie 'Autres terres' (ID: D0.2.7.6)
+2025-06-05 13:20:30 - Ligne 139: Catégorie 'Produits bois' (ID: D0.2.7.7)
+2025-06-05 13:20:30 - Ligne 140: Catégorie 'Barrages' (ID: D0.2.7.8)
+2025-06-05 13:20:30 - Ligne 141: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 142: Catégorie 'Transports - hors total' (ID: D0.2.8.1)
+2025-06-05 13:20:30 - Ligne 143: Catégorie 'Emissions naturelles' (ID: D0.2.8.2)
+2025-06-05 13:20:30 - Ligne 144: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 145: Catégorie 'Transport fluvial international - hors total national' (ID: D0.2.8.1.1)
+2025-06-05 13:20:30 - Ligne 146: Catégorie 'Transport maritime international - hors total national' (ID: D0.2.8.1.2)
+2025-06-05 13:20:30 - Ligne 147: Catégorie 'Transport aérien international - hors total national' (ID: D0.2.8.1.3)
+2025-06-05 13:20:30 - Ligne 148: Catégorie 'Autres engins hors total national' (ID: D0.2.8.1.4)
+2025-06-05 13:20:30 - Ligne 149: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 150: Catégorie 'Végétation (dont polluants des feux de forêt)' (ID: D0.2.8.2.1)
+2025-06-05 13:20:30 - Ligne 151: Catégorie 'Eaux' (ID: D0.2.8.2.2)
+2025-06-05 13:20:30 - Ligne 152: Catégorie 'Autres émissions naturelles (volcans, foudre…)' (ID: D0.2.8.2.3)
+2025-06-05 13:20:30 - Ligne 153: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 154: Catégorie 'CMS sauf lignite' (ID: D0.3.1.1)
+2025-06-05 13:20:30 - Ligne 155: Catégorie 'Lignite' (ID: D0.3.1.2)
+2025-06-05 13:20:30 - Ligne 156: Catégorie 'Bois' (ID: D0.3.1.3)
+2025-06-05 13:20:30 - Ligne 157: Catégorie 'Déchets industriels solides' (ID: D0.3.1.4)
+2025-06-05 13:20:30 - Ligne 158: Catégorie 'Déchets municipaux organiques' (ID: D0.3.1.5)
+2025-06-05 13:20:30 - Ligne 159: Catégorie 'Déchets municipaux  fossiles' (ID: D0.3.1.6)
+2025-06-05 13:20:30 - Ligne 160: Catégorie 'Ordures ménagères' (ID: D0.3.1.7)
+2025-06-05 13:20:30 - Ligne 161: Catégorie 'Autres combustibles solides' (ID: D0.3.1.8)
+2025-06-05 13:20:30 - Ligne 162: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 163: Catégorie 'Coke de pétrole' (ID: D0.3.2.1)
+2025-06-05 13:20:30 - Ligne 164: Catégorie 'Fioul lourd' (ID: D0.3.2.2)
+2025-06-05 13:20:30 - Ligne 165: Catégorie 'Fioul domestique' (ID: D0.3.2.3)
+2025-06-05 13:20:30 - Ligne 166: Catégorie 'Essence / super' (ID: D0.3.2.4)
+2025-06-05 13:20:30 - Ligne 167: Catégorie 'Gazole et GNR' (ID: D0.3.2.5)
+2025-06-05 13:20:30 - Ligne 168: Catégorie 'Carburéacteurs' (ID: D0.3.2.6)
+2025-06-05 13:20:30 - Ligne 169: Catégorie 'Huiles et solvants usagés' (ID: D0.3.2.7)
+2025-06-05 13:20:30 - Ligne 170: Catégorie 'Autres produits pétroliers' (ID: D0.3.2.8)
+2025-06-05 13:20:30 - Ligne 171: Catégorie 'Liqueurs noires' (ID: D0.3.2.9)
+2025-06-05 13:20:30 - Ligne 172: Catégorie 'Autres combustibles liquides' (ID: D0.3.2.10)
+2025-06-05 13:20:30 - Ligne 173: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 174: Catégorie 'Gaz naturel et GNV' (ID: D0.3.3.1)
+2025-06-05 13:20:30 - Ligne 175: Catégorie 'GPL et GPLc' (ID: D0.3.3.2)
+2025-06-05 13:20:30 - Ligne 176: Catégorie 'Gaz de cokerie' (ID: D0.3.3.3)
+2025-06-05 13:20:30 - Ligne 177: Catégorie 'Gaz de haut-fourneau' (ID: D0.3.3.4)
+2025-06-05 13:20:30 - Ligne 178: Catégorie 'Gaz industriels' (ID: D0.3.3.5)
+2025-06-05 13:20:30 - Ligne 179: Catégorie 'Gaz de raffinerie' (ID: D0.3.3.6)
+2025-06-05 13:20:30 - Ligne 180: Catégorie 'Biogaz' (ID: D0.3.3.7)
+2025-06-05 13:20:30 - Ligne 181: Catégorie 'Autres combustibles gazeux' (ID: D0.3.3.8)
+2025-06-05 13:20:30 - Ligne 182: Pas d'ID externe, ignorée
+2025-06-05 13:20:30 - Ligne 183: Catégorie 'Agro-carburant essence' (ID: D0.3.4.1)
+2025-06-05 13:20:30 - Ligne 184: Catégorie 'Agro-carburant diesel' (ID: D0.3.4.2)
+2025-06-05 13:20:30 - Ligne 185: Catégorie 'Agro-carburant Kérozène' (ID: D0.3.4.3)
+2025-06-05 13:20:30 - Ligne 186: Catégorie 'Agro-carburant fioul domestique' (ID: D0.3.4.4)
+2025-06-05 13:20:30 - Ligne 187: Catégorie 'Autres produits de la biomasse' (ID: D0.3.4.5)
+2025-06-05 13:20:30 - Analyse terminée:
+2025-06-05 13:20:30 - - 185 lignes traitées
+2025-06-05 13:20:30 - - 156 éléments extraits
+2025-06-05 13:20:30 - Exemple #1: {"externalId":"D0","name":"Emissions GES","parentId":null,"isSection":false,"source":"CITEPA","link":"https:\/\/www.citepa.org\/donnees-air-climat\/donnees-gaz-a-effet-de-serre\/secten\/","geography":"France","geographyId":"G0","unit":"Mt CO2e","isSummable":false,"years":{"1990":521.2052040272719,"1991":546.7229882421835,"1992":537.5784522771797,"1993":511.75165590828766,"1994":505.70880117165893,"1995":508.53456694100873,"1996":519.1622015857834,"1997":510.1717702707568,"1998":520.9909133404635,"1999":511.2186940613546,"2000":522.0240041214378,"2001":512.7700672607588,"2002":496.77377374414243,"2003":496.4206656773596,"2004":494.43727511623393,"2005":496.9119714192918,"2006":486.97958185679533,"2007":481.27074910255067,"2008":477.0095769821024,"2009":467.5958551018564,"2010":469.5096868217831,"2011":443.66273741851353,"2012":441.70082061650373,"2013":436.36601986754584,"2014":410.25545241565914,"2015":417.25886245249205,"2016":425.29727273117834,"2017":438.7437841211195,"2018":414.7101024975848,"2019":410.3951090403157,"2020":368.1321814835017,"2021":392.5802676729246,"2022":377.173993038191,"2023":352.2112217686705}}
+2025-06-05 13:20:30 - Exemple #2: {"externalId":"D0.1","name":"par gaz \u00e0 effet de serre","parentId":"D0","isSection":true,"source":"CITEPA","link":"https:\/\/www.citepa.org\/donnees-air-climat\/donnees-gaz-a-effet-de-serre\/secten\/","geography":"France","geographyId":"G0","unit":"Mt CO2e","isSummable":false,"years":[]}
+2025-06-05 13:20:30 - Exemple #3: {"externalId":"D0.2","name":"par secteur","parentId":"D0","isSection":true,"source":"CITEPA","link":"https:\/\/www.citepa.org\/donnees-air-climat\/donnees-gaz-a-effet-de-serre\/secten\/","geography":"France","geographyId":"G0","unit":"Mt CO2e","isSummable":false,"years":[]}
+2025-06-05 13:20:30 - Début de l'importation - 156 thèmes à importer
+2025-06-05 13:20:30 - Thèmes enregistrés: 156 créés, 0 mis à jour
+2025-06-05 13:20:30 - Relations parent-enfant établies
+2025-06-05 13:20:37 - Importation terminée: 5202 valeurs créées
