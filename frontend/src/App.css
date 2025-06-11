@@ -1,42 +1,58 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Patrick+Hand&display=swap");
+
+:root {
+  --bg-color-ligth: #ffffff;
+  --bg-color-dark: #edeff2;
+  --primary-color: #000000;
+  --dark-highligth-color: #091863;
+  --highligth-color: #061ea5;
+  --light-highligth-color: #d4dbff;
+  --hidden-color: #7b88a2;
+  --main-font: "Nunito", sans-serif;
+  --title-font: "Patrick Hand", cursive;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-color-ligth);
+  font-family: var(--main-font);
+  font-size: 1em;
+  color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+nav {
+  height: 15vh;
+  width: 100vw;
 }
 
-.card {
-  padding: 2em;
+main {
+  height: 70vh;
+  width: 100vw;
 }
 
-.read-the-docs {
-  color: #888;
+footer {
+  height: 15vh;
+  width: 100vw;
+}
+
+h1 {
+  font-family: var(--title-font);
+  font-size: 3em;
+  color: var(--primary-color);
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+}
+
+@media screen and (min-width: 1024px) {
 }

@@ -1,0 +1,27 @@
+.logo {
+  background-color: var(--bg-color-dark);
+  margin-bottom: 5px;
+  padding: 0.6em 2em;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 1em;
+}
+
+.country_box {
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 1em;
+  width: 75%;
+}
+
+.year_box {
+  border: 1px solid var(--highligth-color);
+  border-radius: 8px;
+  padding: 1em;
+  width: 20%;
+  color: var(--highligth-color);
+}
