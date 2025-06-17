@@ -1,0 +1,14 @@
+.tree_node {
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  background-color: var(--bg-color-ligth);
+}
+
+.linked_children {
+  margin: 10px 20px;
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}

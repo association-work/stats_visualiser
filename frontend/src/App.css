@@ -36,13 +36,21 @@ nav {
 }
 
 main {
-  height: 70vh;
+  height: 78vh;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 footer {
-  height: 15vh;
+  height: 7vh;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
