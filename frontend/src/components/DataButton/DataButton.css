@@ -1,12 +1,5 @@
-.last_node .tree_node {
+.tree_node {
+  border: 1px solid var(--highligth-color);
   border-radius: 8px;
   background-color: var(--bg-color-ligth);
-}
-
-.last_node {
-  border: 1px solid var(--highligth-color);
-}
-
-.tree_node {
-  border: 1px solid var(--primary-color);
 }

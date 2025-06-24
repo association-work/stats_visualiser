@@ -1,48 +1,45 @@
 .breadcrumbs {
-  height: 7vh;
-  width: 100vw;
+  height: 5vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  margin: 2vh 0 3vh;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .static_crumbs {
-  width: 94%;
+  background-color: var(--light-highligth-color);
+  color: var(--dark-highligth-color);
   display: flex;
-  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.234);
-  overflow: hidden;
-  border-radius: 0.3rem;
+  font-size: 14px;
+  position: relative;
 }
 
 .crumbs {
+  padding: 0 0 0 30px;
+  height: 5vh;
+  line-height: 46px;
+  border: none;
   background-color: var(--light-highligth-color);
-  color: var(--highligth-color);
-  outline: none;
-  padding: 0.75em 1.5em;
-  position: relative;
-  text-decoration: none;
-  transition: background 0.2s linear;
-  clip-path: polygon(90% 0%, 100% 50%, 90% 100%, 0% 100%, 10% 50%, 0% 0%);
-  width: 6em;
 }
 
 .crumbs:first-child {
-  clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0 100%, 0 49%, 0 0);
+  padding: 0 0 0 10px;
+  border-radius: 8px;
 }
 
-.crumbs:last-child {
-  background-color: var(--dark-highligth-color);
-  color: var(--bg-color-ligth);
+.crumbs::after {
+  content: "";
+  display: block;
+  width: 31px;
+  height: 31px;
+  transform: rotate(130deg) skew(-10deg);
+  float: right;
+  position: relative;
+  top: 7px;
+  left: 19px;
+  border-top: 3px solid var(--bg-color-ligth);
+  border-left: 3px solid var(--bg-color-ligth);
+  background-color: var(--light-highligth-color);
 }
-
-.crumbs:hover {
-  background: var(--highligth-color);
-}
-
-/* .crumbs:focus,
-.crumbs:focus,
-.crumbs:last-child:focus {
-  background: var(--dark-highligth-color);
-  color: var(--bg-color-ligth);
-} */

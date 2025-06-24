@@ -3,33 +3,25 @@ import type { branch } from "./../../types/dataTypes";
 
 interface DataButtonProps {
   information: branch;
-  hasChildren: boolean;
-  setHasChildren: (boolean: boolean) => void;
-  chosenPath: string[];
+  index: number;
+  handleChangedBranch: (index: number) => any;
 }
 
 export default function DataButton({
   information,
-  hasChildren,
-  setHasChildren,
-  chosenPath,
+  index,
+  handleChangedBranch,
 }: DataButtonProps) {
-  const isParent = (tree: branch) => {
-    if (tree.children) {
-      setHasChildren(true);
-      chosenPath.push(tree.name);
-    }
-  };
-
   return (
-    <>
-      <button
-        type="button"
-        className={hasChildren === false ? "last_node" : "tree_node"}
-        onClick={() => isParent(information)}
-      >
-        {information.name}
-      </button>
-    </>
+    <button
+      type="button"
+      className="tree_node"
+      key={index}
+      onClick={() => {
+        handleChangedBranch(index);
+      }}
+    >
+      {information.name}
+    </button>
   );
 }

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
-import DataTree from "./pages/DataTree/DataTree.tsx";
+import GlobalTree from "./pages/GlobalTree/GlobalTree.tsx";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <DataTree />,
+        element: <GlobalTree />,
       },
     ],
   },
