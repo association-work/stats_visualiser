@@ -8,27 +8,19 @@ import DataButton from "../../components/DataButton/DataButton";
 export default function GlobalTree() {
   const entireTree = BigData.themes[0];
 
-  const [chosenPath, setChosenPath] = useState<string[]>([
-    `${entireTree.name}`,
-  ]);
-  const [path, setPath] = useState("");
+  const [chosenPath, setChosenPath] = useState<branch[]>([entireTree]);
+
   const [currentBranch, setCurrentBranch] = useState<branch>(entireTree);
 
   const handleChangedBranch = (index: number) => {
-    setPath("");
-    currentBranch.children.map((kid, id) => {
+    currentBranch.children.forEach((kid, id) => {
       if (id === index) {
-        setPath(kid.name);
+        chosenPath.push(kid);
+        setChosenPath(chosenPath);
         setCurrentBranch(currentBranch.children[id]);
       }
     });
-    if (path !== "") {
-      chosenPath.push(path);
-      setChosenPath(chosenPath);
-    }
   };
-
-  console.log(currentBranch);
 
   return (
     <section className="global_tree">
@@ -50,7 +42,6 @@ export default function GlobalTree() {
         )}
       </article>
       <BreadCrumbs
-        entireTree={entireTree}
         chosenPath={chosenPath}
         setChosenPath={setChosenPath}
         setCurrentBranch={setCurrentBranch}

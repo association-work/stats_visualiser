@@ -2,42 +2,23 @@ import type { branch } from "../../types/dataTypes";
 import "./BreadCrumbs.css";
 
 interface BreadCrumbsProps {
-  chosenPath: string[];
-  setChosenPath: any;
-  setCurrentBranch: any;
-  entireTree: branch;
+  chosenPath: branch[];
+  setChosenPath: any; // temporaire : à retrouver correctement
+  setCurrentBranch: any; // temporaire : à retrouver correctement
 }
 
 export default function BreadCrumbs({
   chosenPath,
   setChosenPath,
   setCurrentBranch,
-  entireTree,
 }: BreadCrumbsProps) {
   const handleRewindBranch = (index: number) => {
-    chosenPath.map((choice, id) => {
+    chosenPath.forEach((choice, id) => {
       if (id === index) {
-        if (id === 0) {
-          setCurrentBranch(entireTree);
-          setChosenPath([`${entireTree.name}`]);
-        }
-        // function isName(data: branch) {
-        //   return data.name === choice;
-        // }
-        // if (id === 1) {
-        //   setCurrentBranch(entireTree.children.find(isName));
-        // }
-        // if (id === 2) {
-        //   for (let i = 0; i < entireTree.children.length; i++) {
-        //     for (let j = 0; j < entireTree.children[i].children.length; j++) {
-        //       setCurrentBranch(entireTree.children[i].children.find(isName));
-        //     }
-        //   }
-        // }
+        setCurrentBranch(choice);
         let i = chosenPath.length - 1;
         while (i > id) {
           chosenPath.pop();
-          console.log(chosenPath);
           i--;
         }
         setChosenPath(chosenPath);
@@ -55,7 +36,7 @@ export default function BreadCrumbs({
               key={index}
               onClick={() => handleRewindBranch(index)}
             >
-              {choice}
+              {choice.name.length < 15 ? choice.name : choice.name.slice(0, 15)}
             </button>
           ))}
       </section>
