@@ -28,6 +28,9 @@ export default function GlobalTree() {
         <button type="button" className="branch_title">
           {currentBranch.name}
         </button>
+        {/* <p className="branch_title">
+          {currentBranch.values} >> il manque le contexte pour le choix des dates.
+        </p> */}
         {currentBranch.children && (
           <article className="linked_children">
             {currentBranch.children.map((kid, index) => (

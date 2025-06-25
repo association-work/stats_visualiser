@@ -27,8 +27,20 @@
 }
 
 .crumbs:first-child {
-  padding: 0 0 0 10px;
+  padding: 0 0 0 15px;
   border-radius: 8px;
+  background-color: var(--bg-color-ligth);
+  color: var(--hidden-color);
+  border-top: 2px solid var(--hidden-color);
+  border-left: 2px solid var(--hidden-color);
+  border-bottom: 2px solid var(--hidden-color);
+}
+
+.crumbs:first-child::after {
+  background-color: var(--bg-color-ligth);
+  left: 13px;
+  border-top: 2px solid var(--hidden-color);
+  border-left: 2px solid var(--hidden-color);
 }
 
 .crumbs::after {

@@ -28,6 +28,7 @@ export default function BreadCrumbs({
   return (
     <aside className="breadcrumbs">
       <section className="static_crumbs">
+        <p className="crumbs">Environnement</p>
         {chosenPath.length > 0 &&
           chosenPath.map((choice, index) => (
             <button
