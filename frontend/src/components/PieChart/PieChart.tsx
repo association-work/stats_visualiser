@@ -30,15 +30,15 @@ export default function PieChart() {
         const isvalue = kid.values.filter((info) => info.year === isyear);
         console.log(isvalue);
         data.push(isvalue[0].value);
-        datasets.push({
-          data,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(38, 90, 29, 0,9)",
-          ],
-          hoverOffset: 4,
-        });
+      });
+      datasets.push({
+        data,
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(38, 90, 29, 0,9)",
+        ],
+        hoverOffset: 4,
       });
     }
     return (chartedData = { labels, datasets });
