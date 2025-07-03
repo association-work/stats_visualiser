@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { branch } from "../../types/dataTypes";
 import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
 import DataButton from "../../components/DataButton/DataButton";
+import PieChart from "../../components/PieChart/PieChart";
 
 export default function GlobalTree() {
   const entireTree = BigData.themes[0];
@@ -43,6 +44,7 @@ export default function GlobalTree() {
             ))}
           </article>
         )}
+        <PieChart />
       </article>
       <BreadCrumbs
         chosenPath={chosenPath}
