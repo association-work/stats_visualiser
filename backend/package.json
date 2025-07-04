@@ -1,0 +1,29 @@
+{
+ "name": "@wikidata/backend",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "ts-node --files -r tsconfig-paths/register src/server/index.ts",
+    "start:js": "node -r tsconfig-paths/register --enable-source-maps src/server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "body-parser": "~2.2.0",
+    "dotenv": "~16.4.7",
+    "helmet": "~8.1.0",
+    "inversify": "~7.2.0",
+    "reflect-metadata": "0.2.2",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "~22.0.2",
+    "@types/node": "~22.13.10",
+    "ts-node": "^10.9.2",
+    "@types/express": "~5.0.3",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
