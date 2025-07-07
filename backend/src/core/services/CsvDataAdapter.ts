@@ -10,8 +10,7 @@ export interface CsvDataAdapterOptions {
 }
 
 export class CsvDataAdapter implements DataAdapter<CsvDataAdapterOptions> {
-  file?: fs.FileHandle;
-  lines?: AsyncIterable<string>;
+  private file?: fs.FileHandle;
 
   async open(options: CsvDataAdapterOptions): Promise<DataReader> {
     this.file = await fs.open(options.filePath);

@@ -29,4 +29,29 @@ export class DataReader {
       value: data,
     };
   }
+
+  toIterable(count: number = 1): AsyncIterable<RawData[]> {
+    if (typeof count === "number" && count < 1) {
+      throw new Error("Invalid count value: must be greater of 0 if specified");
+    }
+
+    return {
+      [Symbol.asyncIterator]: () => ({
+        next: async () => {
+          const result = await this.onNext(count);
+          if (result === null) {
+            return {
+              value: [],
+              done: true,
+            };
+          }
+
+          return {
+            value: result,
+            done: false,
+          };
+        },
+      }),
+    };
+  }
 }
