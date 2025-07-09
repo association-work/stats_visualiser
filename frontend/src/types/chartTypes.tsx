@@ -1,6 +1,6 @@
-export type pieData = {
+export type chartData = {
   labels: string[];
-  datasets: pieSets[];
+  datasets: pieSets[] | lineSets[];
 };
 
 export type pieSets = {
@@ -9,4 +9,10 @@ export type pieSets = {
   backgroundColor: string[];
   // borderWidth: number;
   hoverOffset: number;
+};
+
+export type lineSets = {
+  label?: string;
+  data: number[];
+  bordercolor: string[];
 };

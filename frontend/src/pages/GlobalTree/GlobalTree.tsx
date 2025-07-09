@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { branch } from "../../types/dataTypes";
 import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
 import DataButton from "../../components/DataButton/DataButton";
-import PieChart from "../../components/PieChart/PieChart";
+import { Link } from "react-router-dom";
 
 export default function GlobalTree() {
   const entireTree = BigData.themes[0];
@@ -23,15 +23,29 @@ export default function GlobalTree() {
     });
   };
 
+  const isyear = 2009; // a remplacer par un context de date
+  const isvalue = currentBranch.values.filter(
+    (info) => info.year === isyear
+  )[0];
+
   return (
     <section className="global_tree">
       <article className="data_tree">
-        <button type="button" className="branch_title">
-          {currentBranch.name}
-        </button>
-        {/* <p className="branch_title">
-          {currentBranch.values} >> il manque le contexte pour le choix des dates.
-        </p> */}
+        <section className="current_branch">
+          <button type="button" className="branch_title">
+            {currentBranch.name}
+          </button>
+          <Link
+            to={`/Details/${currentBranch.id}`}
+            className="branch_title_value"
+          >
+            <p>{isvalue.value}</p>
+            {/* il manque l'unité de valeur... */}
+            <p>{"+"}</p>
+            {/* il manque le contexte pour le choix des dates. */}
+          </Link>
+        </section>
+
         {currentBranch.children && (
           <article className="linked_children">
             {currentBranch.children.map((kid, index) => (
@@ -44,7 +58,6 @@ export default function GlobalTree() {
             ))}
           </article>
         )}
-        <PieChart />
       </article>
       <BreadCrumbs
         chosenPath={chosenPath}

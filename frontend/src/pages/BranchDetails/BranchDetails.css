@@ -1,0 +1,15 @@
+.data_branch {
+  height: 100%;
+  width: 93%;
+  padding: 3% 2%;
+  overflow-y: auto;
+}
+
+.more_branch {
+  margin-top: 20px;
+}
+
+.more_branch hr {
+  width: 100%;
+  height: 2px;
+}

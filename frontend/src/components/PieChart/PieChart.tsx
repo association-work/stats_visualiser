@@ -1,15 +1,17 @@
 import "./PieChart.css";
-import BigData from "../../data.json";
-import type { pieData, pieSets } from "./../../types/chartTypes";
+import type { chartData, pieSets } from "./../../types/chartTypes";
 import type { branch } from "../../types/dataTypes";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function PieChart() {
-  const entireTree: branch = BigData.themes[0];
-  let chartedData: pieData = {
+interface PieChartProps {
+  currentBranch: branch;
+}
+
+export default function PieChart({ currentBranch }: PieChartProps) {
+  let chartedData: chartData = {
     labels: [],
     datasets: [
       {
@@ -27,9 +29,8 @@ export default function PieChart() {
     if (isdata.children) {
       isdata.children.map((kid) => {
         labels.push(kid.name);
-        const isvalue = kid.values.filter((info) => info.year === isyear);
-        console.log(isvalue);
-        data.push(isvalue[0].value);
+        const isvalue = kid.values.filter((info) => info.year === isyear)[0];
+        data.push(isvalue.value);
       });
       datasets.push({
         data,
@@ -45,7 +46,7 @@ export default function PieChart() {
   };
   return (
     <>
-      <Pie data={chartingTree(entireTree, 2000)} />
+      <Pie data={chartingTree(currentBranch, 2000)} />
     </>
   );
 }

@@ -4,7 +4,7 @@ import type { branch } from "./../../types/dataTypes";
 interface DataButtonProps {
   information: branch;
   index: number;
-  handleChangedBranch: (index: number) => any;
+  handleChangedBranch: (index: number) => void;
 }
 
 export default function DataButton({
@@ -21,7 +21,8 @@ export default function DataButton({
         handleChangedBranch(index);
       }}
     >
-      {information.name}
+      <p>{information.name}</p>
+      <p>{">"}</p>
     </button>
   );
 }

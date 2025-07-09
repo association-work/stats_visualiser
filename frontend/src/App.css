@@ -50,6 +50,13 @@ h1 {
   color: var(--primary-color);
 }
 
+a {
+  text-decoration: none;
+  font-family: var(--main-font);
+  font-size: 1em;
+  color: var(--primary-color);
+}
+
 @media screen and (min-width: 768px) and (max-width: 1023px) {
 }
 
