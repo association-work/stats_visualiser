@@ -1,16 +1,11 @@
 import "./GlobalTree.css";
-import BigData from "../../data.json";
-import { useState } from "react";
-import type { branch } from "../../types/dataTypes";
-import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
+import { useContext } from "react";
 import DataButton from "../../components/DataButton/DataButton";
+import GlobalContext from "../../contexts/GlobalContext";
 
 export default function GlobalTree() {
-  const entireTree = BigData.themes[0];
-
-  const [chosenPath, setChosenPath] = useState<branch[]>([entireTree]);
-
-  const [currentBranch, setCurrentBranch] = useState<branch>(entireTree);
+  const { chosenPath, setChosenPath, setCurrentBranch, currentBranch } =
+    useContext(GlobalContext);
 
   const handleChangedBranch = (index: number) => {
     currentBranch.children.forEach((kid, id) => {
@@ -44,11 +39,6 @@ export default function GlobalTree() {
           </article>
         )}
       </article>
-      <BreadCrumbs
-        chosenPath={chosenPath}
-        setChosenPath={setChosenPath}
-        setCurrentBranch={setCurrentBranch}
-      />
     </section>
   );
 }

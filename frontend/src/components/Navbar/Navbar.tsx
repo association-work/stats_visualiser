@@ -39,17 +39,20 @@ export default function Navbar() {
             <option value="to choose">To choose</option>
           )}
         </select>
-        <select name="year" id="" className="year_box">
+        <select
+          name="year"
+          id=""
+          className="year_box"
+          onChange={(event) => {
+            setIsYear(Number(event.target.value));
+          }}
+        >
           <option value="" key="option">
             Année
           </option>
           {years &&
             years.map((year) => (
-              <option
-                value={year.year}
-                key={year.year}
-                onChange={() => setIsYear(year.year)}
-              >
+              <option value={year.year} key={year.year}>
                 {year.year}
               </option>
             ))}

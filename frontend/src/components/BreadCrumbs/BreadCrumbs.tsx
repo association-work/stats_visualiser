@@ -3,8 +3,8 @@ import "./BreadCrumbs.css";
 
 interface BreadCrumbsProps {
   chosenPath: branch[];
-  setChosenPath: any; // temporaire : à retrouver correctement
-  setCurrentBranch: any; // temporaire : à retrouver correctement
+  setChosenPath: React.Dispatch<React.SetStateAction<branch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<branch>>;
 }
 
 export default function BreadCrumbs({
@@ -25,6 +25,7 @@ export default function BreadCrumbs({
       }
     });
   };
+
   return (
     <aside className="breadcrumbs">
       <section className="static_crumbs">
