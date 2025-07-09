@@ -1,17 +1,12 @@
 import "./GlobalTree.css";
-import BigData from "../../data.json";
-import { useState } from "react";
-import type { branch } from "../../types/dataTypes";
-import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
+import { useContext } from "react";
 import DataButton from "../../components/DataButton/DataButton";
 import { Link } from "react-router-dom";
+import GlobalContext from "../../contexts/GlobalContext";
 
 export default function GlobalTree() {
-  const entireTree = BigData.themes[0];
-
-  const [chosenPath, setChosenPath] = useState<branch[]>([entireTree]);
-
-  const [currentBranch, setCurrentBranch] = useState<branch>(entireTree);
+  const { chosenPath, setChosenPath, setCurrentBranch, currentBranch, isYear } =
+    useContext(GlobalContext);
 
   const handleChangedBranch = (index: number) => {
     currentBranch.children.forEach((kid, id) => {
@@ -23,9 +18,8 @@ export default function GlobalTree() {
     });
   };
 
-  const isyear = 2009; // a remplacer par un context de date
   const isvalue = currentBranch.values.filter(
-    (info) => info.year === isyear
+    (info) => info.year === isYear
   )[0];
 
   return (
@@ -42,7 +36,6 @@ export default function GlobalTree() {
             <p>{isvalue.value}</p>
             {/* il manque l'unité de valeur... */}
             <p>{"+"}</p>
-            {/* il manque le contexte pour le choix des dates. */}
           </Link>
         </section>
 
@@ -59,11 +52,6 @@ export default function GlobalTree() {
           </article>
         )}
       </article>
-      <BreadCrumbs
-        chosenPath={chosenPath}
-        setChosenPath={setChosenPath}
-        setCurrentBranch={setCurrentBranch}
-      />
     </section>
   );
 }

@@ -1,9 +1,9 @@
 .breadcrumbs {
-  height: 5vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 2vh 0 3vh;
+  margin: 0 0 0 3vh;
   border-radius: 8px;
   overflow-x: auto;
 }

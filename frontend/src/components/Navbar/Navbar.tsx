@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import data from "../../data.json";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import GlobalContext from "../../contexts/GlobalContext";
 
 export default function Navbar() {
   const years = data.themes[0].values;
+  const { setIsYear } = useContext(GlobalContext);
 
   const [location, setlocation] = useState(true);
 
@@ -37,7 +39,14 @@ export default function Navbar() {
             <option value="to choose">To choose</option>
           )}
         </select>
-        <select name="year" id="" className="year_box">
+        <select
+          name="year"
+          id=""
+          className="year_box"
+          onChange={(event) => {
+            setIsYear(Number(event.target.value));
+          }}
+        >
           <option value="" key="option">
             Année
           </option>

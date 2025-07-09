@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App.tsx";
 import GlobalTree from "./pages/GlobalTree/GlobalTree.tsx";
 import BranchDetails from "./pages/BranchDetails/BranchDetails.tsx";
+import { GlobalProvider } from "./contexts/GlobalContext.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <GlobalProvider>
+      <RouterProvider router={router} />
+    </GlobalProvider>
   </StrictMode>
 );
