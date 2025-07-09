@@ -2,8 +2,10 @@ import "./BranchDetails.css";
 import { Link, useParams } from "react-router-dom";
 import BigData from "../../data.json";
 import type { branch } from "../../types/dataTypes";
+// import LineChart from "../../components/LineChart/LineChart";
+// import PieChart from "../../components/PieChart/PieChart";
+import PieCharts from "../../components/PieChart/PieChart";
 import LineChart from "../../components/LineChart/LineChart";
-import PieChart from "../../components/PieChart/PieChart";
 
 export default function BranchDetails() {
   const { id } = useParams();
@@ -36,7 +38,7 @@ export default function BranchDetails() {
     <article className="data_branch">
       <h1>{isBranch.name}</h1>
       <LineChart currentBranch={isBranch} />
-      <PieChart currentBranch={isBranch} />
+      <PieCharts currentBranch={isBranch} />
       <section className="more_branch">
         <hr />
         {isBranch.children.map((kid, index) => (

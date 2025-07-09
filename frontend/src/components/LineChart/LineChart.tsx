@@ -11,6 +11,14 @@ import {
   Title,
   Legend,
 } from "chart.js";
+import {
+  LineChart as LineCharts,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Line as Lines,
+  Tooltip as CoolTip,
+} from "recharts";
 
 ChartJS.register(
   CategoryScale,
@@ -59,6 +67,26 @@ export default function LineChart({ currentBranch }: LineChartProps) {
   return (
     <>
       <Line data={chartingTree(currentBranch)} />
+      <LineCharts
+        width={400}
+        height={300}
+        data={currentBranch.values}
+        margin={{
+          top: 5,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="year" />
+        <YAxis />
+        <CoolTip />
+        <Lines
+          type="monotone"
+          dataKey="value"
+          stroke="#8884d8"
+          activeDot={{ r: 8 }}
+        />
+      </LineCharts>
     </>
   );
 }
