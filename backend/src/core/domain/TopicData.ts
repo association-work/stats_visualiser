@@ -1,7 +1,13 @@
 export interface TopicData {
-  topicName: string;
-  topicId: string;
-  topicParentId?: string;
+  name: string;
+  id: string;
+  parentId?: string;
+  source: {
+    name: string;
+    url: string;
+  };
+  unit: string;
   values: [number, number][];
-  children: TopicData[];
+  hasChildren: boolean;
+  children?: TopicData[];
 }
