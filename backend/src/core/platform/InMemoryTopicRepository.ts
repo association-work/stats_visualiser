@@ -41,7 +41,7 @@ export class InMemoryTopicRepository extends TopicRepository {
   }
 
   async findAll(): Promise<TopicData[]> {
-    return [...this.topicsTree.values()];
+    return [...this.topicsTree.values().map(mapTopic)];
   }
 
   async findById(id: TopicId): Promise<TopicData | null> {
@@ -55,12 +55,16 @@ export class InMemoryTopicRepository extends TopicRepository {
       return null;
     }
 
-    return {
-      ...topic,
-      children: topic.children?.map((c) => ({
-        ...c,
-        children: undefined,
-      })),
-    };
+    return mapTopic(topic);
   }
+}
+
+function mapTopic(topic: TopicData) {
+  return {
+    ...topic,
+    children: topic.children?.map((c) => ({
+      ...c,
+      children: undefined,
+    })),
+  };
 }

@@ -19,6 +19,6 @@ export class DataSynchronizationService {
       await this.topicRepo.addMany(data);
     }
 
-    adapter.close();
+    await adapter.close();
   }
 }

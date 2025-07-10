@@ -22,14 +22,19 @@ process.on("uncaughtException", (e) => {
 });
 
 process.on("unhandledRejection", (e) => {
+  console.error("unhandledRejection", e);
   throw e;
 });
 
 serviceMap.synchronizationService
   .start()
   .then((_) =>
-    app.listen(process.env.PORT, () => {
-      console.log(`Server listening on port ${process.env.PORT}`);
+    app.listen(process.env.PORT, (e) => {
+      if (e) {
+        console.error(e);
+      } else {
+        console.log(`Server listening on port ${process.env.PORT}`);
+      }
     })
   )
   .catch((e) => {
