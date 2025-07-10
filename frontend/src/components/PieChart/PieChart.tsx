@@ -1,11 +1,12 @@
 import "./PieChart.css";
 import type { branch } from "../../types/dataTypes";
-import { PieChart, Pie as Pies, Sector, type SectorProps } from "recharts";
-import type { chartData, pieSets } from "./../../types/chartTypes";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
+import {
+  PieChart,
+  Pie as Pies,
+  ResponsiveContainer,
+  Sector,
+  type SectorProps,
+} from "recharts";
 
 interface PieChartProps {
   currentBranch: branch;
@@ -33,41 +34,6 @@ type PieSectorDataItem = React.SVGProps<SVGPathElement> &
   PieSectorData;
 
 export default function PieCharts({ currentBranch }: PieChartProps) {
-  // Pour la première solution avec Chart JS
-  let chartedData: chartData = {
-    labels: [],
-    datasets: [
-      {
-        data: [],
-        backgroundColor: [""],
-        hoverOffset: 4,
-      },
-    ],
-  };
-
-  const chartingTree = (isdata: branch, isyear: number) => {
-    const labels: string[] = [];
-    let datasets: pieSets[] = [];
-    const data: number[] = [];
-    if (isdata.children) {
-      isdata.children.map((kid) => {
-        labels.push(kid.name);
-        const isvalue = kid.values.filter((info) => info.year === isyear)[0];
-        data.push(isvalue.value);
-      });
-      datasets.push({
-        data,
-        backgroundColor: [
-          "rgba(171, 226, 255, 0.8)",
-          "rgba(135, 207, 255, 0.8)",
-          "rgba(212, 219, 255, 0.8)",
-        ],
-        hoverOffset: 4,
-      });
-    }
-    return (chartedData = { labels, datasets });
-  };
-
   // Pour la deuxième solution avec Rechart
 
   const chartedDataTree: {}[] = [];
@@ -148,9 +114,7 @@ export default function PieCharts({ currentBranch }: PieChartProps) {
   };
 
   return (
-    <section className="pies">
-      <Pie data={chartingTree(currentBranch, 2000)} />
-
+    <ResponsiveContainer width="100%" height="50%">
       <PieChart width={600} height={400}>
         <Pies
           activeShape={renderActiveShape}
@@ -164,6 +128,6 @@ export default function PieCharts({ currentBranch }: PieChartProps) {
           fill="#d4dbff"
         />
       </PieChart>
-    </section>
+    </ResponsiveContainer>
   );
 }

@@ -33,12 +33,11 @@ export default function GlobalTree() {
             to={`/Details/${currentBranch.id}`}
             className="branch_title_value"
           >
-            <p>{isvalue.value}</p>
-            {/* il manque l'unité de valeur... */}
+            <p>{isvalue.value + " Mt CO2e"}</p>
             <p>{"+"}</p>
           </Link>
         </section>
-
+        {/* mettre une condition de clickabilité si il y a des petits enfants ou si il n'y en a pas */}
         {currentBranch.children && (
           <article className="linked_children">
             {currentBranch.children.map((kid, index) => (
