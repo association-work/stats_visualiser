@@ -3,6 +3,7 @@ import "reflect-metadata";
 require("dotenv").config();
 
 import express, { Application } from "express";
+import cors from "cors";
 import bodyParser = require("body-parser");
 import helmet from "helmet";
 import { router } from "./routes";
@@ -11,6 +12,7 @@ import { serviceMap } from "./config/services";
 const app = express();
 
 app.use(helmet());
+app.use(cors());
 app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 
