@@ -13,3 +13,16 @@ export type branch = {
   values: { year: number; value: number }[];
   children: branch[];
 };
+
+export type topicBranch = {
+  id: string;
+  name: string;
+  source: {
+    name: string;
+    url: string;
+  };
+  unit: string;
+  values: [number, number][];
+  hasChildren: boolean;
+  parentId: string;
+};

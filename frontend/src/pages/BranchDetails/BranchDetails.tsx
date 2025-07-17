@@ -35,21 +35,30 @@ export default function BranchDetails() {
   }
 
   return (
-    <article className="data_branch">
+    <article className="details">
       <h1>{isBranch.name}</h1>
-      <LineChart currentBranch={isBranch} />
-      <PieCharts currentBranch={isBranch} />
-      <section className="more_branch">
-        <hr />
-        {isBranch.children.map((kid, index) => (
-          <section key={index}>
-            <Link to={`/Details/${kid.id}`}>
-              {kid.name} {">"}
-            </Link>
+      <section className="data_branch">
+        <article className="branch_parts">
+          <h2>Répartition : </h2>
+          <PieCharts currentBranch={isBranch} />
+          <article className="more_branch">
             <hr />
-          </section>
-        ))}
+            {isBranch.children.map((kid, index) => (
+              <section key={index}>
+                <Link to={`/Details/${kid.id}`}>
+                  {kid.name} {">"}
+                </Link>
+                <hr />
+              </section>
+            ))}
+          </article>
+        </article>
+        <article className="evolution">
+          <h2>Evolution : </h2>
+          <LineChart currentBranch={isBranch} />
+        </article>
       </section>
+      <p>Source : à fournir</p>
     </article>
   );
 }

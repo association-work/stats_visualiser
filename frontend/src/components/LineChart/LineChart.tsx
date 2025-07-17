@@ -15,30 +15,27 @@ interface LineChartProps {
 
 export default function LineChart({ currentBranch }: LineChartProps) {
   return (
-    <>
-      <ResponsiveContainer width="100%" height="50%">
-        <LineCharts
-          width={400}
-          height={200}
-          data={currentBranch.values}
-          margin={{
-            top: 5,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="year" />
-          <YAxis />
-          <CoolTip />
-          <Lines
-            type="monotone"
-            dataKey="value"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineCharts>
-      </ResponsiveContainer>
-      <p>Source : à fournir</p>
-    </>
+    <ResponsiveContainer width="100%" height="88%">
+      <LineCharts
+        width={400}
+        height={200}
+        data={currentBranch.values}
+        margin={{
+          top: 5,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="year" />
+        <YAxis />
+        <CoolTip />
+        <Lines
+          type="monotone"
+          dataKey="value"
+          stroke="#8884d8"
+          activeDot={{ r: 8 }}
+        />
+      </LineCharts>
+    </ResponsiveContainer>
   );
 }

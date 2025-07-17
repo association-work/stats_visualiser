@@ -1,4 +1,3 @@
-import "./PieChart.css";
 import type { branch } from "../../types/dataTypes";
 import {
   PieChart,
@@ -34,8 +33,6 @@ type PieSectorDataItem = React.SVGProps<SVGPathElement> &
   PieSectorData;
 
 export default function PieCharts({ currentBranch }: PieChartProps) {
-  // Pour la deuxième solution avec Rechart
-
   const chartedDataTree: {}[] = [];
   currentBranch.children.map((child) =>
     chartedDataTree.push({ name: child.name, value: 1 })
@@ -114,7 +111,7 @@ export default function PieCharts({ currentBranch }: PieChartProps) {
   };
 
   return (
-    <ResponsiveContainer width="100%" height="50%">
+    <ResponsiveContainer width="100%" height="47%">
       <PieChart width={600} height={400}>
         <Pies
           activeShape={renderActiveShape}
