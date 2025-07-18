@@ -1,34 +1,83 @@
 import { createContext, useState } from "react";
-import type { branch } from "../types/dataTypes";
-import BigData from "../data.json";
-
-const entireTree = BigData.themes[0];
+import type { topicBranch } from "../types/dataTypes";
 
 const GlobalContext = createContext<GlobalProps>({
-  isYear: 2000,
+  isYear: 2023,
   setIsYear: () => {},
   chosenPath: [],
   setChosenPath: () => {},
-  currentBranch: entireTree,
+  currentBranch: {
+    id: "",
+    name: "",
+    source: {
+      name: "CITEPA",
+      url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+    },
+    unit: "Mt CO2e",
+    values: [],
+    hasChildren: true,
+    parentId: "",
+  },
   setCurrentBranch: () => {},
+  topicOrigin: {
+    id: "",
+    name: "",
+    source: {
+      name: "CITEPA",
+      url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+    },
+    unit: "",
+    values: [],
+    hasChildren: true,
+    parentId: "",
+  },
+  setTopicOrigin: () => {},
 });
 
 interface GlobalProps {
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  chosenPath: branch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<branch[]>>;
-  currentBranch: branch;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<branch>>;
+  chosenPath: topicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
+  currentBranch: topicBranch;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  topicOrigin: topicBranch;
+  setTopicOrigin: React.Dispatch<React.SetStateAction<topicBranch>>;
 }
 
 export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isYear, setIsYear] = useState<number>(2000);
+  const [isYear, setIsYear] = useState<number>(2023);
 
-  const [chosenPath, setChosenPath] = useState<branch[]>([entireTree]);
-  const [currentBranch, setCurrentBranch] = useState<branch>(entireTree);
+  const [topicOrigin, setTopicOrigin] = useState<topicBranch>({
+    id: "0_origin",
+    name: "",
+    source: {
+      name: "CITEPA",
+      url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+    },
+    unit: "",
+    values: [],
+    hasChildren: false,
+    parentId: "",
+  });
+
+  const [currentBranch, setCurrentBranch] = useState<topicBranch>({
+    id: "",
+    name: "Environnement",
+    source: {
+      name: "CITEPA",
+      url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+    },
+    unit: "",
+    values: [],
+    hasChildren: false,
+    parentId: "",
+  });
+
+  const [chosenPath, setChosenPath] = useState<topicBranch[]>([currentBranch]);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -38,6 +87,8 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
         setChosenPath,
         currentBranch,
         setCurrentBranch,
+        topicOrigin,
+        setTopicOrigin,
       }}
     >
       {children}

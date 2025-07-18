@@ -1,38 +1,41 @@
 import "./BranchDetails.css";
 import { Link, useParams } from "react-router-dom";
-import BigData from "../../data.json";
-import type { branch } from "../../types/dataTypes";
-// import LineChart from "../../components/LineChart/LineChart";
-// import PieChart from "../../components/PieChart/PieChart";
+import type { topicBranch } from "../../types/dataTypes";
 import PieCharts from "../../components/PieChart/PieChart";
 import LineChart from "../../components/LineChart/LineChart";
+import { useEffect } from "react";
 
 export default function BranchDetails() {
   const { id } = useParams();
-  const entireTree = BigData.themes[0];
 
-  let isBranch: branch = {
-    id: 0,
+  let isBranch: topicBranch = {
+    id: "",
     name: "",
-    parentId: 0,
-    externalId: "",
-    isSection: false,
-    source: "",
-    link: "",
-    geography: "",
-    geographyId: "",
+    source: {
+      name: "",
+      url: "",
+    },
     unit: "",
-    isSummable: false,
     values: [],
-    children: [],
+    hasChildren: true,
+    parentId: "",
   };
 
-  if (id === "1") {
-    isBranch = entireTree;
-  } else {
-    const isId = Number(id);
-    isBranch = entireTree.children.filter((kid) => kid.id === isId)[0];
-  }
+  useEffect(() => {
+    fetch(`https://stats-visualiser.onrender.com/topic/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data[0]);
+        isBranch = data[0];
+      });
+  }, []);
+
+  // if (id === "1") {
+  //   isBranch = entireTree;
+  // } else {
+  //   const isId = Number(id);
+  //   isBranch = entireTree.children.filter((kid) => kid.id === isId)[0];
+  // }
 
   return (
     <article className="details">
@@ -43,14 +46,15 @@ export default function BranchDetails() {
           <PieCharts currentBranch={isBranch} />
           <article className="more_branch">
             <hr />
-            {isBranch.children.map((kid, index) => (
-              <section key={index}>
-                <Link to={`/Details/${kid.id}`}>
-                  {kid.name} {">"}
-                </Link>
-                <hr />
-              </section>
-            ))}
+            {isBranch.children &&
+              isBranch.children.map((kid, index) => (
+                <section key={index}>
+                  <Link to={`/Details/${kid.id}`}>
+                    {kid.name} {">"}
+                  </Link>
+                  <hr />
+                </section>
+              ))}
           </article>
         </article>
         <article className="evolution">

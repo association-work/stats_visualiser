@@ -1,38 +1,53 @@
 import "./DataButton.css";
-import type { branch } from "./../../types/dataTypes";
+import type { topicBranch } from "./../../types/dataTypes";
 import DetailsButton from "../DetailsButton/DetailsButton";
+import { useEffect, useState, useContext } from "react";
+import GlobalContext from "../../contexts/GlobalContext";
+import { GetTopic } from "../../functions/GetTopic";
 
 interface DataButtonProps {
-  information: branch;
-  index: number;
-  handleChangedBranch: (index: number) => void;
+  information: topicBranch;
 }
 
-export default function DataButton({
-  information,
-  index,
-  handleChangedBranch,
-}: DataButtonProps) {
+export default function DataButton({ information }: DataButtonProps) {
+  const { chosenPath, setChosenPath, setCurrentBranch } =
+    useContext(GlobalContext);
+
+  const [nextBranch, setNextBranch] = useState<topicBranch>(information);
+
+  useEffect(() => {
+    GetTopic(information.id).then((data) => setNextBranch(data));
+  }, []);
+
+  const handleChangingBranch = () => {
+    chosenPath.push(nextBranch);
+    setChosenPath(chosenPath);
+    setCurrentBranch(nextBranch);
+  };
+
   return (
     <>
-      {information.children.length !== 0 ? (
+      {nextBranch && nextBranch.hasChildren ? (
         <button
           type="button"
           className="tree_node"
-          key={index}
-          onClick={() => {
-            handleChangedBranch(index);
-          }}
+          key={nextBranch.id}
+          onClick={handleChangingBranch}
         >
-          <p>{information.name}</p>
+          <p>{nextBranch.name}</p>
           <p>{">"}</p>
         </button>
       ) : (
         <section className="childless">
-          <button type="button" className="tree_end" key={index} disabled>
-            <p>{information.name}</p>
+          <button
+            type="button"
+            className="tree_end"
+            key={nextBranch.id}
+            disabled
+          >
+            <p>{nextBranch.name}</p>
           </button>
-          <DetailsButton details={information} />
+          <DetailsButton details={nextBranch} />
         </section>
       )}
     </>

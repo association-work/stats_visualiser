@@ -1,10 +1,10 @@
-import type { branch } from "../../types/dataTypes";
 import "./BreadCrumbs.css";
+import type { topicBranch } from "../../types/dataTypes";
 
 interface BreadCrumbsProps {
-  chosenPath: branch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<branch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<branch>>;
+  chosenPath: topicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
 }
 
 export default function BreadCrumbs({
@@ -13,24 +13,24 @@ export default function BreadCrumbs({
   setCurrentBranch,
 }: BreadCrumbsProps) {
   const handleRewindBranch = (index: number) => {
-    chosenPath.forEach((choice, id) => {
-      if (id === index) {
-        setCurrentBranch(choice);
-        let i = chosenPath.length - 1;
-        while (i > id) {
-          chosenPath.pop();
-          i--;
-        }
-        setChosenPath(chosenPath);
+    chosenPath.forEach((choice) => {
+      setCurrentBranch(choice);
+      let i = chosenPath.length - 1;
+      while (i > index) {
+        chosenPath.pop();
+        i--;
       }
+      setChosenPath(chosenPath);
     });
   };
+
+  console.log(chosenPath);
 
   return (
     <aside className="breadcrumbs">
       <section className="static_crumbs">
-        <p className="crumbs">Environnement</p>
-        {chosenPath.length > 0 &&
+        {chosenPath &&
+          chosenPath.length > 0 &&
           chosenPath.map((choice, index) => (
             <button
               type="button"

@@ -12,6 +12,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
+      //il faudrait faire une page Home
       {
         path: "/",
         element: <GlobalTree />,

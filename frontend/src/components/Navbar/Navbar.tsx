@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import data from "../../data.json";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import GlobalContext from "../../contexts/GlobalContext";
+import { GetTopics } from "../../functions/GetTopic";
 
 export default function Navbar() {
-  const years = data.themes[0].values;
-  const { setIsYear } = useContext(GlobalContext);
+  const {
+    setIsYear,
+    isYear,
+    chosenPath,
+    setCurrentBranch,
+    setTopicOrigin,
+    topicOrigin,
+  } = useContext(GlobalContext);
 
   const [location, setlocation] = useState(true);
 
@@ -18,6 +24,16 @@ export default function Navbar() {
     }
   };
 
+  useEffect(() => {
+    GetTopics().then((data) => {
+      setTopicOrigin(data[0]);
+      setCurrentBranch(data[0]);
+    });
+    chosenPath.push(topicOrigin);
+  }, []);
+
+  const years = topicOrigin.values;
+
   return (
     <>
       <section className="topNav">
@@ -28,6 +44,7 @@ export default function Navbar() {
           <input type="checkbox" onChange={() => changeParameter()} />
           <span className="slider" />
         </label>
+        {/* à mettre en place une fois les données géographiques ajouter à la BDD*/}
       </section>
       <section className="navigation">
         <select name="country" id="" className="country_box" disabled>
@@ -48,12 +65,12 @@ export default function Navbar() {
           }}
         >
           <option value="" key="option">
-            Année
+            {isYear}
           </option>
           {years &&
             years.map((year) => (
-              <option value={year.year} key={year.year}>
-                {year.year}
+              <option value={year[0]} key={year[0]}>
+                {year[0]}
               </option>
             ))}
         </select>
