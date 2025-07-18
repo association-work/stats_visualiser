@@ -1,6 +1,5 @@
 import "./DataButton.css";
 import type { topicBranch } from "./../../types/dataTypes";
-import DetailsButton from "../DetailsButton/DetailsButton";
 import { useEffect, useState, useContext } from "react";
 import GlobalContext from "../../contexts/GlobalContext";
 import { GetTopic } from "../../functions/GetTopic";
@@ -38,17 +37,9 @@ export default function DataButton({ information }: DataButtonProps) {
           <p>{">"}</p>
         </button>
       ) : (
-        <section className="childless">
-          <button
-            type="button"
-            className="tree_end"
-            key={nextBranch.id}
-            disabled
-          >
-            <p>{nextBranch.name}</p>
-          </button>
-          <DetailsButton details={nextBranch} />
-        </section>
+        <button type="button" className="tree_end" key={nextBranch.id} disabled>
+          <p>{nextBranch.name}</p>
+        </button>
       )}
     </>
   );

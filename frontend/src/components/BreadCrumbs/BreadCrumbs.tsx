@@ -1,17 +1,11 @@
 import "./BreadCrumbs.css";
-import type { topicBranch } from "../../types/dataTypes";
+import { useContext } from "react";
+import GlobalContext from "../../contexts/GlobalContext";
 
-interface BreadCrumbsProps {
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
-}
+export default function BreadCrumbs() {
+  const { chosenPath, setChosenPath, setCurrentBranch } =
+    useContext(GlobalContext);
 
-export default function BreadCrumbs({
-  chosenPath,
-  setChosenPath,
-  setCurrentBranch,
-}: BreadCrumbsProps) {
   const handleRewindBranch = (index: number) => {
     chosenPath.forEach((choice) => {
       setCurrentBranch(choice);

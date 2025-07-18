@@ -4,7 +4,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
 import GlobalTree from "./pages/GlobalTree/GlobalTree.tsx";
-import BranchDetails from "./pages/BranchDetails/BranchDetails.tsx";
 import { GlobalProvider } from "./contexts/GlobalContext.tsx";
 
 const router = createBrowserRouter([
@@ -16,10 +15,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <GlobalTree />,
-      },
-      {
-        path: "/Details/:id",
-        element: <BranchDetails />,
       },
     ],
   },

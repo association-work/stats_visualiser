@@ -10,7 +10,7 @@
 .current_branch {
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 2em 0;
 }
 
@@ -23,23 +23,43 @@
   text-align: left;
 }
 
+.branch_value {
+  border: 1px solid var(--highligth-color);
+  border-radius: 8px;
+  color: var(--highligth-color);
+  background-color: var(--light-highligth-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0.6em 1.2em;
+}
+
 .linked_children {
   margin-top: 1em;
-  gap: 10px;
-  width: 70%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  gap: 10px;
   overflow-y: auto;
+}
+
+.listed_children {
+  margin-top: 1em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .current_branch {
     width: 85%;
-    justify-content: space-between;
   }
   .linked_children {
-    width: 82%;
+    width: 78%;
   }
 }
 

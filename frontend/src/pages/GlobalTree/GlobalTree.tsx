@@ -1,11 +1,13 @@
 import "./GlobalTree.css";
 import { useContext } from "react";
-import DataButton from "../../components/DataButton/DataButton";
 import GlobalContext from "../../contexts/GlobalContext";
-import DetailsButton from "../../components/DetailsButton/DetailsButton";
+import DataButton from "../../components/DataButton/DataButton";
+import PieCharts from "../../components/PieChart/PieChart";
 
 export default function GlobalTree() {
-  const { currentBranch } = useContext(GlobalContext);
+  const { currentBranch, isYear } = useContext(GlobalContext);
+
+  const isvalue = currentBranch.values.filter((info) => info[0] === isYear);
 
   return (
     <section className="global_tree">
@@ -13,16 +15,25 @@ export default function GlobalTree() {
         <button type="button" className="branch_title">
           {currentBranch.name}
         </button>
+        {/* ajouter une icône pour faire popup du lineGraf */}
         {currentBranch.values.length !== 0 && (
-          <DetailsButton details={currentBranch} />
+          <button type="button" className="branch_value">
+            <p>{isvalue[0][1].toFixed(2) + " Mt CO2e"}</p>
+            <p>{"+"}</p>
+          </button>
         )}
       </section>
       {currentBranch.children && (
-        <article className="linked_children">
-          {currentBranch.children.map((kid) => (
-            <DataButton information={kid} key={kid.id} />
-          ))}
-        </article>
+        <section className="linked_children">
+          <article>
+            <PieCharts />
+          </article>
+          <article className="listed_children">
+            {currentBranch.children.map((kid) => (
+              <DataButton information={kid} key={kid.id} />
+            ))}
+          </article>
+        </section>
       )}
     </section>
   );

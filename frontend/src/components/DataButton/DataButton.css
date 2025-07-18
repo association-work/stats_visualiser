@@ -8,34 +8,10 @@
   text-align: left;
 }
 
-.childless {
-  display: flex;
-  justify-content: space-between;
-}
-
 .tree_end {
-  border: 1px solid var(--highligth-color);
+  border: 1px solid var(--light-highligth-color);
   border-radius: 8px;
   background-color: var(--bg-color-ligth);
-  width: 45%;
   text-align: left;
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .tree_node {
-    width: 60%;
-  }
-  .tree_end {
-    width: 60%;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .tree_node {
-    width: 60%;
-  }
-  .tree_end {
-    width: 65%;
-    margin-right: 10px;
-  }
+  color: var(--hidden-color);
 }
