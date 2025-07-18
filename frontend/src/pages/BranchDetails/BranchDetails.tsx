@@ -3,12 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import type { topicBranch } from "../../types/dataTypes";
 import PieCharts from "../../components/PieChart/PieChart";
 import LineChart from "../../components/LineChart/LineChart";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { GetTopic } from "../../functions/GetTopic";
 
 export default function BranchDetails() {
   const { id } = useParams();
 
-  let isBranch: topicBranch = {
+  const [branchDetailsData, setBranchDetailsData] = useState<topicBranch>({
     id: "",
     name: "",
     source: {
@@ -19,14 +20,12 @@ export default function BranchDetails() {
     values: [],
     hasChildren: true,
     parentId: "",
-  };
+  });
 
   useEffect(() => {
-    fetch(`https://stats-visualiser.onrender.com/topic/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data[0]);
-        isBranch = data[0];
+    id &&
+      GetTopic(id).then((data) => {
+        setBranchDetailsData(data);
       });
   }, []);
 
@@ -38,31 +37,37 @@ export default function BranchDetails() {
   // }
 
   return (
-    <article className="details">
-      <h1>{isBranch.name}</h1>
-      <section className="data_branch">
-        <article className="branch_parts">
-          <h2>Répartition : </h2>
-          <PieCharts currentBranch={isBranch} />
-          <article className="more_branch">
-            <hr />
-            {isBranch.children &&
-              isBranch.children.map((kid, index) => (
-                <section key={index}>
-                  <Link to={`/Details/${kid.id}`}>
-                    {kid.name} {">"}
-                  </Link>
-                  <hr />
-                </section>
-              ))}
-          </article>
+    <>
+      {branchDetailsData.id !== "" ? (
+        <article className="details">
+          <h1>{branchDetailsData.name}</h1>
+          <section className="data_branch">
+            <article className="branch_parts">
+              <h2>Répartition : </h2>
+              <PieCharts currentBranch={branchDetailsData} />
+              <article className="more_branch">
+                <hr />
+                {branchDetailsData.children &&
+                  branchDetailsData.children.map((kid, index) => (
+                    <section key={index}>
+                      <Link to={`/Details/${kid.id}`}>
+                        {kid.name} {">"}
+                      </Link>
+                      <hr />
+                    </section>
+                  ))}
+              </article>
+            </article>
+            <article className="evolution">
+              <h2>Evolution : </h2>
+              <LineChart currentBranch={branchDetailsData} />
+            </article>
+          </section>
+          <p>Source : à fournir</p>
         </article>
-        <article className="evolution">
-          <h2>Evolution : </h2>
-          <LineChart currentBranch={isBranch} />
-        </article>
-      </section>
-      <p>Source : à fournir</p>
-    </article>
+      ) : (
+        <p>loading ...</p>
+      )}
+    </>
   );
 }

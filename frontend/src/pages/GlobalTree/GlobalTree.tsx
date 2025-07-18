@@ -7,8 +7,6 @@ import DetailsButton from "../../components/DetailsButton/DetailsButton";
 export default function GlobalTree() {
   const { currentBranch } = useContext(GlobalContext);
 
-  console.log(currentBranch);
-
   return (
     <section className="global_tree">
       <section className="current_branch">

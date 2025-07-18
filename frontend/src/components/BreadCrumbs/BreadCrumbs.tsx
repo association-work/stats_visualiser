@@ -24,8 +24,6 @@ export default function BreadCrumbs({
     });
   };
 
-  console.log(chosenPath);
-
   return (
     <aside className="breadcrumbs">
       <section className="static_crumbs">
@@ -37,6 +35,7 @@ export default function BreadCrumbs({
               className="crumbs"
               key={index}
               onClick={() => handleRewindBranch(index)}
+              disabled={index === 0}
             >
               {choice.name.length < 15 ? choice.name : choice.name.slice(0, 15)}
             </button>

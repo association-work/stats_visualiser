@@ -1,4 +1,5 @@
-import type { branch } from "../../types/dataTypes";
+import { useContext, useEffect, useState } from "react";
+import type { topicBranch } from "../../types/dataTypes";
 import {
   PieChart,
   Pie as Pies,
@@ -6,9 +7,11 @@ import {
   Sector,
   type SectorProps,
 } from "recharts";
+import GlobalContext from "../../contexts/GlobalContext";
+import { GetTopic } from "../../functions/GetTopic";
 
 interface PieChartProps {
-  currentBranch: branch;
+  currentBranch: topicBranch;
 }
 
 type Coordinate = {
@@ -33,10 +36,44 @@ type PieSectorDataItem = React.SVGProps<SVGPathElement> &
   PieSectorData;
 
 export default function PieCharts({ currentBranch }: PieChartProps) {
-  const chartedDataTree: {}[] = [];
-  currentBranch.children.map((child) =>
-    chartedDataTree.push({ name: child.name, value: 1 })
-  );
+  const { isYear } = useContext(GlobalContext);
+
+  const [chartedDataTree, setChartedDataTree] = useState<
+    { name: string; value: number }[]
+  >([]);
+
+  const [eachBranchValues, setEachBranchValues] = useState<[number, number][]>([
+    [0, 0],
+  ]);
+
+  useEffect(() => {
+    if (currentBranch.name === "Emissions GES") {
+      setChartedDataTree([
+        { name: "par gaz à effet de serre", value: 1 },
+        { name: "par secteur", value: 1 },
+        { name: "par combustible", value: 1 },
+      ]);
+      console.log(chartedDataTree);
+    } else {
+      if (currentBranch.children) {
+        currentBranch.children.forEach((child) => {
+          GetTopic(child.id).then((data) => {
+            setEachBranchValues(data.values);
+            console.log(data);
+            const childValue = eachBranchValues.find(
+              (info) => info[0] === isYear
+            );
+            console.log(childValue);
+            if (childValue) {
+              chartedDataTree.push({ name: child.name, value: childValue[1] });
+              setChartedDataTree(chartedDataTree);
+              console.log(chartedDataTree);
+            }
+          });
+        });
+      }
+    }
+  }, []);
 
   const renderActiveShape = ({
     cx,

@@ -51,7 +51,7 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isYear, setIsYear] = useState<number>(2023);
 
   const [topicOrigin, setTopicOrigin] = useState<topicBranch>({
-    id: "0_origin",
+    id: "",
     name: "",
     source: {
       name: "CITEPA",
@@ -64,7 +64,7 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   });
 
   const [currentBranch, setCurrentBranch] = useState<topicBranch>({
-    id: "",
+    id: "0_environnement",
     name: "Environnement",
     source: {
       name: "CITEPA",

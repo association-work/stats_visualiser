@@ -8,7 +8,8 @@ export default function Navbar() {
   const {
     setIsYear,
     isYear,
-    chosenPath,
+    setChosenPath,
+    currentBranch,
     setCurrentBranch,
     setTopicOrigin,
     topicOrigin,
@@ -26,10 +27,10 @@ export default function Navbar() {
 
   useEffect(() => {
     GetTopics().then((data) => {
-      setTopicOrigin(data[0]);
+      setChosenPath([currentBranch, data[0]]);
       setCurrentBranch(data[0]);
+      setTopicOrigin(data[0]);
     });
-    chosenPath.push(topicOrigin);
   }, []);
 
   const years = topicOrigin.values;
