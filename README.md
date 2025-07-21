@@ -102,3 +102,112 @@ tests/
 
 ---
 
+# 📊 Wikidata  Front End
+
+
+# React + TypeScript + Vite
+
+This project provides a modern and minimal boilerplate for building React applications using **TypeScript** and **Vite**, with **Hot Module Replacement (HMR)** and configurable **ESLint** support.
+
+## Features
+
+* 🚀 **Fast development** with [Vite](https://vitejs.dev/)
+* ⚛️ **React** with TypeScript support
+* ♻️ **HMR** for instant updates during development
+* ✅ **ESLint** integration for code quality and consistency
+
+## Plugins
+
+This template currently supports two official Vite plugins for React:
+
+* [`@vitejs/plugin-react`](https://github.com/vitejs/vite-plugin-react): uses [Babel](https://babeljs.io/) for Fast Refresh
+* [`@vitejs/plugin-react-swc`](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc): uses [SWC](https://swc.rs/) for even faster builds
+
+You can choose the one that best fits your performance or tooling needs.
+
+---
+
+## Improving the ESLint Configuration
+
+For production-grade applications, we recommend enabling type-aware linting by updating your ESLint configuration.
+
+```ts
+export default tseslint.config({
+  extends: [
+    // Recommended type-checked rules
+    ...tseslint.configs.recommendedTypeChecked,
+    
+    // Or stricter rules for better safety
+    ...tseslint.configs.strictTypeChecked,
+
+    // Optional: stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+});
+```
+
+### Optional: Add React-Specific ESLint Plugins
+
+You can enhance linting further by adding:
+
+* [`eslint-plugin-react-x`](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x)
+* [`eslint-plugin-react-dom`](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom)
+
+#### Example:
+
+```ts
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x';
+import reactDom from 'eslint-plugin-react-dom';
+
+export default tseslint.config({
+  plugins: {
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+});
+```
+
+---
+
+## Getting Started
+
+1. **Install dependencies**:
+
+```bash
+npm install
+```
+
+2. **Start the development server**:
+
+```bash
+npm run dev
+```
+
+3. **Build for production**:
+
+```bash
+npm run build
+```
+
+4. **Preview production build locally**:
+
+```bash
+npm run preview
+```
+
+---
+
+## License
+
+This project is provided under the [MIT License](LICENSE).
