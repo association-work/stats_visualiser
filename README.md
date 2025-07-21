@@ -1,41 +1,104 @@
-# Open Data Visualization Tool
 
-This project is a web-based visualization tool for exploring and analyzing open data sets. Follow these setup instructions to get started:
+# 📊 Wikidata Backend API
 
-## Setup instructions
+This project is a backend REST API built with **Node.js**, **TypeScript**, and **Express**, using **Inversify** for dependency injection and **Jest** for testing.
 
-1. Install PHPBrew (PHP version manager):
-   - Follow installation guide at: https://github.com/phpbrew/phpbrew
-   - Install phpbrew with variants
-     ```
-     phpbrew install php-8.2.27 +default+sqlite+openssl # builds out php with some dependent variants
-     phpbrew switch php-8.2.27 # sets php version
-     ```
-   - Install required PHP extensions:
-     ```
-     phpbrew ext install iconv
-     phpbrew ext install ctype
-     ```
+Follow the setup instructions below to get started:
 
-3. Install Composer (PHP dependency manager):
-   - Follow installation steps at: https://getcomposer.org/download/
-   - Run `make dev/install-deps` to install dependencies
+---
 
-4. Run migrations:
-   ```
-   make db/create
-   make db/migrate
-   ```
+## ⚙️ Setup Instructions
 
-5. Set up local development server:
-   - Install Symfony CLI from: https://symfony.com/download
-   - Build database schema: `symfony console doctrine:schema:update --force`
-   - Start the server: `make dev/start-server`
+### 1. Install dependencies
+Make sure you have **Node.js** (>=18) and **npm** installed.
 
-6. Access the application:
-   - Open your browser and navigate to: http://localhost:8000/
+Then install the project dependencies:
 
-## Running tests
+```bash
+npm install
+```
 
-- Build database schema: `symfony console doctrine:schema:update --force --env=test`
-- Run tests: `make test`
+---
+
+### 2. Environment configuration
+Create a `.env` file at the root of your project and define your environment variables. For example:
+
+```
+PORT=3000
+NODE_ENV=development
+```
+
+The `dotenv` package is used to load these variables automatically.
+
+---
+
+### 3. Start the development server
+
+To run the server using TypeScript directly:
+
+```bash
+npm start
+```
+
+Or to run the compiled JavaScript (after build):
+
+```bash
+npm run start:js
+```
+
+---
+
+### 4. Build the project
+
+Compile the TypeScript code into JavaScript:
+
+```bash
+npm run build
+```
+
+To check for TypeScript errors **without generating files**:
+
+```bash
+npm run tsc:noEmit
+```
+
+---
+
+## 🧪 Running Tests
+
+This project uses **Jest** and **ts-jest** for unit testing. To run the tests:
+
+```bash
+npm test
+```
+
+The test environment is configured in `jest.config.js`.
+
+---
+
+## 📁 Project structure
+
+```
+src/
+ └── server/
+      └── index.ts       # Entry point of the application
+tests/
+ └── *.test.ts           # Jest test files
+```
+
+---
+
+## 🧩 Main Technologies
+
+| Tool             | Purpose                         |
+|------------------|----------------------------------|
+| `express`        | HTTP server framework           |
+| `typescript`     | Typed JavaScript                |
+| `inversify`      | Dependency Injection container  |
+| `jest`           | Testing framework               |
+| `ts-node`        | Run TypeScript without compiling |
+| `dotenv`         | Environment variable loader     |
+| `helmet`         | Secures HTTP headers            |
+
+---
+
