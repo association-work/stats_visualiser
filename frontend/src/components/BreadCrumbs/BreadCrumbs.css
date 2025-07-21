@@ -1,0 +1,58 @@
+.breadcrumbs {
+  height: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 2vh 0 3vh;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.static_crumbs {
+  background-color: var(--light-highligth-color);
+  color: var(--dark-highligth-color);
+  display: flex;
+  font-size: 14px;
+  position: relative;
+}
+
+.crumbs {
+  padding: 0 0 0 30px;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  border: none;
+  background-color: var(--light-highligth-color);
+}
+
+.crumbs:first-child {
+  padding: 0 0 0 15px;
+  border-radius: 8px;
+  background-color: var(--bg-color-ligth);
+  color: var(--hidden-color);
+  border-top: 2px solid var(--hidden-color);
+  border-left: 2px solid var(--hidden-color);
+  border-bottom: 2px solid var(--hidden-color);
+}
+
+.crumbs:first-child::after {
+  background-color: var(--bg-color-ligth);
+  left: 13px;
+  border-top: 2px solid var(--hidden-color);
+  border-left: 2px solid var(--hidden-color);
+}
+
+.crumbs::after {
+  content: "";
+  display: block;
+  width: 31px;
+  height: 31px;
+  transform: rotate(130deg) skew(-10deg);
+  float: right;
+  position: relative;
+  left: 19px;
+  border-top: 3px solid var(--bg-color-ligth);
+  border-left: 3px solid var(--bg-color-ligth);
+  background-color: var(--light-highligth-color);
+}
