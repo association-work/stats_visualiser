@@ -20,6 +20,7 @@ export default function PieCharts({
   setChildValueTotalWithYear,
 }: PieChartProps) {
   useEffect(() => {
+    setChartedDataTree([]);
     if (
       currentBranch.children !== undefined &&
       currentBranch.children[1].values.length > 0

@@ -52,6 +52,10 @@ function App() {
 
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
 
+  const [chartedLineDataTree, setChartedLineDataTree] = useState<
+    { name: string; value: number }[]
+  >([]);
+
   return (
     <>
       <nav>
@@ -70,6 +74,8 @@ function App() {
           setCurrentBranch={setCurrentBranch}
           chartedDataTree={chartedDataTree}
           setChartedDataTree={setChartedDataTree}
+          chartedLineDataTree={chartedLineDataTree}
+          setChartedLineDataTree={setChartedLineDataTree}
           childValueTotalWithYear={childValueTotalWithYear}
           setChildValueTotalWithYear={setChildValueTotalWithYear}
         />

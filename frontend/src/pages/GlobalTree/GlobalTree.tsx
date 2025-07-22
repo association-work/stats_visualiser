@@ -3,7 +3,8 @@ import DataButton from "../../components/DataButton/DataButton";
 import PieCharts from "../../components/PieChart/PieChart";
 import type { topicBranch } from "../../types/dataTypes";
 import { useEffect, useState } from "react";
-// import LineChart from "../../components/LineChart/LineChart";
+import line_chart from "../../../public/line_chart.png";
+import LineChart from "../../components/LineChart/LineChart";
 
 interface GlobalTreeProps {
   isYear: number;
@@ -17,6 +18,10 @@ interface GlobalTreeProps {
   >;
   childValueTotalWithYear: number;
   setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
+  chartedLineDataTree: { name: string; value: number }[];
+  setChartedLineDataTree: React.Dispatch<
+    React.SetStateAction<{ name: string; value: number }[]>
+  >;
 }
 
 export default function GlobalTree({
@@ -27,6 +32,8 @@ export default function GlobalTree({
   setCurrentBranch,
   chartedDataTree,
   setChartedDataTree,
+  chartedLineDataTree,
+  setChartedLineDataTree,
   childValueTotalWithYear,
   setChildValueTotalWithYear,
 }: GlobalTreeProps) {
@@ -39,20 +46,50 @@ export default function GlobalTree({
     }
   });
 
+  const [showLineChart, setShowLineChart] = useState(false);
+
   return (
     <section className={hasValue > 0 ? "global_tree" : "no_pie"}>
-      <section className="current_branch">
-        <button type="button" className="branch_title">
-          {currentBranch.name}
-        </button>
-        {/* ajouter une icône pour faire popup du lineGraf */}
-        {/* <LineChart currentBranch={currentBranch} /> 
-        <p>Source : à fournir</p>*/}
+      <section className="branch_evolution">
         {currentBranch.values.length !== 0 && (
-          <button type="button" className="branch_value">
-            <p>{isvalue[0][1].toFixed(2) + " Mt CO2e"}</p>
-            <p>{"+"}</p>
+          <button
+            type="button"
+            onClick={() => setShowLineChart(true)}
+            className="icon_linechart"
+          >
+            <img src={line_chart} alt="afficher le graphique de l'évolution" />
           </button>
+        )}
+        <article className="current_branch">
+          <button type="button" className="branch_title">
+            {currentBranch.name}
+          </button>
+          {currentBranch.values.length !== 0 && (
+            <button type="button" className="branch_value">
+              <p>{isvalue[0][1].toFixed(2) + " Mt CO2e"}</p>
+              <p>{"+"}</p>
+            </button>
+          )}
+        </article>
+        {showLineChart && (
+          <article className="popup_linechart">
+            <button
+              type="button"
+              onClick={() => setShowLineChart(false)}
+              className="closeButton"
+            >
+              X
+            </button>
+            <LineChart
+              currentBranch={currentBranch}
+              chartedLineDataTree={chartedLineDataTree}
+              setChartedLineDataTree={setChartedLineDataTree}
+            />
+            <div className="references">
+              <p>Source : </p>
+              <a href={currentBranch.source.url}>{currentBranch.source.name}</a>
+            </div>
+          </article>
         )}
       </section>
       {currentBranch.children && (
