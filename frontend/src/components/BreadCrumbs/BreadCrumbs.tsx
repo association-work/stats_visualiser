@@ -1,11 +1,23 @@
 import "./BreadCrumbs.css";
-import { useContext } from "react";
-import GlobalContext from "../../contexts/GlobalContext";
+import type { topicBranch } from "../../types/dataTypes";
 
-export default function BreadCrumbs() {
-  const { chosenPath, setChosenPath, setCurrentBranch } =
-    useContext(GlobalContext);
+interface BreadCrumbsProps {
+  chosenPath: topicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  setChartedDataTree: React.Dispatch<
+    React.SetStateAction<{ name: string; value: number }[]>
+  >;
+  setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
+}
 
+export default function BreadCrumbs({
+  chosenPath,
+  setChosenPath,
+  setCurrentBranch,
+  setChartedDataTree,
+  setChildValueTotalWithYear,
+}: BreadCrumbsProps) {
   const handleRewindBranch = (index: number) => {
     chosenPath.forEach((choice) => {
       setCurrentBranch(choice);
@@ -15,6 +27,8 @@ export default function BreadCrumbs() {
         i--;
       }
       setChosenPath(chosenPath);
+      setChartedDataTree([]);
+      setChildValueTotalWithYear(0);
     });
   };
 

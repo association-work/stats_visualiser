@@ -1,4 +1,4 @@
-import type { branch } from "../../types/dataTypes";
+import type { topicBranch } from "../../types/dataTypes";
 import {
   LineChart as LineCharts,
   CartesianGrid,
@@ -10,7 +10,7 @@ import {
 } from "recharts";
 
 interface LineChartProps {
-  currentBranch: branch;
+  currentBranch: topicBranch;
 }
 
 export default function LineChart({ currentBranch }: LineChartProps) {

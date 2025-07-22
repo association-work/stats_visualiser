@@ -1,20 +1,19 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import { useContext, useEffect, useState } from "react";
-import GlobalContext from "../../contexts/GlobalContext";
-import { GetTopics } from "../../functions/GetTopic";
+import { useState } from "react";
+import type { topicBranch } from "../../types/dataTypes";
 
-export default function Navbar() {
-  const {
-    setIsYear,
-    isYear,
-    setChosenPath,
-    currentBranch,
-    setCurrentBranch,
-    setTopicOrigin,
-    topicOrigin,
-  } = useContext(GlobalContext);
+interface NavBarProps {
+  isYear: number;
+  setIsYear: React.Dispatch<React.SetStateAction<number>>;
+  topicOrigin: topicBranch;
+}
 
+export default function Navbar({
+  setIsYear,
+  isYear,
+  topicOrigin,
+}: NavBarProps) {
   const [location, setlocation] = useState(true);
 
   const changeParameter = () => {
@@ -24,14 +23,6 @@ export default function Navbar() {
       setlocation(true);
     }
   };
-
-  useEffect(() => {
-    GetTopics().then((data) => {
-      setChosenPath([currentBranch, data[0]]);
-      setCurrentBranch(data[0]);
-      setTopicOrigin(data[0]);
-    });
-  }, []);
 
   const years = topicOrigin.values;
 

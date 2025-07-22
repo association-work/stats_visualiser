@@ -4,6 +4,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
+}
+
+.no_pie {
+  height: 98%;
+  width: 93%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
@@ -36,13 +45,35 @@
 }
 
 .linked_children {
-  margin-top: 1em;
-  width: 80%;
+  width: 85%;
+  min-height: 30%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  justify-content: center;
   gap: 10px;
-  overflow-y: auto;
+}
+
+.linked_charted {
+  width: 85%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 10px;
+}
+
+.camembert_chart {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.references {
+  display: flex;
+  gap: 5px;
 }
 
 .listed_children {
@@ -67,6 +98,7 @@
   .global_tree {
     width: 70%;
     flex-direction: row;
+    gap: 4em;
   }
   .current_branch {
     width: 50%;

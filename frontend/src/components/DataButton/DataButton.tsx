@@ -1,17 +1,27 @@
 import "./DataButton.css";
 import type { topicBranch } from "./../../types/dataTypes";
-import { useEffect, useState, useContext } from "react";
-import GlobalContext from "../../contexts/GlobalContext";
+import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
 
 interface DataButtonProps {
   information: topicBranch;
+  chosenPath: topicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  childValueTotalWithYear: number;
+  setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
+  isYear: number;
 }
 
-export default function DataButton({ information }: DataButtonProps) {
-  const { chosenPath, setChosenPath, setCurrentBranch } =
-    useContext(GlobalContext);
-
+export default function DataButton({
+  information,
+  chosenPath,
+  setChosenPath,
+  setCurrentBranch,
+  childValueTotalWithYear,
+  setChildValueTotalWithYear,
+  isYear,
+}: DataButtonProps) {
   const [nextBranch, setNextBranch] = useState<topicBranch>(information);
 
   useEffect(() => {
@@ -22,7 +32,20 @@ export default function DataButton({ information }: DataButtonProps) {
     chosenPath.push(nextBranch);
     setChosenPath(chosenPath);
     setCurrentBranch(nextBranch);
+    setChildValueTotalWithYear(0);
   };
+
+  const informationValue = information.values.find(
+    (info) => info[0] === isYear
+  );
+
+  let percentage = 0;
+
+  if (informationValue && childValueTotalWithYear > 0) {
+    percentage = Number(
+      ((informationValue[1] / childValueTotalWithYear) * 100).toFixed(2)
+    );
+  }
 
   return (
     <>
@@ -34,11 +57,16 @@ export default function DataButton({ information }: DataButtonProps) {
           onClick={handleChangingBranch}
         >
           <p>{nextBranch.name}</p>
-          <p>{">"}</p>
+          <p>
+            {percentage > 0 ? `${percentage} %` : ""}
+            {">"}
+          </p>
         </button>
       ) : (
         <button type="button" className="tree_end" key={nextBranch.id} disabled>
-          <p>{nextBranch.name}</p>
+          <p>
+            {nextBranch.name} {percentage > 0 ? `${percentage} %` : ""}
+          </p>
         </button>
       )}
     </>
