@@ -60,11 +60,13 @@ export default function Navbar({
             {isYear}
           </option>
           {years &&
-            years.map((year) => (
-              <option value={year[0]} key={year[0]}>
-                {year[0]}
-              </option>
-            ))}
+            years
+              .map((val, index) => years[years.length - 1 - index])
+              .map((year) => (
+                <option value={year[0]} key={year[0]}>
+                  {year[0]}
+                </option>
+              ))}
         </select>
       </section>
     </>

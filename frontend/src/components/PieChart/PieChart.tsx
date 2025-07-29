@@ -1,26 +1,23 @@
-import { useEffect } from "react";
-import { PieChart, Pie, ResponsiveContainer, Tooltip } from "recharts";
+import { useEffect, useState } from "react";
+import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell } from "recharts";
 import type { topicBranch } from "../../types/dataTypes";
 
 interface PieChartProps {
   isYear: number;
   currentBranch: topicBranch;
-  chartedDataTree: { name: string; value: number }[];
-  setChartedDataTree: React.Dispatch<
-    React.SetStateAction<{ name: string; value: number }[]>
-  >;
   setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function PieCharts({
   isYear,
   currentBranch,
-  chartedDataTree,
-  setChartedDataTree,
   setChildValueTotalWithYear,
 }: PieChartProps) {
+  const [chartedDataTree, setChartedDataTree] = useState<
+    { name: string; value: number }[]
+  >([]);
+
   useEffect(() => {
-    setChartedDataTree([]);
     if (
       currentBranch.children !== undefined &&
       currentBranch.children[1].values.length > 0
@@ -48,9 +45,23 @@ export default function PieCharts({
       autreValue = Number(autreValue.toFixed(2));
       futureChartedDataTree.push({ name: "autre", value: autreValue });
       setChartedDataTree(futureChartedDataTree);
+      totalValue = Number(totalValue.toFixed(2));
       setChildValueTotalWithYear(totalValue);
     }
-  }, []);
+  }, [currentBranch]);
+
+  const COLORS = [
+    "#D4DBFF",
+    "#BDC6F5",
+    "#A6B1EB",
+    "#8F9CE1",
+    "#7887D7",
+    "#6272CD",
+    "#4B5DC3",
+    "#3448B9",
+    "#1D33AF",
+    "#061EA5",
+  ];
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -63,9 +74,14 @@ export default function PieCharts({
           cy="50%"
           outerRadius={80}
           innerRadius={20}
-          fill="#d4dbff"
-          label
-        />
+        >
+          {chartedDataTree.map((entry, index) => (
+            <Cell
+              key={`cell-${entry.name}`}
+              fill={COLORS[index % COLORS.length]}
+            />
+          ))}
+        </Pie>
         <Tooltip />
       </PieChart>
     </ResponsiveContainer>

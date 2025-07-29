@@ -44,6 +44,10 @@ main {
   justify-content: center;
 }
 
+main h1 {
+  margin: 0.6em 0;
+}
+
 footer {
   height: 6vh;
   width: 100vw;
@@ -63,7 +67,13 @@ a {
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
+  main h1 {
+    margin: 0.8em 0;
+  }
 }
 
 @media screen and (min-width: 1024px) {
+  main h1 {
+    margin: 1em 0;
+  }
 }

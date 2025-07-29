@@ -51,8 +51,8 @@ export default function LineChart({
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
-        <YAxis domain={["dataMin", "auto"]} />
-        {/* domain permet de mieux cerner les début et fin des axes */}
+        <YAxis />
+        {/* domain={["dataMin", "auto"]} permet de mieux cerner les début et fin des axes */}
         <CoolTip />
         <Lines
           type="monotone"

@@ -29,21 +29,19 @@ export default function DataButton({
   }, []);
 
   const handleChangingBranch = () => {
-    chosenPath.push(nextBranch);
     setChosenPath(chosenPath);
+    chosenPath.push(nextBranch);
     setCurrentBranch(nextBranch);
     setChildValueTotalWithYear(0);
   };
 
-  const informationValue = information.values.find(
-    (info) => info[0] === isYear
-  );
+  const nextBranchValue = nextBranch.values.find((info) => info[0] === isYear);
 
   let percentage = 0;
 
-  if (informationValue && childValueTotalWithYear > 0) {
+  if (nextBranchValue && childValueTotalWithYear !== 0) {
     percentage = Number(
-      ((informationValue[1] / childValueTotalWithYear) * 100).toFixed(2)
+      ((nextBranchValue[1] / childValueTotalWithYear) * 100).toFixed(0)
     );
   }
 
@@ -59,14 +57,13 @@ export default function DataButton({
           <p>{nextBranch.name}</p>
           <p>
             {percentage > 0 ? `${percentage} %` : ""}
-            {">"}
+            {" >"}
           </p>
         </button>
       ) : (
         <button type="button" className="tree_end" key={nextBranch.id} disabled>
-          <p>
-            {nextBranch.name} {percentage > 0 ? `${percentage} %` : ""}
-          </p>
+          <p>{nextBranch.name}</p>
+          <p>{percentage > 0 ? `${percentage} %` : ""}</p>
         </button>
       )}
     </>

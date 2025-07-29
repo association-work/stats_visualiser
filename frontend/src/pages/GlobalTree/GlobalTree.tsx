@@ -3,7 +3,7 @@ import DataButton from "../../components/DataButton/DataButton";
 import PieCharts from "../../components/PieChart/PieChart";
 import type { topicBranch } from "../../types/dataTypes";
 import { useEffect, useState } from "react";
-import line_chart from "../../../public/line_chart.png";
+import line_chart from "../../../src/assets/line_chart.png";
 import LineChart from "../../components/LineChart/LineChart";
 
 interface GlobalTreeProps {
@@ -12,10 +12,6 @@ interface GlobalTreeProps {
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   currentBranch: topicBranch;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
-  chartedDataTree: { name: string; value: number }[];
-  setChartedDataTree: React.Dispatch<
-    React.SetStateAction<{ name: string; value: number }[]>
-  >;
   childValueTotalWithYear: number;
   setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
   chartedLineDataTree: { name: string; value: number }[];
@@ -30,8 +26,6 @@ export default function GlobalTree({
   setChosenPath,
   currentBranch,
   setCurrentBranch,
-  chartedDataTree,
-  setChartedDataTree,
   chartedLineDataTree,
   setChartedLineDataTree,
   childValueTotalWithYear,
@@ -67,7 +61,6 @@ export default function GlobalTree({
           {currentBranch.values.length !== 0 && (
             <button type="button" className="branch_value">
               <p>{isvalue[0][1].toFixed(2) + " Mt CO2e"}</p>
-              <p>{"+"}</p>
             </button>
           )}
         </article>
@@ -87,7 +80,9 @@ export default function GlobalTree({
             />
             <div className="references">
               <p>Source : </p>
-              <a href={currentBranch.source.url}>{currentBranch.source.name}</a>
+              <a href={currentBranch.source.url} target="_blank">
+                {currentBranch.source.name}
+              </a>
             </div>
           </article>
         )}
@@ -98,16 +93,17 @@ export default function GlobalTree({
         >
           {hasValue > 0 ? (
             <article className="camembert_chart">
+              {childValueTotalWithYear !== 0 && (
+                <p>Total des émissions : {childValueTotalWithYear} Mt CO2e</p>
+              )}
               <PieCharts
                 isYear={isYear}
                 currentBranch={currentBranch}
-                chartedDataTree={chartedDataTree}
-                setChartedDataTree={setChartedDataTree}
                 setChildValueTotalWithYear={setChildValueTotalWithYear}
               />
               <div className="references">
                 <p>Source : </p>
-                <a href={currentBranch.source.url}>
+                <a href={currentBranch.source.url} target="_blank">
                   {currentBranch.source.name}
                 </a>
               </div>

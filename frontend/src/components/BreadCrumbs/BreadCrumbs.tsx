@@ -5,18 +5,12 @@ interface BreadCrumbsProps {
   chosenPath: topicBranch[];
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
-  setChartedDataTree: React.Dispatch<
-    React.SetStateAction<{ name: string; value: number }[]>
-  >;
-  setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function BreadCrumbs({
   chosenPath,
   setChosenPath,
   setCurrentBranch,
-  setChartedDataTree,
-  setChildValueTotalWithYear,
 }: BreadCrumbsProps) {
   const handleRewindBranch = (index: number) => {
     chosenPath.forEach((choice) => {
@@ -27,14 +21,12 @@ export default function BreadCrumbs({
         i--;
       }
       setChosenPath(chosenPath);
-      setChartedDataTree([]);
-      setChildValueTotalWithYear(0);
     });
   };
 
   return (
     <aside className="breadcrumbs">
-      <section className="static_crumbs">
+      <section className="static_crumbs" aria-label="Breadcrumb">
         {chosenPath &&
           chosenPath.length > 0 &&
           chosenPath.map((choice, index) => (

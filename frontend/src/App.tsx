@@ -46,10 +46,6 @@ function App() {
     });
   }, []);
 
-  const [chartedDataTree, setChartedDataTree] = useState<
-    { name: string; value: number }[]
-  >([]);
-
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
 
   const [chartedLineDataTree, setChartedLineDataTree] = useState<
@@ -66,14 +62,13 @@ function App() {
         />
       </nav>
       <main>
+        <h1>{topicOrigin.name}</h1>
         <GlobalTree
           isYear={isYear}
           chosenPath={chosenPath}
           setChosenPath={setChosenPath}
           currentBranch={currentBranch}
           setCurrentBranch={setCurrentBranch}
-          chartedDataTree={chartedDataTree}
-          setChartedDataTree={setChartedDataTree}
           chartedLineDataTree={chartedLineDataTree}
           setChartedLineDataTree={setChartedLineDataTree}
           childValueTotalWithYear={childValueTotalWithYear}
@@ -86,8 +81,6 @@ function App() {
           chosenPath={chosenPath}
           setChosenPath={setChosenPath}
           setCurrentBranch={setCurrentBranch}
-          setChartedDataTree={setChartedDataTree}
-          setChildValueTotalWithYear={setChildValueTotalWithYear}
         />
       </footer>
     </>
