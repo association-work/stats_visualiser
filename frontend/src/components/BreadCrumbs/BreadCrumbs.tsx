@@ -35,7 +35,6 @@ export default function BreadCrumbs({
               className="crumbs"
               key={index}
               onClick={() => handleRewindBranch(index)}
-              disabled={index === 0}
             >
               {choice.name.length < 15 ? choice.name : choice.name.slice(0, 15)}
             </button>

@@ -39,7 +39,7 @@
 
 .crumbs:first-child::after {
   background-color: var(--bg-color-ligth);
-  left: 13px;
+  left: 10px;
   border-top: 2px solid var(--hidden-color);
   border-left: 2px solid var(--hidden-color);
 }
@@ -47,12 +47,12 @@
 .crumbs::after {
   content: "";
   display: block;
-  width: 31px;
-  height: 31px;
+  width: 26px;
+  height: 26px;
   transform: rotate(130deg) skew(-10deg);
   float: right;
   position: relative;
-  left: 19px;
+  left: 17px;
   border-top: 3px solid var(--bg-color-ligth);
   border-left: 3px solid var(--bg-color-ligth);
   background-color: var(--light-highligth-color);

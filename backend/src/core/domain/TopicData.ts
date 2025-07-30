@@ -1,13 +1,13 @@
-export type topicBranch = {
-  id: string;
+export interface TopicData {
   name: string;
+  id: string;
+  parentId?: string;
   source: {
     name: string;
     url: string;
   };
   unit: string;
-  children?: topicBranch[];
   values: [number, number][];
   hasChildren: boolean;
-  parentId: string;
-};
+  children?: TopicData[];
+}
