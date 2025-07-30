@@ -1,51 +1,89 @@
-import "./PieChart.css";
-import BigData from "../../data.json";
-import type { pieData, pieSets } from "./../../types/chartTypes";
-import type { branch } from "../../types/dataTypes";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useEffect, useState } from "react";
+import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell } from "recharts";
+import type { topicBranch } from "../../types/dataTypes";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+interface PieChartProps {
+  isYear: number;
+  currentBranch: topicBranch;
+  setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
+}
 
-export default function PieChart() {
-  const entireTree: branch = BigData.themes[0];
-  let chartedData: pieData = {
-    labels: [],
-    datasets: [
-      {
-        data: [],
-        backgroundColor: [""],
-        hoverOffset: 4,
-      },
-    ],
-  };
+export default function PieCharts({
+  isYear,
+  currentBranch,
+  setChildValueTotalWithYear,
+}: PieChartProps) {
+  const [chartedDataTree, setChartedDataTree] = useState<
+    { name: string; value: number }[]
+  >([]);
 
-  const chartingTree = (isdata: branch, isyear: number) => {
-    const labels: string[] = [];
-    let datasets: pieSets[] = [];
-    const data: number[] = [];
-    if (isdata.children) {
-      isdata.children.map((kid) => {
-        labels.push(kid.name);
-        const isvalue = kid.values.filter((info) => info.year === isyear);
-        console.log(isvalue);
-        data.push(isvalue[0].value);
+  useEffect(() => {
+    if (
+      currentBranch.children !== undefined &&
+      currentBranch.children[1].values.length > 0
+    ) {
+      let autreValue = 0;
+      let futureChartedDataTree = [];
+      let totalValue = 0;
+      currentBranch.children.forEach((element) => {
+        const childValue = element.values.find((info) => info[0] === isYear);
+        if (childValue) {
+          totalValue = totalValue + childValue[1];
+          if (childValue[1] < 1) {
+            autreValue = autreValue + childValue[1];
+          } else {
+            futureChartedDataTree.push({
+              name: element.name,
+              value: childValue[1],
+            });
+          }
+        }
       });
-      datasets.push({
-        data,
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(38, 90, 29, 0,9)",
-        ],
-        hoverOffset: 4,
-      });
+      if (autreValue < 0) {
+        autreValue = 0;
+      }
+      autreValue = Number(autreValue.toFixed(2));
+      futureChartedDataTree.push({ name: "autre", value: autreValue });
+      setChartedDataTree(futureChartedDataTree);
+      totalValue = Number(totalValue.toFixed(2));
+      setChildValueTotalWithYear(totalValue);
     }
-    return (chartedData = { labels, datasets });
-  };
+  }, [currentBranch]);
+
+  const COLORS = [
+    "#D4DBFF",
+    "#BDC6F5",
+    "#A6B1EB",
+    "#8F9CE1",
+    "#7887D7",
+    "#6272CD",
+    "#4B5DC3",
+    "#3448B9",
+    "#1D33AF",
+    "#061EA5",
+  ];
+
   return (
-    <>
-      <Pie data={chartingTree(entireTree, 2000)} />
-    </>
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart width={400} height={400}>
+        <Pie
+          dataKey="value"
+          isAnimationActive={true}
+          data={chartedDataTree}
+          cx="50%"
+          cy="50%"
+          outerRadius={80}
+          innerRadius={20}
+        >
+          {chartedDataTree.map((entry, index) => (
+            <Cell
+              key={`cell-${entry.name}`}
+              fill={COLORS[index % COLORS.length]}
+            />
+          ))}
+        </Pie>
+        <Tooltip />
+      </PieChart>
+    </ResponsiveContainer>
   );
 }

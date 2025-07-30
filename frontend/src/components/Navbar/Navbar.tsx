@@ -1,11 +1,19 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import data from "../../data.json";
 import { useState } from "react";
+import type { topicBranch } from "../../types/dataTypes";
 
-export default function Navbar() {
-  const years = data.themes[0].values;
+interface NavBarProps {
+  isYear: number;
+  setIsYear: React.Dispatch<React.SetStateAction<number>>;
+  topicOrigin: topicBranch;
+}
 
+export default function Navbar({
+  setIsYear,
+  isYear,
+  topicOrigin,
+}: NavBarProps) {
   const [location, setlocation] = useState(true);
 
   const changeParameter = () => {
@@ -15,6 +23,8 @@ export default function Navbar() {
       setlocation(true);
     }
   };
+
+  const years = topicOrigin.values;
 
   return (
     <>
@@ -26,6 +36,7 @@ export default function Navbar() {
           <input type="checkbox" onChange={() => changeParameter()} />
           <span className="slider" />
         </label>
+        {/* à mettre en place une fois les données géographiques ajouter à la BDD*/}
       </section>
       <section className="navigation">
         <select name="country" id="" className="country_box" disabled>
@@ -37,16 +48,25 @@ export default function Navbar() {
             <option value="to choose">To choose</option>
           )}
         </select>
-        <select name="year" id="" className="year_box">
+        <select
+          name="year"
+          id=""
+          className="year_box"
+          onChange={(event) => {
+            setIsYear(Number(event.target.value));
+          }}
+        >
           <option value="" key="option">
-            Année
+            {isYear}
           </option>
           {years &&
-            years.map((year) => (
-              <option value={year.year} key={year.year}>
-                {year.year}
-              </option>
-            ))}
+            years
+              .map((val, index) => years[years.length - 1 - index])
+              .map((year) => (
+                <option value={year[0]} key={year[0]}>
+                  {year[0]}
+                </option>
+              ))}
         </select>
       </section>
     </>

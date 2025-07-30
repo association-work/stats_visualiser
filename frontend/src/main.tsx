@@ -3,18 +3,11 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
-import GlobalTree from "./pages/GlobalTree/GlobalTree.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [
-      {
-        path: "/",
-        element: <GlobalTree />,
-      },
-    ],
   },
 ]);
 

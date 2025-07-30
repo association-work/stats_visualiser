@@ -1,15 +1,13 @@
-export type branch = {
-  id: number;
+export type topicBranch = {
+  id: string;
   name: string;
-  parentId: number | null;
-  externalId: string;
-  isSection: boolean;
-  source: string;
-  link: string;
-  geography: string;
-  geographyId: string;
+  source: {
+    name: string;
+    url: string;
+  };
   unit: string;
-  isSummable: boolean;
-  values: { year: number; value: number }[];
-  children: branch[];
+  children?: topicBranch[];
+  values: [number, number][];
+  hasChildren: boolean;
+  parentId: string;
 };

@@ -2,4 +2,38 @@
   border: 1px solid var(--highligth-color);
   border-radius: 8px;
   background-color: var(--bg-color-ligth);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6em;
+}
+
+.tree_node p:first-child {
+  width: 75%;
+  text-align: start;
+}
+
+.tree_node p:last-child {
+  width: 20%;
+  text-align: end;
+}
+
+.tree_end {
+  border: 1px solid var(--light-highligth-color);
+  border-radius: 8px;
+  background-color: var(--bg-color-ligth);
+  text-align: left;
+  color: var(--hidden-color);
+  padding: 0.6em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tree_end p:first-child {
+  width: 75%;
+  text-align: start;
+}
+
+.tree_end p:last-child {
+  width: 20%;
+  text-align: end;
 }
