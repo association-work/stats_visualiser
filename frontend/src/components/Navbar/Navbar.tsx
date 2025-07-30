@@ -24,7 +24,7 @@ export default function Navbar({
     }
   };
 
-  const years = topicOrigin.values;
+  const years = topicOrigin.values.sort((a, b) => b[0] - a[0]);
 
   return (
     <>
@@ -60,13 +60,11 @@ export default function Navbar({
             {isYear}
           </option>
           {years &&
-            years
-              .map((val, index) => years[years.length - 1 - index])
-              .map((year) => (
-                <option value={year[0]} key={year[0]}>
-                  {year[0]}
-                </option>
-              ))}
+            years.map((year) => (
+              <option value={year[0]} key={year[0]}>
+                {year[0]}
+              </option>
+            ))}
         </select>
       </section>
     </>
