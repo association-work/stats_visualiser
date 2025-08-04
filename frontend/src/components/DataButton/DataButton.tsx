@@ -2,7 +2,7 @@ import "./DataButton.css";
 import type { topicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
-import go_next from "../../assets/go-next.png";
+import go_next from "../../assets/corner-up-right.svg";
 
 interface DataButtonProps {
   information: topicBranch;

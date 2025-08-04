@@ -11,7 +11,7 @@
 .last_chosen_tree_node {
   border: 1px solid var(--highligth-color);
   border-radius: 8px;
-  background-color: var(--bg-color-dark);
+  background-color: var(--bg-color-medium-ligth);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,12 +35,12 @@
 
 .tree_node img,
 .last_chosen_tree_node img {
-  width: 2em;
+  width: 1em;
   height: auto;
 }
 
 .tree_end {
-  border: 1px solid var(--light-highligth-color);
+  border: 1px solid var(--medium-highligth-color);
   border-radius: 8px;
   background-color: var(--bg-color-ligth);
   text-align: left;
