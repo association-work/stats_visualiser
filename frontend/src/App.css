@@ -2,15 +2,21 @@
 
 :root {
   --bg-color-ligth: #ffffff;
-  --bg-color-dark: #edeff2;
+  --bg-color-medium-ligth: #edeff2;
+  --bg-color-dark-ligth: #bbc2cf;
+  --bg-color-medium: #77869f;
+  --bg-color-ligth-dark: #434d5f;
+  --bg-color-medium-dark: #282f39;
+  --bg-color-dark: #14171c;
   --primary-color: #000000;
-  --dark-highligth-color: #091863;
+  --dark-highligth-color: #0a1863;
+  --medium-dark-highligth-color: #223fe2;
   --highligth-color: #061ea5;
+  --medium-highligth-color: #8698fd;
   --light-highligth-color: #d4dbff;
   --hidden-color: #7b88a2;
   --main-font: "Nunito", sans-serif;
   --title-font: "Patrick Hand", cursive;
-
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
@@ -54,7 +60,7 @@ main {
 }
 
 main h1 {
-  margin: 0.2em 0;
+  margin: 0.3em 0;
 }
 
 footer {
