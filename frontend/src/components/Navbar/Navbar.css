@@ -61,20 +61,21 @@ input:checked + .slider:before {
   flex-direction: row;
   justify-content: space-around;
   padding: 0 1em;
+  gap: 5px;
 }
 
 .country_box {
   border: 1px solid var(--primary-color);
   border-radius: 8px;
   padding: 1em;
-  width: 75%;
+  min-width: 70%;
 }
 
 .year_box {
   border: 1px solid var(--highligth-color);
   border-radius: 8px;
   padding: 1em;
-  width: 20%;
+  width: 8em;
   color: var(--highligth-color);
 }
 
