@@ -53,6 +53,24 @@
   background-color: var(--highligth-color);
   max-width: 50%;
   text-align: left;
+  padding: 0.6em 0.5em;
+}
+
+.branch_title:focus,
+.branch_title:focus-visible {
+  outline: none;
+}
+
+.branch_title p {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.branch_title img {
+  width: 2em;
+  height: auto;
 }
 
 .branch_value {
@@ -62,7 +80,7 @@
   background-color: var(--light-highligth-color);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
   padding: 0.6em 1.2em;
 }
@@ -132,6 +150,7 @@
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
+  margin-bottom: 5px;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -165,6 +184,9 @@
   }
   .linked_children {
     width: 90%;
+  }
+  .camembert_chart {
+    width: 25vw;
   }
   .linked_charted {
     width: 95%;

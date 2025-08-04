@@ -2,6 +2,7 @@ import "./DataButton.css";
 import type { topicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
+import go_next from "../../assets/go-next.png";
 
 interface DataButtonProps {
   information: topicBranch;
@@ -11,6 +12,8 @@ interface DataButtonProps {
   childValueTotalWithYear: number;
   setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
   isYear: number;
+  previousBranchName: string;
+  setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function DataButton({
@@ -21,6 +24,8 @@ export default function DataButton({
   childValueTotalWithYear,
   setChildValueTotalWithYear,
   isYear,
+  previousBranchName,
+  setPreviousBranchName,
 }: DataButtonProps) {
   const [nextBranch, setNextBranch] = useState<topicBranch>(information);
 
@@ -33,37 +38,57 @@ export default function DataButton({
     chosenPath.push(nextBranch);
     setCurrentBranch(nextBranch);
     setChildValueTotalWithYear(0);
+    setPreviousBranchName("");
   };
 
   const nextBranchValue = nextBranch.values.find((info) => info[0] === isYear);
 
-  let percentage = 0;
+  let percentage = "0";
 
   if (nextBranchValue && childValueTotalWithYear !== 0) {
-    percentage = Number(
-      ((nextBranchValue[1] / childValueTotalWithYear) * 100).toFixed(0)
-    );
+    if (childValueTotalWithYear > 0) {
+      percentage = (
+        (nextBranchValue[1] / childValueTotalWithYear) *
+        100
+      ).toFixed(1);
+    } else {
+      percentage = (
+        (nextBranchValue[1] / Math.abs(childValueTotalWithYear)) *
+        100
+      ).toFixed(1);
+    }
   }
+
+  console.log(previousBranchName);
+  console.log(nextBranch.name);
 
   return (
     <>
       {nextBranch && nextBranch.hasChildren ? (
         <button
           type="button"
-          className="tree_node"
+          className={
+            nextBranch.name === previousBranchName
+              ? "last_chosen_tree_node"
+              : "tree_node"
+          }
           key={nextBranch.id}
           onClick={handleChangingBranch}
         >
           <p>{nextBranch.name}</p>
-          <p>
-            {percentage > 0 ? `${percentage} %` : ""}
-            {" >"}
-          </p>
+          {nextBranch.values.length !== 0 ? (
+            <p>
+              {percentage + " %"}
+              <img src={go_next} alt="show more data" />
+            </p>
+          ) : (
+            <img src={go_next} alt="show more data" />
+          )}
         </button>
       ) : (
         <button type="button" className="tree_end" key={nextBranch.id} disabled>
           <p>{nextBranch.name}</p>
-          <p>{percentage > 0 ? `${percentage} %` : ""}</p>
+          <p>{percentage + " %"}</p>
         </button>
       )}
     </>

@@ -46,11 +46,7 @@ function App() {
     });
   }, []);
 
-  const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
-
-  const [chartedLineDataTree, setChartedLineDataTree] = useState<
-    { name: string; value: number }[]
-  >([]);
+  const [previousBranchName, setPreviousBranchName] = useState<string>("");
 
   return (
     <>
@@ -69,10 +65,8 @@ function App() {
           setChosenPath={setChosenPath}
           currentBranch={currentBranch}
           setCurrentBranch={setCurrentBranch}
-          chartedLineDataTree={chartedLineDataTree}
-          setChartedLineDataTree={setChartedLineDataTree}
-          childValueTotalWithYear={childValueTotalWithYear}
-          setChildValueTotalWithYear={setChildValueTotalWithYear}
+          previousBranchName={previousBranchName}
+          setPreviousBranchName={setPreviousBranchName}
         />
         {/* <Outlet /> */}
       </main>
@@ -81,6 +75,7 @@ function App() {
           chosenPath={chosenPath}
           setChosenPath={setChosenPath}
           setCurrentBranch={setCurrentBranch}
+          setPreviousBranchName={setPreviousBranchName}
         />
       </footer>
     </>
