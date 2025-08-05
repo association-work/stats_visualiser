@@ -74,8 +74,8 @@ input:checked + .slider:before {
 .year_box {
   border: 1px solid var(--highligth-color);
   border-radius: 8px;
-  padding: 1em;
-  width: 8em;
+  padding: 0.5em;
+  width: 8.5em;
   color: var(--highligth-color);
 }
 

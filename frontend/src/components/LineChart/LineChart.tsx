@@ -32,7 +32,9 @@ export default function LineChart({
           value: element[1],
         });
       });
-      setChartedLineDataTree(futureChartedDataTree);
+      setChartedLineDataTree(
+        futureChartedDataTree.sort((a, b) => b.value - a.value)
+      );
     }
   }, []);
 

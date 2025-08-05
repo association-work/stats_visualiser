@@ -4,16 +4,11 @@ import { useState } from "react";
 import type { topicBranch } from "../../types/dataTypes";
 
 interface NavBarProps {
-  isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
   topicOrigin: topicBranch;
 }
 
-export default function Navbar({
-  setIsYear,
-  isYear,
-  topicOrigin,
-}: NavBarProps) {
+export default function Navbar({ setIsYear, topicOrigin }: NavBarProps) {
   const [location, setlocation] = useState(true);
 
   const changeParameter = () => {
@@ -55,9 +50,10 @@ export default function Navbar({
           onChange={(event) => {
             setIsYear(Number(event.target.value));
           }}
+          defaultValue={""}
         >
-          <option value="" key="option">
-            {isYear}
+          <option value="" disabled>
+            Choix année
           </option>
           {years &&
             years.map((year) => (

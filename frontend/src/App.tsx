@@ -51,11 +51,7 @@ function App() {
   return (
     <>
       <nav>
-        <Navbar
-          isYear={isYear}
-          setIsYear={setIsYear}
-          topicOrigin={topicOrigin}
-        />
+        <Navbar setIsYear={setIsYear} topicOrigin={topicOrigin} />
       </nav>
       <main>
         <h1>{topicOrigin.name}</h1>
