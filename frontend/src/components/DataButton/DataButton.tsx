@@ -59,9 +59,6 @@ export default function DataButton({
     }
   }
 
-  console.log(previousBranchName);
-  console.log(nextBranch.name);
-
   return (
     <>
       {nextBranch && nextBranch.hasChildren ? (
