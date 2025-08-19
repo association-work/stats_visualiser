@@ -36,11 +36,10 @@ function App() {
     parentId: "",
   });
 
-  const [chosenPath, setChosenPath] = useState<topicBranch[]>([currentBranch]);
+  const [chosenPath, setChosenPath] = useState<topicBranch[]>([]);
 
   useEffect(() => {
     GetTopics().then((data) => {
-      setChosenPath([currentBranch, data[0]]);
       setCurrentBranch(data[0]);
       setTopicOrigin(data[0]);
     });
@@ -54,7 +53,6 @@ function App() {
         <Navbar setIsYear={setIsYear} topicOrigin={topicOrigin} />
       </nav>
       <main>
-        <h1>{topicOrigin.name}</h1>
         <GlobalTree
           isYear={isYear}
           chosenPath={chosenPath}
@@ -64,7 +62,6 @@ function App() {
           previousBranchName={previousBranchName}
           setPreviousBranchName={setPreviousBranchName}
         />
-        {/* <Outlet /> */}
       </main>
       <footer>
         <BreadCrumbs

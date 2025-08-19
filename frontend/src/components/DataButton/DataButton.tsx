@@ -72,7 +72,7 @@ export default function DataButton({
           key={nextBranch.id}
           onClick={handleChangingBranch}
         >
-          <p>{nextBranch.name}</p>
+          <p>{nextBranch.name[0].toUpperCase() + nextBranch.name.slice(1)}</p>
           {nextBranch.values.length !== 0 ? (
             <p>
               {percentage + " %"}

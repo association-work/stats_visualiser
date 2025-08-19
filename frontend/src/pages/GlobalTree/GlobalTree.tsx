@@ -3,7 +3,7 @@ import DataButton from "../../components/DataButton/DataButton";
 import PieCharts from "../../components/PieChart/PieChart";
 import type { topicBranch } from "../../types/dataTypes";
 import { useEffect, useState } from "react";
-import line_chart from "../../../src/assets/line_chart.png";
+import line_chart from "../../../src/assets/activity.svg";
 import LineChart from "../../components/LineChart/LineChart";
 import { GetTopic } from "../../functions/GetTopic";
 import go_back from "../../assets/go-back.png";
@@ -56,41 +56,76 @@ export default function GlobalTree({
     { name: string; value: number }[]
   >([]);
 
+  const welcomeBranch = [
+    { id: "0_être_humain", name: "Être humain" },
+    {
+      id: "0_environnement",
+      name: "Environnement",
+      children: [
+        currentBranch,
+        { id: "1_matières premières", name: "Matières premières" },
+        { id: "1_surfaces_disponibles", name: "Surfaces disponibles" },
+        { id: "1_énergie", name: "Énergie" },
+        { id: "1_climat", name: "Climat" },
+      ],
+    },
+    { id: "0_économie", name: "Économie" },
+  ];
+
+  const [welcomeChoice, setWelcomeChoice] = useState(true);
+
+  const handleClickedButton = (nextStep: {
+    id: string;
+    name: string;
+    children?: topicBranch;
+  }) => {
+    setWelcomeChoice(false);
+    if (nextStep.children) {
+      setChosenPath([nextStep.children]);
+    }
+  };
+
   return (
     isYear !== 0 &&
     isvalue && (
       <section className={hasValue > 0 ? "global_tree" : "no_pie"}>
         <section className="branch_evolution">
-          {currentBranch.values.length !== 0 && (
-            <button
-              type="button"
-              onClick={() => setShowLineChart(true)}
-              className="icon_linechart"
-            >
-              <img
-                src={line_chart}
-                alt="afficher le graphique de l'évolution"
-              />
-            </button>
-          )}
-          <article className="current_branch">
-            <button
-              type="button"
-              className="branch_title"
-              onClick={() => handleGoingBackOnce(currentBranch.parentId)}
-            >
-              {currentBranch.name !== "Emissions GES" ? (
-                <p>
-                  <img src={go_back} alt="navigation back" />{" "}
-                  {currentBranch.name}
-                </p>
-              ) : (
-                currentBranch.name
-              )}
-            </button>
-            {currentBranch.values.length !== 0 && (
+          <button
+            type="button"
+            className="branch_title"
+            onClick={() => handleGoingBackOnce(currentBranch.parentId)}
+          >
+            {currentBranch.name !== "Emissions GES" ? (
+              <p>
+                <img src={go_back} alt="navigation back" />{" "}
+                {currentBranch.name[0].toUpperCase() +
+                  currentBranch.name.slice(1)}
+              </p>
+            ) : (
+              currentBranch.name
+            )}
+          </button>
+          <article className="value_chart">
+            {(currentBranch.values.length !== 0 ||
+              childValueTotalWithYear !== 0) && (
               <button type="button" className="branch_value">
-                <p>{isvalue[0][1].toFixed(2) + " Mt CO2e"}</p>
+                <p>
+                  {childValueTotalWithYear !== 0
+                    ? childValueTotalWithYear.toFixed(2)
+                    : isvalue[0][1].toFixed(2) + " Mt CO2e"}
+                </p>
+              </button>
+            )}
+            {currentBranch.values.length !== 0 && (
+              <button
+                type="button"
+                onClick={() => setShowLineChart(true)}
+                className="icon_linechart"
+              >
+                <img
+                  src={line_chart}
+                  alt="afficher le graphique de l'évolution"
+                />
               </button>
             )}
           </article>
@@ -123,12 +158,6 @@ export default function GlobalTree({
           >
             {hasValue > 0 ? (
               <article className="camembert_chart">
-                {childValueTotalWithYear !== 0 &&
-                  currentBranch.values.length === 0 && (
-                    <p>
-                      Total des émissions : {childValueTotalWithYear} Mt CO2e
-                    </p>
-                  )}
                 <PieCharts
                   isYear={isYear}
                   currentBranch={currentBranch}

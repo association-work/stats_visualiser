@@ -27,11 +27,11 @@ export default function Navbar({ setIsYear, topicOrigin }: NavBarProps) {
         <Link to="/">
           <h1>Logo</h1>
         </Link>
-        <label className="switch">
+        {/* <label className="switch">
           <input type="checkbox" onChange={() => changeParameter()} />
           <span className="slider" />
         </label>
-        {/* à mettre en place une fois les données géographiques ajouter à la BDD*/}
+        à mettre en place une fois les données géographiques ajouter à la BDD */}
       </section>
       <section className="navigation">
         <select name="country" id="" className="country_box" disabled>
@@ -52,9 +52,6 @@ export default function Navbar({ setIsYear, topicOrigin }: NavBarProps) {
           }}
           defaultValue={""}
         >
-          <option value="" disabled>
-            Choix année
-          </option>
           {years &&
             years.map((year) => (
               <option value={year[0]} key={year[0]}>

@@ -23,37 +23,13 @@
   align-items: flex-end;
 }
 
-.icon_linechart {
-  width: 2em;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  background-color: var(--bg-color-ligth);
-  padding: 0;
-}
-
-.icon_linechart img {
-  width: 2em;
-  height: auto;
-}
-
-.current_branch {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2em;
-  margin-top: 0.5em;
-  padding: 0 15px;
-}
-
 .branch_title {
   border: 1px solid var(--highligth-color);
   border-radius: 8px;
   color: var(--bg-color-ligth);
   background-color: var(--highligth-color);
-  max-width: 50%;
+  width: 100%;
   text-align: left;
-  padding: 0.6em 0.5em;
 }
 
 .branch_title:focus,
@@ -73,16 +49,38 @@
   height: auto;
 }
 
-.branch_value {
-  border: 1px solid var(--highligth-color);
-  border-radius: 8px;
-  color: var(--highligth-color);
-  background-color: var(--light-highligth-color);
+.value_chart {
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-top: 0.3em;
+  margin-bottom: 2em;
+  gap: 5px;
+}
+
+.branch_value {
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--bg-color-medium-ligth);
+  text-align: left;
   gap: 10px;
   padding: 0.6em 1.2em;
+}
+
+.icon_linechart {
+  width: 2.7em;
+  height: 2.7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background-color: var(--highligth-color);
+  border-radius: 8px;
+}
+
+.icon_linechart img {
+  width: 24px;
+  height: 24px;
 }
 
 .popup_linechart {
@@ -154,7 +152,7 @@
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .current_branch {
+  .value_chart {
     width: 85%;
   }
   .linked_children {
@@ -172,7 +170,7 @@
     flex-direction: row;
     gap: 4em;
   }
-  .current_branch {
+  .value_chart {
     width: 90%;
     margin-right: 1em;
     flex-direction: column;
