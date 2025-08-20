@@ -44,7 +44,11 @@ export default function GlobalTree({
   // changement de branche après l'appuie sur le boutton parent
 
   const handleGoingBackOnce = (id: string) => {
-    GetTopic(id).then((data: topicBranch) => setCurrentBranch(data));
+    if (id && id.length > 35) {
+      GetTopic(id).then((data: topicBranch) => setCurrentBranch(data));
+    } else {
+      setCurrentBranch(chosenPath[chosenPath.length - 2]);
+    }
     setPreviousBranchName(chosenPath[chosenPath.length - 1].name);
     chosenPath.pop();
     setChosenPath(chosenPath);
@@ -56,102 +60,80 @@ export default function GlobalTree({
     { name: string; value: number }[]
   >([]);
 
-  const welcomeBranch = [
-    { id: "0_être_humain", name: "Être humain" },
-    {
-      id: "0_environnement",
-      name: "Environnement",
-      children: [
-        currentBranch,
-        { id: "1_matières premières", name: "Matières premières" },
-        { id: "1_surfaces_disponibles", name: "Surfaces disponibles" },
-        { id: "1_énergie", name: "Énergie" },
-        { id: "1_climat", name: "Climat" },
-      ],
-    },
-    { id: "0_économie", name: "Économie" },
-  ];
-
-  const [welcomeChoice, setWelcomeChoice] = useState(true);
-
-  const handleClickedButton = (nextStep: {
-    id: string;
-    name: string;
-    children?: topicBranch;
-  }) => {
-    setWelcomeChoice(false);
-    if (nextStep.children) {
-      setChosenPath([nextStep.children]);
-    }
-  };
-
   return (
     isYear !== 0 &&
     isvalue && (
       <section className={hasValue > 0 ? "global_tree" : "no_pie"}>
-        <section className="branch_evolution">
-          <button
-            type="button"
-            className="branch_title"
-            onClick={() => handleGoingBackOnce(currentBranch.parentId)}
-          >
-            {currentBranch.name !== "Emissions GES" ? (
-              <p>
-                <img src={go_back} alt="navigation back" />{" "}
-                {currentBranch.name[0].toUpperCase() +
-                  currentBranch.name.slice(1)}
-              </p>
-            ) : (
-              currentBranch.name
-            )}
-          </button>
-          <article className="value_chart">
-            {(currentBranch.values.length !== 0 ||
-              childValueTotalWithYear !== 0) && (
-              <button type="button" className="branch_value">
+        {currentBranch.name !== "Welcome" && (
+          <section className="branch_evolution">
+            {currentBranch.name !== "Environnement" ? (
+              <button
+                type="button"
+                className="branch_title"
+                onClick={() => handleGoingBackOnce(currentBranch.parentId)}
+              >
                 <p>
-                  {childValueTotalWithYear !== 0
-                    ? childValueTotalWithYear.toFixed(2)
-                    : isvalue[0][1].toFixed(2) + " Mt CO2e"}
+                  <img src={go_back} alt="navigation back" />{" "}
+                  {currentBranch.name[0].toUpperCase() +
+                    currentBranch.name.slice(1)}
+                </p>
+              </button>
+            ) : (
+              <button type="button" className="branch_title">
+                <p>
+                  {currentBranch.name[0].toUpperCase() +
+                    currentBranch.name.slice(1)}
                 </p>
               </button>
             )}
-            {currentBranch.values.length !== 0 && (
-              <button
-                type="button"
-                onClick={() => setShowLineChart(true)}
-                className="icon_linechart"
-              >
-                <img
-                  src={line_chart}
-                  alt="afficher le graphique de l'évolution"
-                />
-              </button>
-            )}
-          </article>
-          {showLineChart && (
-            <article className="popup_linechart">
-              <button
-                type="button"
-                onClick={() => setShowLineChart(false)}
-                className="closeButton"
-              >
-                X
-              </button>
-              <LineChart
-                currentBranch={currentBranch}
-                chartedLineDataTree={chartedLineDataTree}
-                setChartedLineDataTree={setChartedLineDataTree}
-              />
-              <div className="references">
-                <p>Source : </p>
-                <a href={currentBranch.source.url} target="_blank">
-                  {currentBranch.source.name}
-                </a>
-              </div>
+            <article className="value_chart">
+              {(currentBranch.values.length !== 0 ||
+                childValueTotalWithYear !== 0) && (
+                <button type="button" className="branch_value">
+                  <p>
+                    {childValueTotalWithYear !== 0
+                      ? childValueTotalWithYear.toFixed(2) + " Mt CO2e"
+                      : isvalue[0][1].toFixed(2) + " Mt CO2e"}
+                  </p>
+                </button>
+              )}
+              {currentBranch.values.length !== 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowLineChart(true)}
+                  className="icon_linechart"
+                >
+                  <img
+                    src={line_chart}
+                    alt="afficher le graphique de l'évolution"
+                  />
+                </button>
+              )}
             </article>
-          )}
-        </section>
+            {showLineChart && (
+              <article className="popup_linechart">
+                <button
+                  type="button"
+                  onClick={() => setShowLineChart(false)}
+                  className="closeButton"
+                >
+                  X
+                </button>
+                <LineChart
+                  currentBranch={currentBranch}
+                  chartedLineDataTree={chartedLineDataTree}
+                  setChartedLineDataTree={setChartedLineDataTree}
+                />
+                <div className="references">
+                  <p>Source : </p>
+                  <a href={currentBranch.source.url} target="_blank">
+                    {currentBranch.source.name}
+                  </a>
+                </div>
+              </article>
+            )}
+          </section>
+        )}
         {currentBranch.children && (
           <section
             className={hasValue > 0 ? "linked_charted" : "linked_children"}

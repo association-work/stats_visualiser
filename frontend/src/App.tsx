@@ -24,15 +24,104 @@ function App() {
   });
 
   const [currentBranch, setCurrentBranch] = useState<topicBranch>({
-    id: "0_environnement",
-    name: "Environnement",
+    id: "00_welcome",
+    name: "Welcome",
     source: {
       name: "CITEPA",
       url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
     },
     unit: "",
     values: [],
-    hasChildren: false,
+    children: [
+      {
+        id: "0_être_humain",
+        name: "Être humain",
+        source: {
+          name: "CITEPA",
+          url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+        },
+        unit: "",
+        values: [],
+        hasChildren: false,
+        parentId: "00_welcome",
+      },
+      {
+        id: "0_environnement",
+        name: "Environnement",
+        source: {
+          name: "CITEPA",
+          url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+        },
+        unit: "",
+        values: [],
+        children: [
+          topicOrigin,
+          {
+            id: "1_matières premières",
+            name: "Matières premières",
+            source: {
+              name: "CITEPA",
+              url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+            },
+            unit: "",
+            values: [],
+            hasChildren: false,
+            parentId: "0_environnement",
+          },
+          {
+            id: "1_surfaces_disponibles",
+            name: "Surfaces disponibles",
+            source: {
+              name: "CITEPA",
+              url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+            },
+            unit: "",
+            values: [],
+            hasChildren: false,
+            parentId: "0_environnement",
+          },
+          {
+            id: "1_énergie",
+            name: "Énergie",
+            source: {
+              name: "CITEPA",
+              url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+            },
+            unit: "",
+            values: [],
+            hasChildren: false,
+            parentId: "0_environnement",
+          },
+          {
+            id: "1_climat",
+            name: "Climat",
+            source: {
+              name: "CITEPA",
+              url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+            },
+            unit: "",
+            values: [],
+            hasChildren: false,
+            parentId: "0_environnement",
+          },
+        ],
+        hasChildren: true,
+        parentId: "00_welcome",
+      },
+      {
+        id: "0_économie",
+        name: "Économie",
+        source: {
+          name: "CITEPA",
+          url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+        },
+        unit: "",
+        values: [],
+        hasChildren: false,
+        parentId: "00_welcome",
+      },
+    ],
+    hasChildren: true,
     parentId: "",
   });
 
@@ -40,8 +129,12 @@ function App() {
 
   useEffect(() => {
     GetTopics().then((data) => {
-      setCurrentBranch(data[0]);
+      // setCurrentBranch(data[0]); A remettre en place une fois la BDD mise à jour avec les nouvelles informations
       setTopicOrigin(data[0]);
+      if (currentBranch.children && currentBranch.children[1].children) {
+        currentBranch.children[1].children[0] = data[0];
+        setCurrentBranch(currentBranch);
+      }
     });
   }, []);
 

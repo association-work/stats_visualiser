@@ -46,12 +46,12 @@ body {
 }
 
 nav {
-  height: 15vh;
+  height: 17vh;
   width: 100vw;
 }
 
 main {
-  height: 79vh;
+  height: 77vh;
   width: 100vw;
   display: flex;
   flex-direction: column;

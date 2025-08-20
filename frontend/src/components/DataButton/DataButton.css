@@ -1,17 +1,18 @@
 .tree_node {
-  border: 1px solid var(--highligth-color);
+  border: 2px solid var(--highligth-color);
   border-radius: 8px;
   background-color: var(--bg-color-ligth);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.6em;
+  color: var(--highligth-color);
 }
 
 .last_chosen_tree_node {
-  border: 1px solid var(--highligth-color);
+  border: 2px solid var(--highligth-color);
   border-radius: 8px;
-  background-color: var(--bg-color-medium-ligth);
+  background-color: var(--medium-highligth-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,8 +30,9 @@
   width: 27%;
   text-align: end;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  gap: 2px;
 }
 
 .tree_node img,
@@ -57,5 +59,26 @@
 
 .tree_end p:last-child {
   width: 27%;
+  text-align: end;
+}
+
+.tree_unknown {
+  border: 1px solid var(--medium-highligth-color);
+  border-radius: 8px;
+  background-color: var(--bg-color-ligth);
+  text-align: left;
+  color: var(--hidden-color);
+  padding: 0.6em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tree_unknown p:first-child {
+  width: 60%;
+  text-align: start;
+}
+
+.tree_unknown p:last-child {
+  width: 40%;
   text-align: end;
 }

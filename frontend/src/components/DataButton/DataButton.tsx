@@ -30,7 +30,11 @@ export default function DataButton({
   const [nextBranch, setNextBranch] = useState<topicBranch>(information);
 
   useEffect(() => {
-    GetTopic(information.id).then((data) => setNextBranch(data));
+    if (information.id.length > 35) {
+      GetTopic(information.id).then((data) => setNextBranch(data));
+    } else {
+      setNextBranch(information);
+    }
   }, []);
 
   const handleChangingBranch = () => {
@@ -73,19 +77,25 @@ export default function DataButton({
           onClick={handleChangingBranch}
         >
           <p>{nextBranch.name[0].toUpperCase() + nextBranch.name.slice(1)}</p>
-          {nextBranch.values.length !== 0 ? (
-            <p>
-              {percentage + " %"}
-              <img src={go_next} alt="show more data" />
-            </p>
-          ) : (
+          <p>
+            {percentage !== "0" && percentage + " %"}
             <img src={go_next} alt="show more data" />
-          )}
+          </p>
         </button>
-      ) : (
+      ) : nextBranchValue ? (
         <button type="button" className="tree_end" key={nextBranch.id} disabled>
           <p>{nextBranch.name}</p>
           <p>{percentage + " %"}</p>
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="tree_unknown"
+          key={nextBranch.id}
+          disabled
+        >
+          <p>{nextBranch.name}</p>
+          <p>en construction</p>
         </button>
       )}
     </>
