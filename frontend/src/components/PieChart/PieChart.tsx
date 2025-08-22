@@ -44,6 +44,7 @@ export default function PieCharts({
       }
       autreValue = Number(autreValue.toFixed(2));
       futureChartedDataTree.push({ name: "autre", value: autreValue });
+      futureChartedDataTree.sort((a, b) => b.value - a.value);
       setChartedDataTree(futureChartedDataTree);
       totalValue = Number(totalValue.toFixed(2));
       setChildValueTotalWithYear(totalValue);

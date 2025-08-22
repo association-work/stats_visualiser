@@ -64,19 +64,50 @@ input:checked + .slider:before {
   gap: 5px;
 }
 
+.environnement_list {
+  width: 70%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: end;
+}
+
 .country_box {
-  border: 1px solid var(--primary-color);
+  border: 2px solid var(--bg-color-dark-ligth);
   border-radius: 8px;
   padding: 1em;
-  min-width: 70%;
+  width: 100%;
+  appearance: none;
+  height: 5.5vh;
+}
+
+.environnement_list img {
+  position: absolute;
+  padding-right: 2px;
+  transform: translateY(43%);
+  pointer-events: none;
+}
+
+.year_list {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: end;
 }
 
 .year_box {
-  border: 1px solid var(--highligth-color);
+  border: 2px solid var(--bg-color-dark-ligth);
   border-radius: 8px;
   padding: 1em;
-  width: 8em;
-  color: var(--highligth-color);
+  width: 8.5em;
+  color: var(--primary-color);
+  appearance: none;
+  height: 5.5vh;
+}
+
+.year_list img {
+  position: absolute;
+  padding-right: 2px;
+  transform: translateY(43%);
+  pointer-events: none;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
