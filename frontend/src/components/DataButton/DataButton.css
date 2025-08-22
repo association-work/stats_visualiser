@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6em;
+  padding: 0.8em 0.6em;
   color: var(--highligth-color);
 }
 
@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6em;
+  padding: 0.8em 0.6em;
 }
 
 .tree_node p:first-child,
@@ -41,15 +41,24 @@
   height: auto;
 }
 
+.last_topic_branch {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: 5px;
+  align-items: center;
+}
+
 .tree_end {
-  border: 1px solid var(--medium-highligth-color);
+  border: 2px solid var(--bg-color-dark-ligth);
   border-radius: 8px;
   background-color: var(--bg-color-ligth);
   text-align: left;
-  color: var(--hidden-color);
-  padding: 0.6em;
+  color: var(--bg-color-dark-ligth);
+  padding: 0.8em 0.6em;
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .tree_end p:first-child {
@@ -63,12 +72,12 @@
 }
 
 .tree_unknown {
-  border: 1px solid var(--medium-highligth-color);
+  border: 2px solid var(--bg-color-dark-ligth);
   border-radius: 8px;
   background-color: var(--bg-color-ligth);
   text-align: left;
-  color: var(--hidden-color);
-  padding: 0.6em;
+  color: var(--bg-color-dark-ligth);
+  padding: 0.8em 0.6em;
   display: flex;
   justify-content: space-between;
 }

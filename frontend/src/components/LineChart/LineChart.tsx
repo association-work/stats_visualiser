@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { topicBranch } from "../../types/dataTypes";
 import {
   LineChart as LineCharts,
@@ -12,17 +12,13 @@ import {
 
 interface LineChartProps {
   currentBranch: topicBranch;
-  chartedLineDataTree: { name: string; value: number }[];
-  setChartedLineDataTree: React.Dispatch<
-    React.SetStateAction<{ name: string; value: number }[]>
-  >;
 }
 
-export default function LineChart({
-  currentBranch,
-  chartedLineDataTree,
-  setChartedLineDataTree,
-}: LineChartProps) {
+export default function LineChart({ currentBranch }: LineChartProps) {
+  const [chartedLineDataTree, setChartedLineDataTree] = useState<
+    { name: string; value: number }[]
+  >([]);
+
   useEffect(() => {
     if (currentBranch && currentBranch.values.length > 0) {
       let futureChartedDataTree: { name: string; value: number }[] = [];

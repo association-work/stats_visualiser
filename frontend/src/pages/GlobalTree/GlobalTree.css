@@ -31,6 +31,7 @@
   background-color: var(--highligth-color);
   width: 100%;
   text-align: left;
+  padding: 0.6em 0.6em;
 }
 
 .branch_title:focus,
@@ -114,20 +115,20 @@
 }
 
 .linked_children {
-  width: 85%;
   min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
+  width: 100%;
 }
 
 .linked_charted {
-  width: 85%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
+  width: 100%;
 }
 
 .camembert_chart {

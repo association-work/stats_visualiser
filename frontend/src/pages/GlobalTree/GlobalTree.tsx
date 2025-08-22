@@ -30,6 +30,8 @@ export default function GlobalTree({
   // permet de récupérer la valeur de la branche actuelle
   const isvalue = currentBranch.values.filter((info) => info[0] === isYear);
 
+  console.log(isvalue);
+
   useEffect(() => {
     if (currentBranch && currentBranch.children) {
       setHasValue(currentBranch.children[1].values.length);
@@ -55,10 +57,6 @@ export default function GlobalTree({
   };
 
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
-
-  const [chartedLineDataTree, setChartedLineDataTree] = useState<
-    { name: string; value: number }[]
-  >([]);
 
   return (
     isYear !== 0 &&
@@ -119,11 +117,7 @@ export default function GlobalTree({
                 >
                   X
                 </button>
-                <LineChart
-                  currentBranch={currentBranch}
-                  chartedLineDataTree={chartedLineDataTree}
-                  setChartedLineDataTree={setChartedLineDataTree}
-                />
+                <LineChart currentBranch={currentBranch} />
                 <div className="references">
                   <p>Source : </p>
                   <a href={currentBranch.source.url} target="_blank">

@@ -143,7 +143,11 @@ function App() {
   return (
     <>
       <nav>
-        <Navbar setIsYear={setIsYear} topicOrigin={topicOrigin} />
+        <Navbar
+          setIsYear={setIsYear}
+          topicOrigin={topicOrigin}
+          currentBranch={currentBranch}
+        />
       </nav>
       <main>
         <GlobalTree

@@ -3,6 +3,8 @@ import type { topicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
 import go_next from "../../assets/corner-up-right.svg";
+import LineChart from "../LineChart/LineChart";
+import line_chart from "../../../src/assets/activity.svg";
 
 interface DataButtonProps {
   information: topicBranch;
@@ -63,6 +65,8 @@ export default function DataButton({
     }
   }
 
+  const [showChildrenLineChart, setShowChildrenLineChart] = useState(false);
+
   return (
     <>
       {nextBranch && nextBranch.hasChildren ? (
@@ -83,10 +87,24 @@ export default function DataButton({
           </p>
         </button>
       ) : nextBranchValue ? (
-        <button type="button" className="tree_end" key={nextBranch.id} disabled>
-          <p>{nextBranch.name}</p>
-          <p>{percentage + " %"}</p>
-        </button>
+        <section className="last_topic_branch">
+          <button
+            type="button"
+            className="tree_end"
+            key={nextBranch.id}
+            disabled
+          >
+            <p>{nextBranch.name}</p>
+            <p>{percentage + " %"}</p>
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowChildrenLineChart(true)}
+            className="icon_linechart"
+          >
+            <img src={line_chart} alt="afficher le graphique de l'évolution" />
+          </button>
+        </section>
       ) : (
         <button
           type="button"
@@ -97,6 +115,24 @@ export default function DataButton({
           <p>{nextBranch.name}</p>
           <p>en construction</p>
         </button>
+      )}
+      {showChildrenLineChart && (
+        <article className="popup_linechart">
+          <button
+            type="button"
+            onClick={() => setShowChildrenLineChart(false)}
+            className="closeButton"
+          >
+            X
+          </button>
+          <LineChart currentBranch={nextBranch} />
+          <div className="references">
+            <p>Source : </p>
+            <a href={nextBranch.source.url} target="_blank">
+              {nextBranch.source.name}
+            </a>
+          </div>
+        </article>
       )}
     </>
   );
