@@ -32,6 +32,7 @@ export default function BreadCrumbs({
       <section className="static_crumbs" aria-label="Breadcrumb">
         {chosenPath &&
           chosenPath.length > 0 &&
+          chosenPath[0].name !== "Welcome" &&
           chosenPath.map((choice, index) => (
             <button
               type="button"
