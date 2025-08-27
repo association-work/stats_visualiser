@@ -1,8 +1,14 @@
 export interface RawData {
   externalId: string;
   topicName: string;
-  parentTopicName?: string;
-  location: string;
+  parent?: {
+    topicName: string;
+    externalId: string;
+  };
+  location: {
+    name: string;
+    externalId: string;
+  };
   source: {
     url: string;
     name: string;
@@ -10,3 +16,4 @@ export interface RawData {
   valuesUnit: string;
   values: [number, number][];
 }
+  

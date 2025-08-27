@@ -7,6 +7,7 @@ export interface CsvDataAdapterOptions {
   filePath: string;
   separator: string;
   keepFirstRow?: boolean;
+  skipRows?: number;
 }
 
 export class CsvDataAdapter implements DataAdapter<CsvDataAdapterOptions> {
@@ -18,7 +19,8 @@ export class CsvDataAdapter implements DataAdapter<CsvDataAdapterOptions> {
     return new CsvDataReader(
       this.file,
       options.separator,
-      options.keepFirstRow
+      options.keepFirstRow,
+      options.skipRows ?? 1
     );
   }
 
@@ -38,7 +40,8 @@ class CsvDataReader extends DataReader {
   constructor(
     file: fs.FileHandle,
     private separator: string,
-    private keepFirstRow: boolean = false
+    private keepFirstRow: boolean = false,
+    private rowsToSkip = 1
   ) {
     super((count) => this.next(count));
     this.lines = file.readLines();
@@ -50,11 +53,17 @@ class CsvDataReader extends DataReader {
     }
 
     let i = 0;
+    let rowNumber = 0;
     const result: RawData[] = [];
 
     for await (const line of this.lines) {
+      rowNumber++;
+
       if (!this.keepFirstRow && !this.firstRowSkipped) {
-        this.firstRowSkipped = true;
+        if (rowNumber >= this.rowsToSkip) {
+          this.firstRowSkipped = true;
+        }
+
         continue;
       }
 
@@ -90,20 +99,32 @@ class CsvDataReader extends DataReader {
     const lastDotIdx = externalId.lastIndexOf(".");
     let parentTopicName: undefined | string = undefined;
 
+    let parentTopicId: undefined | string = undefined;
     if (lastDotIdx > -1) {
-      const parentTopicId = externalId.substring(0, lastDotIdx);
+      parentTopicId = externalId.substring(0, lastDotIdx);
       parentTopicName = this.topics.get(parentTopicId);
     }
+
+    const parent =
+      parentTopicId && parentTopicName
+        ? {
+            externalId: parentTopicId,
+            topicName: parentTopicName,
+          }
+        : undefined;
 
     return {
       externalId,
       topicName: columns[0],
-      parentTopicName,
+      parent,
       source: {
         name: columns[3],
         url: columns[4],
       },
-      location: columns[5],
+      location: {
+        name: columns[5],
+        externalId: columns[6],
+      },
       valuesUnit: columns[7],
       values: columns
         .filter((_, i) => i > 8)

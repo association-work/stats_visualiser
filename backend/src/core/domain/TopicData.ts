@@ -1,13 +1,5 @@
-export interface TopicData {
-  name: string;
-  id: string;
-  parentId?: string;
-  source: {
-    name: string;
-    url: string;
-  };
-  unit: string;
-  values: [number, number][];
-  hasChildren: boolean;
-  children?: TopicData[];
-}
+import { LocationId } from "./Location";
+import { YearId } from "./Year";
+
+export type TimedTopicData = [YearId, number][];
+export type LocatedTimedTopicData = [YearId, LocationId, number][];

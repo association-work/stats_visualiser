@@ -1,9 +1,9 @@
 import * as path from "path";
 import { CsvDataAdapter } from "./CsvDataAdapter";
-import { TopicRepository } from "../repositories/TopicRepository";
+import { TopicService } from "./TopicService";
 
 export class DataSynchronizationService {
-  constructor(private readonly topicRepo: TopicRepository) {}
+  constructor(private readonly topicService: TopicService) {}
 
   async start() {
     const adapter = new CsvDataAdapter();
@@ -13,10 +13,11 @@ export class DataSynchronizationService {
         "../../../data/Z_CITEPA_emissions_GES_structure_1.4_v4.csv"
       ),
       separator: ";",
+      skipRows: 2,
     });
 
     for await (const data of dataReader.toIterable(100)) {
-      await this.topicRepo.addMany(data);
+      await this.topicService.addData(data);
     }
 
     await adapter.close();
