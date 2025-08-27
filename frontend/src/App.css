@@ -2,14 +2,27 @@
 
 :root {
   --bg-color-ligth: #ffffff;
-  --bg-color-dark: #edeff2;
+  --bg-color-medium-ligth: #edeff2;
+  --bg-color-dark-ligth: #bbc2cf;
+  --bg-color-medium: #77869f;
+  --bg-color-ligth-dark: #434d5f;
+  --bg-color-medium-dark: #282f39;
+  --bg-color-dark: #14171c;
   --primary-color: #000000;
-  --dark-highligth-color: #091863;
+  --dark-highligth-color: #0a1863;
+  --medium-dark-highligth-color: #223fe2;
   --highligth-color: #061ea5;
+  --medium-highligth-color: #8698fd;
   --light-highligth-color: #d4dbff;
   --hidden-color: #7b88a2;
   --main-font: "Nunito", sans-serif;
   --title-font: "Patrick Hand", cursive;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -29,15 +42,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  place-items: center;
 }
 
 nav {
-  height: 15vh;
+  height: 17vh;
   width: 100vw;
 }
 
 main {
-  height: 79vh;
+  height: 77vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -46,7 +60,7 @@ main {
 }
 
 main h1 {
-  margin: 0.2em 0;
+  margin: 0.3em 0;
 }
 
 footer {
@@ -56,16 +70,47 @@ footer {
 
 h1 {
   font-family: var(--title-font);
-  font-size: 3em;
+  font-size: 3.2em;
   color: var(--primary-color);
+  line-height: 1.1;
 }
 
 a {
   text-decoration: none;
   font-family: var(--main-font);
   font-size: 1em;
-  color: var(--primary-color);
+  color: var(--medium-dark-highligth-color);
+  font-weight: 500;
 }
+
+a:hover {
+  color: var(--dark-highligth-color);
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: var(--main-font);
+  background-color: var(--hidden-color);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  color: var(--dark-highligth-color);
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+/* @media (prefers-color-scheme: light) {
+Pour un light et dark mode possible
+} */
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   main h1 {
