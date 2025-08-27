@@ -58,6 +58,8 @@ export default function GlobalTree({
 
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
 
+  console.log(childValueTotalWithYear);
+
   return (
     isYear !== 0 &&
     isvalue && (
@@ -80,7 +82,7 @@ export default function GlobalTree({
                 childValueTotalWithYear !== 0) && (
                 <button type="button" className="branch_value">
                   <p>
-                    {childValueTotalWithYear !== 0
+                    {isvalue.length === 0
                       ? childValueTotalWithYear.toFixed(2) + " Mt CO2e"
                       : isvalue[0][1].toFixed(2) + " Mt CO2e"}
                   </p>
@@ -161,6 +163,7 @@ export default function GlobalTree({
                     isYear={isYear}
                     previousBranchName={previousBranchName}
                     setPreviousBranchName={setPreviousBranchName}
+                    isvalue={isvalue}
                   />
                 ))}
             </article>
