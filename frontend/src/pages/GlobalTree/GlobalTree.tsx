@@ -64,7 +64,6 @@ export default function GlobalTree({
       <section className={hasValue > 0 ? "global_tree" : "no_pie"}>
         {currentBranch.name !== "Welcome" && (
           <section className="branch_evolution">
-            {/* {currentBranch.name !== "Environnement" ? ( */}
             <button
               type="button"
               className="branch_title"
@@ -76,14 +75,6 @@ export default function GlobalTree({
                   currentBranch.name.slice(1)}
               </p>
             </button>
-            {/* ) : (
-              <button type="button" className="branch_title">
-                <p>
-                  {currentBranch.name[0].toUpperCase() +
-                    currentBranch.name.slice(1)}
-                </p>
-              </button>
-            )} */}
             <article className="value_chart">
               {(currentBranch.values.length !== 0 ||
                 childValueTotalWithYear !== 0) && (
