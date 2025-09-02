@@ -64,7 +64,6 @@ export default function DataButton({
       ).toFixed(1);
     }
   }
-  console.log(percentage);
 
   const [showChildrenLineChart, setShowChildrenLineChart] = useState(false);
 

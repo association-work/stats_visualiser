@@ -5,14 +5,9 @@ import type { topicBranch } from "../../types/dataTypes";
 interface PieChartProps {
   isYear: number;
   currentBranch: topicBranch;
-  setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PieCharts({
-  isYear,
-  currentBranch,
-  setChildValueTotalWithYear,
-}: PieChartProps) {
+export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
   const [chartedDataTree, setChartedDataTree] = useState<
     { name: string; value: number }[]
   >([]);
@@ -24,11 +19,9 @@ export default function PieCharts({
     ) {
       let autreValue = 0;
       let futureChartedDataTree = [];
-      let totalValue = 0;
       currentBranch.children.forEach((element) => {
         const childValue = element.values.find((info) => info[0] === isYear);
         if (childValue) {
-          totalValue = totalValue + childValue[1];
           if (childValue[1] < 1) {
             autreValue = autreValue + childValue[1];
           } else {
@@ -46,8 +39,6 @@ export default function PieCharts({
       futureChartedDataTree.push({ name: "autre", value: autreValue });
       futureChartedDataTree.sort((a, b) => b.value - a.value);
       setChartedDataTree(futureChartedDataTree);
-      totalValue = Number(totalValue.toFixed(2));
-      setChildValueTotalWithYear(totalValue);
     }
   }, [currentBranch, isYear]);
 

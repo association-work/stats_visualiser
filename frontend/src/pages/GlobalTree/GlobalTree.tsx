@@ -41,6 +41,26 @@ export default function GlobalTree({
 
   const [showLineChart, setShowLineChart] = useState(false);
 
+  const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
+
+  useEffect(() => {
+    if (currentBranch.children !== undefined) {
+      console.log(currentBranch);
+      let totalValue = 0;
+      currentBranch.children.forEach((element) => {
+        const childValue = element.values.find((info) => info[0] === isYear);
+        console.log(childValue);
+        if (childValue) {
+          totalValue = totalValue + childValue[1];
+        }
+      });
+      totalValue = Number(totalValue.toFixed(2));
+      setChildValueTotalWithYear(totalValue);
+    }
+  }, [currentBranch, isYear]);
+
+  console.log(childValueTotalWithYear);
+
   // changement de branche après l'appuie sur le boutton parent
 
   const handleGoingBackOnce = (id: string) => {
@@ -53,11 +73,6 @@ export default function GlobalTree({
     chosenPath.pop();
     setChosenPath(chosenPath);
   };
-
-  const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
-
-  console.log(childValueTotalWithYear);
-  console.log(isvalue);
 
   return (
     isYear !== 0 &&
@@ -127,11 +142,7 @@ export default function GlobalTree({
           >
             {hasValue > 0 ? (
               <article className="camembert_chart">
-                <PieCharts
-                  isYear={isYear}
-                  currentBranch={currentBranch}
-                  setChildValueTotalWithYear={setChildValueTotalWithYear}
-                />
+                <PieCharts isYear={isYear} currentBranch={currentBranch} />
                 <div className="references">
                   <p>Source : </p>
                   <a href={currentBranch.source.url} target="_blank">
