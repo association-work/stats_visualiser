@@ -1,5 +1,6 @@
 import "./BreadCrumbs.css";
 import type { topicBranch } from "../../types/dataTypes";
+import home from "../../../src/assets/house.svg";
 
 interface BreadCrumbsProps {
   chosenPath: topicBranch[];
@@ -27,6 +28,8 @@ export default function BreadCrumbs({
     });
   };
 
+  console.log(chosenPath);
+
   return (
     <aside className="breadcrumbs">
       <section className="static_crumbs" aria-label="Breadcrumb">
@@ -35,12 +38,19 @@ export default function BreadCrumbs({
           chosenPath.map((choice, index) => (
             <button
               type="button"
-              className="crumbs"
               key={index}
+              className="crumbs"
               onClick={() => handleRewindBranch(index)}
-              disabled={index === 0}
             >
-              {choice.name.length < 15 ? choice.name : choice.name.slice(0, 16)}
+              {index === 0 ? (
+                <img src={home} alt="retour home" />
+              ) : (
+                <p>
+                  {choice.name.length < 15
+                    ? choice.name
+                    : choice.name.slice(0, 16)}
+                </p>
+              )}
             </button>
           ))}
       </section>
