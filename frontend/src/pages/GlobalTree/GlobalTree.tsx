@@ -45,11 +45,9 @@ export default function GlobalTree({
 
   useEffect(() => {
     if (currentBranch.children !== undefined) {
-      console.log(currentBranch);
       let totalValue = 0;
       currentBranch.children.forEach((element) => {
         const childValue = element.values.find((info) => info[0] === isYear);
-        console.log(childValue);
         if (childValue) {
           totalValue = totalValue + childValue[1];
         }
@@ -58,8 +56,6 @@ export default function GlobalTree({
       setChildValueTotalWithYear(totalValue);
     }
   }, [currentBranch, isYear]);
-
-  console.log(childValueTotalWithYear);
 
   // changement de branche après l'appuie sur le boutton parent
 
