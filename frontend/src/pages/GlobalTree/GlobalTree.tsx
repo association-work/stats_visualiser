@@ -30,8 +30,6 @@ export default function GlobalTree({
   // permet de récupérer la valeur de la branche actuelle
   const isvalue = currentBranch.values.filter((info) => info[0] === isYear);
 
-  console.log(isvalue);
-
   useEffect(() => {
     if (currentBranch && currentBranch.children) {
       setHasValue(currentBranch.children[1].values.length);
@@ -59,6 +57,7 @@ export default function GlobalTree({
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
 
   console.log(childValueTotalWithYear);
+  console.log(isvalue);
 
   return (
     isYear !== 0 &&
@@ -78,15 +77,16 @@ export default function GlobalTree({
               </p>
             </button>
             <article className="value_chart">
-              {(currentBranch.values.length !== 0 ||
-                childValueTotalWithYear !== 0) && (
-                <button type="button" className="branch_value">
-                  <p>
-                    {isvalue.length === 0
-                      ? childValueTotalWithYear.toFixed(2) + " Mt CO2e"
-                      : isvalue[0][1].toFixed(2) + " Mt CO2e"}
-                  </p>
-                </button>
+              {isvalue.length !== 0 ? (
+                <div className="branch_value">
+                  <p>{isvalue[0][1].toFixed(2) + " Mt CO2e"}</p>
+                </div>
+              ) : childValueTotalWithYear !== 0 ? (
+                <div className="branch_value">
+                  <p> {childValueTotalWithYear.toFixed(2) + " Mt CO2e"}</p>
+                </div>
+              ) : (
+                <></>
               )}
               {currentBranch.values.length !== 0 && (
                 <button
@@ -163,7 +163,6 @@ export default function GlobalTree({
                     isYear={isYear}
                     previousBranchName={previousBranchName}
                     setPreviousBranchName={setPreviousBranchName}
-                    isvalue={isvalue}
                   />
                 ))}
             </article>

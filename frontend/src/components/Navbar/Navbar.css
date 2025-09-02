@@ -106,6 +106,7 @@ input:checked + .slider:before {
 .year_list img {
   position: absolute;
   padding-right: 2px;
+  padding-top: 2px;
   transform: translateY(43%);
   pointer-events: none;
 }

@@ -16,7 +16,6 @@ interface DataButtonProps {
   isYear: number;
   previousBranchName: string;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
-  isvalue: [number, number][];
 }
 
 export default function DataButton({
@@ -29,7 +28,6 @@ export default function DataButton({
   isYear,
   previousBranchName,
   setPreviousBranchName,
-  isvalue,
 }: DataButtonProps) {
   const [nextBranch, setNextBranch] = useState<topicBranch>(information);
 
@@ -54,10 +52,6 @@ export default function DataButton({
   let percentage = "0";
 
   if (nextBranchValue && childValueTotalWithYear !== 0) {
-    //How to integrate isvalue into the calcul ??
-    // if (isvalue) {
-    //   percentage = ((nextBranchValue[1] / isvalue[0][1]) * 100).toFixed(1);
-    // }
     if (childValueTotalWithYear > 0) {
       percentage = (
         (nextBranchValue[1] / childValueTotalWithYear) *

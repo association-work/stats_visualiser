@@ -49,19 +49,19 @@ export default function PieCharts({
       totalValue = Number(totalValue.toFixed(2));
       setChildValueTotalWithYear(totalValue);
     }
-  }, [currentBranch]);
+  }, [currentBranch, isYear]);
 
   const COLORS = [
-    "#D4DBFF",
-    "#BDC6F5",
-    "#A6B1EB",
-    "#8F9CE1",
-    "#7887D7",
-    "#6272CD",
-    "#4B5DC3",
-    "#3448B9",
-    "#1D33AF",
     "#061EA5",
+    "#1D33AF",
+    "#3448B9",
+    "#4B5DC3",
+    "#6272CD",
+    "#7887D7",
+    "#8F9CE1",
+    "#A6B1EB",
+    "#BDC6F5",
+    "#D4DBFF",
   ];
 
   return (
