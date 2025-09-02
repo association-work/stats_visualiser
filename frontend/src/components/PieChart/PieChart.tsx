@@ -5,14 +5,9 @@ import type { topicBranch } from "../../types/dataTypes";
 interface PieChartProps {
   isYear: number;
   currentBranch: topicBranch;
-  setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function PieCharts({
-  isYear,
-  currentBranch,
-  setChildValueTotalWithYear,
-}: PieChartProps) {
+export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
   const [chartedDataTree, setChartedDataTree] = useState<
     { name: string; value: number }[]
   >([]);
@@ -24,11 +19,9 @@ export default function PieCharts({
     ) {
       let autreValue = 0;
       let futureChartedDataTree = [];
-      let totalValue = 0;
       currentBranch.children.forEach((element) => {
         const childValue = element.values.find((info) => info[0] === isYear);
         if (childValue) {
-          totalValue = totalValue + childValue[1];
           if (childValue[1] < 1) {
             autreValue = autreValue + childValue[1];
           } else {
@@ -46,22 +39,20 @@ export default function PieCharts({
       futureChartedDataTree.push({ name: "autre", value: autreValue });
       futureChartedDataTree.sort((a, b) => b.value - a.value);
       setChartedDataTree(futureChartedDataTree);
-      totalValue = Number(totalValue.toFixed(2));
-      setChildValueTotalWithYear(totalValue);
     }
-  }, [currentBranch]);
+  }, [currentBranch, isYear]);
 
   const COLORS = [
-    "#D4DBFF",
-    "#BDC6F5",
-    "#A6B1EB",
-    "#8F9CE1",
-    "#7887D7",
-    "#6272CD",
-    "#4B5DC3",
-    "#3448B9",
-    "#1D33AF",
     "#061EA5",
+    "#1D33AF",
+    "#3448B9",
+    "#4B5DC3",
+    "#6272CD",
+    "#7887D7",
+    "#8F9CE1",
+    "#A6B1EB",
+    "#BDC6F5",
+    "#D4DBFF",
   ];
 
   return (

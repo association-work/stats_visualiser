@@ -30,8 +30,6 @@ export default function GlobalTree({
   // permet de récupérer la valeur de la branche actuelle
   const isvalue = currentBranch.values.filter((info) => info[0] === isYear);
 
-  console.log(isvalue);
-
   useEffect(() => {
     if (currentBranch && currentBranch.children) {
       setHasValue(currentBranch.children[1].values.length);
@@ -42,6 +40,26 @@ export default function GlobalTree({
   const [hasValue, setHasValue] = useState(0);
 
   const [showLineChart, setShowLineChart] = useState(false);
+
+  const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
+
+  useEffect(() => {
+    if (currentBranch.children !== undefined) {
+      console.log(currentBranch);
+      let totalValue = 0;
+      currentBranch.children.forEach((element) => {
+        const childValue = element.values.find((info) => info[0] === isYear);
+        console.log(childValue);
+        if (childValue) {
+          totalValue = totalValue + childValue[1];
+        }
+      });
+      totalValue = Number(totalValue.toFixed(2));
+      setChildValueTotalWithYear(totalValue);
+    }
+  }, [currentBranch, isYear]);
+
+  console.log(childValueTotalWithYear);
 
   // changement de branche après l'appuie sur le boutton parent
 
@@ -56,44 +74,34 @@ export default function GlobalTree({
     setChosenPath(chosenPath);
   };
 
-  const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
-
   return (
     isYear !== 0 &&
     isvalue && (
       <section className={hasValue > 0 ? "global_tree" : "no_pie"}>
         {currentBranch.name !== "Welcome" && (
           <section className="branch_evolution">
-            {currentBranch.name !== "Environnement" ? (
-              <button
-                type="button"
-                className="branch_title"
-                onClick={() => handleGoingBackOnce(currentBranch.parentId)}
-              >
-                <p>
-                  <img src={go_back} alt="navigation back" />{" "}
-                  {currentBranch.name[0].toUpperCase() +
-                    currentBranch.name.slice(1)}
-                </p>
-              </button>
-            ) : (
-              <button type="button" className="branch_title">
-                <p>
-                  {currentBranch.name[0].toUpperCase() +
-                    currentBranch.name.slice(1)}
-                </p>
-              </button>
-            )}
+            <button
+              type="button"
+              className="branch_title"
+              onClick={() => handleGoingBackOnce(currentBranch.parentId)}
+            >
+              <p>
+                <img src={go_back} alt="navigation back" />{" "}
+                {currentBranch.name[0].toUpperCase() +
+                  currentBranch.name.slice(1)}
+              </p>
+            </button>
             <article className="value_chart">
-              {(currentBranch.values.length !== 0 ||
-                childValueTotalWithYear !== 0) && (
-                <button type="button" className="branch_value">
-                  <p>
-                    {childValueTotalWithYear !== 0
-                      ? childValueTotalWithYear.toFixed(2) + " Mt CO2e"
-                      : isvalue[0][1].toFixed(2) + " Mt CO2e"}
-                  </p>
-                </button>
+              {isvalue.length !== 0 ? (
+                <div className="branch_value">
+                  <p>{isvalue[0][1].toFixed(2) + " Mt CO2e"}</p>
+                </div>
+              ) : childValueTotalWithYear !== 0 ? (
+                <div className="branch_value">
+                  <p> {childValueTotalWithYear.toFixed(2) + " Mt CO2e"}</p>
+                </div>
+              ) : (
+                <></>
               )}
               {currentBranch.values.length !== 0 && (
                 <button
@@ -134,11 +142,7 @@ export default function GlobalTree({
           >
             {hasValue > 0 ? (
               <article className="camembert_chart">
-                <PieCharts
-                  isYear={isYear}
-                  currentBranch={currentBranch}
-                  setChildValueTotalWithYear={setChildValueTotalWithYear}
-                />
+                <PieCharts isYear={isYear} currentBranch={currentBranch} />
                 <div className="references">
                   <p>Source : </p>
                   <a href={currentBranch.source.url} target="_blank">
