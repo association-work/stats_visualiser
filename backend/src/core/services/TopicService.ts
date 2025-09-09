@@ -4,7 +4,7 @@ import { Topic } from "../domain/Topic";
 import { TopicRepository } from "../repositories/TopicRepository";
 import { DataRepository } from "../repositories/DataRepository";
 import { Year } from "../domain/Year";
-import { LocatedTimedTopicData, TimedTopicData } from "../domain/TopicData";
+import { LocatedTimedTopicData } from "../domain/TopicData";
 import { Location } from "../domain/Location";
 import { LocationRepository } from "../repositories/LocationRepository";
 

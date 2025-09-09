@@ -8,6 +8,11 @@ export interface RawData {
   location: {
     name: string;
     externalId: string;
+
+    parent?: {
+      name: string;
+      externalId: string;
+    };
   };
   source: {
     url: string;
@@ -16,4 +21,3 @@ export interface RawData {
   valuesUnit: string;
   values: [number, number][];
 }
-  

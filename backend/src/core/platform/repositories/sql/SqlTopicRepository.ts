@@ -60,11 +60,17 @@ export class SqlTopicRepository extends TopicRepository {
   }
 
   findAll(): Promise<TopicDataTree[]> {
-    return this.client.$queryRawUnsafe(topicTreeRequest);
+    return this.client.$queryRawUnsafe(
+      `${topicTreeRequest} WHERE _topic."parentId" is null`
+    );
   }
 
-  findById(id: TopicId): Promise<TopicDataTree | null> {
-    throw new Error("Method not implemented.");
+  async findById(id: TopicId): Promise<TopicDataTree | null> {
+    const data: TopicDataTree[] = await this.client.$queryRawUnsafe(
+      `${topicTreeRequest} WHERE _topic.id = '${id}'`
+    );
+
+    return data[0] ?? null;
   }
 
   async saveData(id: TopicId, data: LocatedTimedTopicData): Promise<void> {
