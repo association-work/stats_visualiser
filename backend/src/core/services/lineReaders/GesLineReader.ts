@@ -1,7 +1,7 @@
 import { RawData } from "@/core/domain/RawData";
 import { CsvLineReader } from "../CsvLineReader";
 
-export class GesLineReader implements CsvLineReader {
+export class GesLineReader implements CsvLineReader<RawData> {
   topics: Map<string, string> = new Map();
 
   readLine(line: string, separator: string): RawData | null {
@@ -38,10 +38,7 @@ export class GesLineReader implements CsvLineReader {
         name: columns[3],
         url: columns[4],
       },
-      location: {
-        name: columns[5],
-        externalId: columns[6],
-      },
+      locationExternalId: columns[6],
       valuesUnit: columns[7],
       values: columns
         .filter((_, i) => i > 8)

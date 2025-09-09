@@ -4,18 +4,20 @@ import { DataAdapter } from "./DataAdapter";
 import { RawData } from "../domain/RawData";
 import { CsvLineReader } from "./CsvLineReader";
 
-export interface CsvDataAdapterOptions {
+export interface CsvDataAdapterOptions<T> {
   filePath: string;
   separator: string;
-  lineReaderProvider: () => CsvLineReader;
+  lineReaderProvider: () => CsvLineReader<T>;
   keepFirstRow?: boolean;
   skipRows?: number;
 }
 
-export class CsvDataAdapter implements DataAdapter<CsvDataAdapterOptions> {
+export class CsvDataAdapter<T>
+  implements DataAdapter<T, CsvDataAdapterOptions<T>>
+{
   private file?: fs.FileHandle;
 
-  async open(options: CsvDataAdapterOptions): Promise<DataReader> {
+  async open(options: CsvDataAdapterOptions<T>): Promise<DataReader<T>> {
     this.file = await fs.open(options.filePath);
 
     return new CsvDataReader(
@@ -36,13 +38,13 @@ export class CsvDataAdapter implements DataAdapter<CsvDataAdapterOptions> {
   }
 }
 
-class CsvDataReader extends DataReader {
+class CsvDataReader<T> extends DataReader<T> {
   lines: AsyncIterable<string>;
   firstRowSkipped = false;
 
   constructor(
     file: fs.FileHandle,
-    private lineReader: CsvLineReader,
+    private lineReader: CsvLineReader<T>,
     private separator: string,
     private keepFirstRow: boolean = false,
     private rowsToSkip = 1
@@ -55,14 +57,14 @@ class CsvDataReader extends DataReader {
     });
   }
 
-  async next(_: number, count: number = Infinity): Promise<RawData[] | null> {
+  async next(_: number, count: number = Infinity): Promise<T[] | null> {
     if (count < 1) {
       throw new Error("");
     }
 
     let i = 0;
     let rowNumber = 0;
-    const result: RawData[] = [];
+    const result: T[] = [];
 
     for await (const line of this.lines) {
       rowNumber++;

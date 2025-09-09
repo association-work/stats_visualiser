@@ -1,14 +1,14 @@
+import { RawData } from "@/core/domain/RawData";
+import { TopicRepository } from "@/core/repositories/TopicRepository";
+import { LocationRepository } from "@/core/repositories/LocationRepository";
+import { DataRepository } from "@/core/repositories/DataRepository";
+import { Topic } from "@/core/domain/Topic";
+import { Location } from "@/core/domain/Location";
+import { Year } from "@/core/domain/Year";
 import { randomUUID } from "crypto";
-import { RawData } from "../domain/RawData";
-import { Topic } from "../domain/Topic";
-import { TopicRepository } from "../repositories/TopicRepository";
-import { DataRepository } from "../repositories/DataRepository";
-import { Year } from "../domain/Year";
-import { LocatedTimedTopicData } from "../domain/TopicData";
-import { Location, LocationId } from "../domain/Location";
-import { LocationRepository } from "../repositories/LocationRepository";
+import { LocatedTimedTopicData } from "@/core/domain/TopicData";
 
-export class TopicService {
+export abstract class DataSynchronizationBaseJob {
   private yearsMap!: Map<number, Year>;
 
   constructor(
@@ -17,39 +17,7 @@ export class TopicService {
     private readonly dataRepo: DataRepository
   ) {}
 
-  private async findTopic(
-    cache: Map<string, Topic>,
-    name: string,
-    exId: string
-  ): Promise<Topic | null> {
-    let topic: Topic | null = null;
-
-    if (cache.has(name)) {
-      topic = cache.get(name)!;
-    }
-
-    // look up in storage
-    topic = await this.topicRepo.findByExternalId(exId);
-    return topic;
-  }
-
-  private async getLocation(cache: Map<string, Location>, exId: string) {
-    let location: Location | null = null;
-
-    if (cache.has(exId)) {
-      location = cache.get(exId)!;
-    }
-
-    // look up in storage
-    location = await this.locationRepo.findByExternalId(exId);
-    if (!location) {
-      throw new Error(`Location not with ID ${exId} not found`);
-    }
-
-    return location;
-  }
-
-  async addData(rawData: RawData[]) {
+  protected async addData(rawData: RawData[]) {
     const topics: Map<string, Topic> = new Map();
     const locations: Map<string, Location> = new Map();
 
@@ -102,5 +70,37 @@ export class TopicService {
         values as LocatedTimedTopicData
       );
     }
+  }
+
+  private async findTopic(
+    cache: Map<string, Topic>,
+    name: string,
+    exId: string
+  ): Promise<Topic | null> {
+    let topic: Topic | null = null;
+
+    if (cache.has(name)) {
+      topic = cache.get(name)!;
+    }
+
+    // look up in storage
+    topic = await this.topicRepo.findByExternalId(exId);
+    return topic;
+  }
+
+  private async getLocation(cache: Map<string, Location>, exId: string) {
+    let location: Location | null = null;
+
+    if (cache.has(exId)) {
+      location = cache.get(exId)!;
+    }
+
+    // look up in storage
+    location = await this.locationRepo.findByExternalId(exId);
+    if (!location) {
+      throw new Error(`Location not with ID ${exId} not found`);
+    }
+
+    return location;
   }
 }

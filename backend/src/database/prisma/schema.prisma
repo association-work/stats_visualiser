@@ -39,8 +39,11 @@ model location {
   id         Int    @id @default(autoincrement())
   name       String @db.VarChar()
   externalId String @unique @db.VarChar()
+  parentId   Int?
 
-  values value[]
+  parent   location?  @relation("LocationParent", fields: [parentId], references: [id])
+  children location[] @relation("LocationParent")
+  values   value[]
 }
 
 model value {

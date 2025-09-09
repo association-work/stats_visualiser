@@ -1,4 +1,4 @@
-import { Location } from "@/core/domain/Location";
+import { Location, LocationId } from "@/core/domain/Location";
 import { Year } from "@/core/domain/Year";
 import { LocationRepository } from "@/core/repositories/LocationRepository";
 import { PrismaClient } from "@/database/client";
@@ -10,19 +10,46 @@ export class SqlLocationRepository extends LocationRepository {
     super();
   }
 
-  create(location: { name: string; externalId: string }): Promise<Location> {
-    return this.client.location.create({
-      data: location,
+  async save(location: {
+    name: string;
+    externalId: string;
+    parentId?: LocationId;
+  }): Promise<Location> {
+    const result = await this.client.location.upsert({
+      where: {
+        externalId: location.externalId,
+      },
+      create: {
+        externalId: location.externalId,
+        name: location.name,
+        parentId: location.parentId,
+      },
+      update: {
+        parentId: location.parentId,
+        name: location.name,
+      },
     });
+
+    return {
+      ...result,
+      parentId: result.parentId ?? undefined,
+    };
   }
 
   async findByExternalId(externalId: string): Promise<Location | null> {
-    const location = this.client.location.findUnique({
+    const location = await this.client.location.findUnique({
       where: {
         externalId,
       },
     });
 
-    return location;
+    if (!location) {
+      return null;
+    }
+
+    return {
+      ...location,
+      parentId: location.parentId ?? undefined,
+    };
   }
 }

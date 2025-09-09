@@ -5,7 +5,7 @@ import { GesLineReader } from "../lineReaders/GesLineReader";
 
 describe("CsvDataAdapter Tests", () => {
   test("Should return all CSV file lines", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawData>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -22,7 +22,7 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("Should return the 15 first lines", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawData>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -43,7 +43,7 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("Should should all the lines two by two", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawData>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -70,7 +70,7 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("toIterable method should return an async iterable", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawData>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -91,7 +91,7 @@ describe("CsvDataAdapter Tests", () => {
   });
 
    test("toIterable method should return an async iterable", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawData>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
