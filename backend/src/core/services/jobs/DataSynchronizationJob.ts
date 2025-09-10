@@ -59,8 +59,8 @@ export abstract class DataSynchronizationBaseJob {
       let location = await this.getLocation(locations, data.locationExternalId);
 
       const values = data.values
-        .map((v) => [this.yearsMap.get(v[0])?.id!, location.id, v[1]])
-        .filter((v) => !isNaN(v[2])) as [number, number][];
+        .map((v) => [this.yearsMap.get(v[0])?.id!, v[1]])
+        .filter((v) => !isNaN(v[1])) as [number, number][];
 
       const series: Omit<DataSeries, "id"> = {
         datasetId: dataset.id,

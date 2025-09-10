@@ -1,6 +1,10 @@
 export const topicTreeRequest = `
 select 
-	_topic.*,  
+	_topic.*,
+	json_build_object(
+		'name', _ds."sourceName",
+		'url', _ds."sourceUrl"
+	)  "source", 
 	COALESCE(
 		(
 			SELECT json_agg
@@ -11,37 +15,41 @@ select
 				)	
 			) FROM "value" _val 
 			inner join "year" _y on _y.id = _val."yearId"
-			inner join "location" _loc on _loc.id = _val."locationId"
+			inner join data_series _ds on _ds.id = _val."seriesId"
 
-			where _val."topicId" = _topic.id and _loc.name = 'France'
+			where _ds."topicId" = _topic.id 
 		),
 		'[]'::json
 	) values FROM 
 	(
-		select  _root.id, _root.name, _root."parentId", _root.unit, _root."externalId", 
-			
-			json_build_object(
-				'name', _root."sourceName",
-				'url', _root."sourceUrl"
-			)  "source",
+		select  _root.id, _root.name, _root."parentId", _root."externalId", 
 			COALESCE(json_agg(_child) FILTER (WHERE _child.id is not null), '[]') children from topic _root
+
 		left join 
 		(
-			select _t.id, _t.name, _t."parentId", _t.unit, _t."externalId", 
+			select _t.id, _t.name, _t."parentId", _d.unit, _t."externalId", 
 				json_build_object(
-					'name', _t."sourceName",
-					'url', _t."sourceUrl"
+					'name', _d."sourceName",
+					'url', _d."sourceUrl"
 				)  "source", 
-				exists(select 1 from topic _c where _c."parentId" = _t.id) "hasChildren" from topic _t
+				exists(select 1 from topic _c where _c."parentId" = _t.id) "hasChildren" 
+				from topic _t
+				inner join data_series _d on _d."topicId" = _t.id
 		) _child on _child."parentId" = _root."id"
 	
 		group by _root.id
 	) as _topic
+	INNER JOIN data_series _ds ON _ds."topicId" = _topic.id
+	INNER JOIN "location" _loc ON _loc.id = _ds."locationId"
 `;
 
-export const topic = `
+export const locationTreeRequest = `
 select 
 	_location.*,  
+	json_build_object(
+		'name', _ds."sourceName",
+		'url', _ds."sourceUrl"
+	)  "source", 
 	COALESCE(
 		(
 			SELECT json_agg
@@ -52,24 +60,30 @@ select
 				)	
 			) FROM "value" _val 
 			inner join "year" _y on _y.id = _val."yearId"
-			inner join "location" _loc on _loc.id = _val."locationId"
-
-			where _val."locationId" = _location.id
+			inner join data_series _ds on _ds.id = _val."seriesId"
+			where _ds."locationId" = _location.id
 		),
 		'[]'::json
 	) values FROM 
 	(
-		select  _root.id, _root.name, _root."parentId",  _root."externalId", 
+		select  _root.id, _root.name, _root."parentId", _root."externalId", 
 	
-			COALESCE(json_agg(_child) FILTER (WHERE _child.id is not null), '[]') children from "location" _root
-		left join 
+			COALESCE(json_agg(_child) FILTER (WHERE _child.id is not null), '[]') children 
+		FROM "location" _root
+		LEFT JOIN 
 		(
 			select _l.id, _l.name, _l."parentId", _l."externalId", 
-				
-				exists(select 1 from "location" _c where _c."parentId" = _l.id) "hasChildren" from "location" _l
+				json_build_object(
+					'name', _d."sourceName",
+					'url', _d."sourceUrl"
+				)  "source", 
+				exists(select 1 from "location" _c where _c."parentId" = _l.id) "hasChildren" 
+				from "location" _l
+				inner join data_series _d on _d."locationId" = _l.id
 		) _child on _child."parentId" = _root."id"
 	
 		group by _root.id
-	) as _location where _location.id = 5
-
+	) as _location 
+INNER JOIN data_series _ds ON _ds."locationId" = _location.id
+INNER JOIN topic _tp ON _tp.id = _ds."topicId"
 `;
