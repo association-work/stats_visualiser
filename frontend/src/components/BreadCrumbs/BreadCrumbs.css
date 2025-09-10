@@ -1,7 +1,5 @@
 .breadcrumbs {
-  height: 100%;
   display: flex;
-  flex-direction: row-reverse;
   align-items: flex-start;
   margin: 0 0 0 3vh;
   border-radius: 8px;
@@ -24,23 +22,20 @@
   width: max-content;
   border: none;
   background-color: var(--light-highligth-color);
+  border-radius: 0;
+}
+
+.crumbs img {
+  height: 2.5em;
+  width: auto;
 }
 
 .crumbs:first-child {
-  padding: 0 0 0 15px;
-  border-radius: 8px;
-  background-color: var(--bg-color-ligth);
-  color: var(--hidden-color);
-  border-top: 2px solid var(--hidden-color);
-  border-left: 2px solid var(--hidden-color);
-  border-bottom: 2px solid var(--hidden-color);
+  padding: 0 0 0 10px;
 }
 
-.crumbs:first-child::after {
-  background-color: var(--bg-color-ligth);
-  left: 10px;
-  border-top: 2px solid var(--hidden-color);
-  border-left: 2px solid var(--hidden-color);
+.crumbs:last-child {
+  background-color: var(--medium-highligth-color);
 }
 
 .crumbs::after {
@@ -51,8 +46,12 @@
   transform: rotate(130deg) skew(-10deg);
   float: right;
   position: relative;
-  left: 17px;
+  left: 16px;
   border-top: 3px solid var(--bg-color-ligth);
   border-left: 3px solid var(--bg-color-ligth);
   background-color: var(--light-highligth-color);
+}
+
+.crumbs:last-child::after {
+  background-color: var(--medium-highligth-color);
 }

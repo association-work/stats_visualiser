@@ -16,20 +16,20 @@ interface LineChartProps {
 
 export default function LineChart({ currentBranch }: LineChartProps) {
   const [chartedLineDataTree, setChartedLineDataTree] = useState<
-    { name: string; value: number }[]
+    { name: number; value: number }[]
   >([]);
 
   useEffect(() => {
     if (currentBranch && currentBranch.values.length > 0) {
-      let futureChartedDataTree: { name: string; value: number }[] = [];
+      let futureChartedDataTree: { name: number; value: number }[] = [];
       currentBranch.values.forEach((element) => {
         futureChartedDataTree.push({
-          name: element[0].toString(),
+          name: element[0],
           value: element[1],
         });
       });
       setChartedLineDataTree(
-        futureChartedDataTree.sort((a, b) => b.value - a.value)
+        futureChartedDataTree.sort((a, b) => a.name - b.name)
       );
     }
   }, []);

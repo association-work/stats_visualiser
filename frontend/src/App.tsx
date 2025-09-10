@@ -6,6 +6,7 @@ import type { topicBranch } from "./types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopics } from "./functions/GetTopic";
 import GlobalTree from "./pages/GlobalTree/GlobalTree";
+import Loader from "./pages/Loader/Loader";
 
 function App() {
   const [isYear, setIsYear] = useState<number>(2023);
@@ -134,11 +135,15 @@ function App() {
       if (currentBranch.children && currentBranch.children[1].children) {
         currentBranch.children[1].children[0] = data[0];
         setCurrentBranch(currentBranch);
+        setChosenPath([currentBranch]);
       }
+      setTopicIsReady(true);
     });
   }, []);
 
   const [previousBranchName, setPreviousBranchName] = useState<string>("");
+
+  const [topicIsReady, setTopicIsReady] = useState(false);
 
   return (
     <>
@@ -150,15 +155,19 @@ function App() {
         />
       </nav>
       <main>
-        <GlobalTree
-          isYear={isYear}
-          chosenPath={chosenPath}
-          setChosenPath={setChosenPath}
-          currentBranch={currentBranch}
-          setCurrentBranch={setCurrentBranch}
-          previousBranchName={previousBranchName}
-          setPreviousBranchName={setPreviousBranchName}
-        />
+        {!topicIsReady ? (
+          <Loader />
+        ) : (
+          <GlobalTree
+            isYear={isYear}
+            chosenPath={chosenPath}
+            setChosenPath={setChosenPath}
+            currentBranch={currentBranch}
+            setCurrentBranch={setCurrentBranch}
+            previousBranchName={previousBranchName}
+            setPreviousBranchName={setPreviousBranchName}
+          />
+        )}
       </main>
       <footer>
         <BreadCrumbs
