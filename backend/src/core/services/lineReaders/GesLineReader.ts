@@ -1,10 +1,10 @@
-import { RawData } from "@/core/domain/RawData";
+import { RawDataSeries } from "@/core/domain/RawDataSeries";
 import { CsvLineReader } from "../CsvLineReader";
 
-export class GesLineReader implements CsvLineReader<RawData> {
+export class GesLineReader implements CsvLineReader<RawDataSeries> {
   topics: Map<string, string> = new Map();
 
-  readLine(line: string, separator: string): RawData | null {
+  readLine(line: string, separator: string): RawDataSeries | null {
     if (!line || line === ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;") {
       return null;
     }
@@ -31,7 +31,7 @@ export class GesLineReader implements CsvLineReader<RawData> {
         : undefined;
 
     return {
-      externalId,
+      topicExternalId: externalId,
       topicName: columns[0],
       parent,
       source: {

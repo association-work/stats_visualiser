@@ -19,13 +19,10 @@ model topic {
   name       String  @db.VarChar()
   externalId String  @unique @db.VarChar()
   parentId   String? @db.Uuid()
-  unit       String
-  sourceName String
-  sourceUrl  String
 
-  parent   topic?  @relation("TopicParent", fields: [parentId], references: [id])
-  children topic[] @relation("TopicParent")
-  values   value[]
+  parent      topic?        @relation("TopicParent", fields: [parentId], references: [id])
+  children    topic[]       @relation("TopicParent")
+  data_series data_series[]
 }
 
 model year {
@@ -41,20 +38,40 @@ model location {
   externalId String @unique @db.VarChar()
   parentId   Int?
 
-  parent   location?  @relation("LocationParent", fields: [parentId], references: [id])
-  children location[] @relation("LocationParent")
-  values   value[]
+  parent      location?     @relation("LocationParent", fields: [parentId], references: [id])
+  children    location[]    @relation("LocationParent")
+  data_series data_series[]
 }
 
 model value {
-  topicId    String  @db.Uuid()
-  yearId     Int
-  locationId Int
-  value      Decimal @db.Decimal()
+  seriesId Int
+  yearId   Int
+  value    Decimal @db.Decimal()
 
-  year     year     @relation(fields: [yearId], references: [id])
+  year        year        @relation(fields: [yearId], references: [id])
+  data_series data_series @relation(fields: [seriesId], references: [id])
+
+  @@id([seriesId, yearId])
+}
+
+model data_series {
+  id         Int    @id @default(autoincrement())
+  topicId    String @db.Uuid()
+  locationId Int
+  datasetId  Int
+  unit       String
+  sourceName String
+  sourceUrl  String
+
   topic    topic    @relation(fields: [topicId], references: [id])
   location location @relation(fields: [locationId], references: [id])
+  dataset  dataset  @relation(fields: [datasetId], references: [id])
+  values   value[]
+}
 
-  @@id([topicId, yearId, locationId])
+model dataset {
+  id           Int           @id @default(autoincrement())
+  name         String
+  creationDate DateTime      @db.Timestamp()
+  data_series  data_series[]
 }

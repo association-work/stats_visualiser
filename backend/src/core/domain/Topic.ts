@@ -5,9 +5,4 @@ export interface Topic {
   name: string;
   externalId: string;
   parentId?: TopicId;
-  source: {
-    name: string;
-    url: string;
-  };
-  unit: string;
 }

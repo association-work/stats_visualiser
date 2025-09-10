@@ -1,12 +1,12 @@
-import { RawData } from "@/core/domain/RawData";
+import { RawDataSeries } from "@/core/domain/RawDataSeries";
 import { CsvLineReader } from "../CsvLineReader";
 import { findParent } from "./utils";
 
-export class PopulationLineReader implements CsvLineReader<RawData> {
+export class PopulationLineReader implements CsvLineReader<RawDataSeries> {
   topics: Map<string, string> = new Map();
   locations: Map<string, string> = new Map();
 
-  readLine(line: string, separator: string): RawData | null {
+  readLine(line: string, separator: string): RawDataSeries | null {
     if (!line) {
       return null;
     }
@@ -19,7 +19,7 @@ export class PopulationLineReader implements CsvLineReader<RawData> {
     const parentTopic = findParent(externalId, this.topics);
 
     return {
-      externalId,
+      topicExternalId: externalId,
       topicName: columns[0],
       parent: parentTopic
         ? { topicName: parentTopic.name, externalId: parentTopic.externalId }
@@ -33,7 +33,7 @@ export class PopulationLineReader implements CsvLineReader<RawData> {
       values: columns
         .filter((_, i) => i > 9)
         .filter((v) => !!v || v.trim() === "-")
-        .map((v, i) => [1990 + i, Number.parseFloat(v.replace(",", "."))]),
+        .map((v, i) => [1960 + i, Number.parseFloat(v.replace(",", "."))]),
     };
   }
 }

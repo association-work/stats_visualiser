@@ -15,3 +15,13 @@ serviceMap.gesDataJob.run().then(
     console.error(e);
   }
 );
+
+process.on("uncaughtException", (e) => {
+  console.error("Uncaught exception", e);
+  process.exit(1);
+});
+
+process.on("unhandledRejection", (e) => {
+  console.error("unhandledRejection", e);
+  throw e;
+});

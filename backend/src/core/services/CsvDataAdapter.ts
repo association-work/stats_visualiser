@@ -1,7 +1,7 @@
 import * as fs from "fs/promises";
 import { DataReader } from "./DataReader";
 import { DataAdapter } from "./DataAdapter";
-import { RawData } from "../domain/RawData";
+import { RawDataSeries } from "../domain/RawDataSeries";
 import { CsvLineReader } from "./CsvLineReader";
 
 export interface CsvDataAdapterOptions<T> {

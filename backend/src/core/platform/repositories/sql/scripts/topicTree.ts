@@ -38,3 +38,38 @@ select
 		group by _root.id
 	) as _topic
 `;
+
+export const topic = `
+select 
+	_location.*,  
+	COALESCE(
+		(
+			SELECT json_agg
+			(
+				jsonb_build_array(
+					_y.year,
+					_val."value"
+				)	
+			) FROM "value" _val 
+			inner join "year" _y on _y.id = _val."yearId"
+			inner join "location" _loc on _loc.id = _val."locationId"
+
+			where _val."locationId" = _location.id
+		),
+		'[]'::json
+	) values FROM 
+	(
+		select  _root.id, _root.name, _root."parentId",  _root."externalId", 
+	
+			COALESCE(json_agg(_child) FILTER (WHERE _child.id is not null), '[]') children from "location" _root
+		left join 
+		(
+			select _l.id, _l.name, _l."parentId", _l."externalId", 
+				
+				exists(select 1 from "location" _c where _c."parentId" = _l.id) "hasChildren" from "location" _l
+		) _child on _child."parentId" = _root."id"
+	
+		group by _root.id
+	) as _location where _location.id = 5
+
+`;
