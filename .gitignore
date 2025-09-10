@@ -144,3 +144,4 @@ node_modules
 
 src/database/generated/prisma
 /backend/src/database/generated/
+/backend/data/
