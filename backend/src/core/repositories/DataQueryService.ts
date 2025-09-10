@@ -1,5 +1,5 @@
-import { TopicData } from "../domain/TopicData";
+import { TopicDataTree } from "../domain/TopicDataTree";
 
 export abstract class DataQueryService {
-  abstract getAll(): Promise<TopicData[]>;
+  abstract getAll(): Promise<TopicDataTree[]>;
 }

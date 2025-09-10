@@ -2,23 +2,30 @@ import * as fs from "fs/promises";
 import { DataReader } from "./DataReader";
 import { DataAdapter } from "./DataAdapter";
 import { RawData } from "../domain/RawData";
+import { CsvLineReader } from "./CsvLineReader";
 
-export interface CsvDataAdapterOptions {
+export interface CsvDataAdapterOptions<T> {
   filePath: string;
   separator: string;
+  lineReaderProvider: () => CsvLineReader<T>;
   keepFirstRow?: boolean;
+  skipRows?: number;
 }
 
-export class CsvDataAdapter implements DataAdapter<CsvDataAdapterOptions> {
+export class CsvDataAdapter<T>
+  implements DataAdapter<T, CsvDataAdapterOptions<T>>
+{
   private file?: fs.FileHandle;
 
-  async open(options: CsvDataAdapterOptions): Promise<DataReader> {
+  async open(options: CsvDataAdapterOptions<T>): Promise<DataReader<T>> {
     this.file = await fs.open(options.filePath);
 
     return new CsvDataReader(
       this.file,
+      options.lineReaderProvider(),
       options.separator,
-      options.keepFirstRow
+      options.keepFirstRow,
+      options.skipRows ?? 1
     );
   }
 
@@ -31,34 +38,46 @@ export class CsvDataAdapter implements DataAdapter<CsvDataAdapterOptions> {
   }
 }
 
-class CsvDataReader extends DataReader {
+class CsvDataReader<T> extends DataReader<T> {
   lines: AsyncIterable<string>;
   firstRowSkipped = false;
-  topics: Map<string, string> = new Map();
+
   constructor(
     file: fs.FileHandle,
+    private lineReader: CsvLineReader<T>,
     private separator: string,
-    private keepFirstRow: boolean = false
+    private keepFirstRow: boolean = false,
+    private rowsToSkip = 1
   ) {
-    super((count) => this.next(count));
-    this.lines = file.readLines();
+    super((cursor, count) => this.next(cursor, count));
+
+    // replace with something better
+    this.lines = file.readLines({
+      autoClose: false,
+    });
   }
 
-  async next(count: number = Infinity): Promise<RawData[] | null> {
+  async next(_: number, count: number = Infinity): Promise<T[] | null> {
     if (count < 1) {
       throw new Error("");
     }
 
     let i = 0;
-    const result: RawData[] = [];
+    let rowNumber = 0;
+    const result: T[] = [];
 
     for await (const line of this.lines) {
+      rowNumber++;
+
       if (!this.keepFirstRow && !this.firstRowSkipped) {
-        this.firstRowSkipped = true;
+        if (rowNumber >= this.rowsToSkip) {
+          this.firstRowSkipped = true;
+        }
+
         continue;
       }
 
-      const data = this.readLine(line, this.separator!);
+      const data = this.lineReader.readLine(line, this.separator!);
       if (!data) {
         continue;
       }
@@ -76,39 +95,5 @@ class CsvDataReader extends DataReader {
     }
 
     return result;
-  }
-
-  readLine(line: string, separator: string): RawData | null {
-    if (!line || line === ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;") {
-      return null;
-    }
-
-    const columns = line.split(separator);
-    this.topics.set(columns[1], columns[0]);
-
-    const externalId = columns[1];
-    const lastDotIdx = externalId.lastIndexOf(".");
-    let parentTopicName: undefined | string = undefined;
-
-    if (lastDotIdx > -1) {
-      const parentTopicId = externalId.substring(0, lastDotIdx);
-      parentTopicName = this.topics.get(parentTopicId);
-    }
-
-    return {
-      externalId,
-      topicName: columns[0],
-      parentTopicName,
-      source: {
-        name: columns[3],
-        url: columns[4],
-      },
-      location: columns[5],
-      valuesUnit: columns[7],
-      values: columns
-        .filter((_, i) => i > 8)
-        .filter((v) => !!v || v.trim() === "-")
-        .map((v, i) => [1990 + i, Number.parseFloat(v.replace(",", "."))]),
-    };
   }
 }
