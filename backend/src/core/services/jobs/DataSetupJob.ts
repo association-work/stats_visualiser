@@ -7,7 +7,7 @@ export class DataSetupJob {
     let years = await this.dataRepo.findAllYears();
 
     if (years.length === 0) {
-      const max = 2099;
+      const max = 3000;
       const min = 1960;
       const yearNumbers = new Array(max - min).fill(0);
 

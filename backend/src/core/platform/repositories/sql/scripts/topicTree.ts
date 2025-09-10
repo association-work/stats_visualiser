@@ -7,14 +7,13 @@ select
 			(
 				jsonb_build_array(
 					_y.year,
-					_loc.name,
 					_val."value"
 				)	
 			) FROM "value" _val 
 			inner join "year" _y on _y.id = _val."yearId"
 			inner join "location" _loc on _loc.id = _val."locationId"
 
-			where _val."topicId" = _topic.id
+			where _val."topicId" = _topic.id and _loc.name = 'France'
 		),
 		'[]'::json
 	) values FROM 
