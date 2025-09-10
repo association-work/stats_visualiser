@@ -1,4 +1,5 @@
 import { Location, LocationId } from "@/core/domain/Location";
+import { TopicId } from "@/core/domain/Topic";
 import { Year } from "@/core/domain/Year";
 import { LocationRepository } from "@/core/repositories/LocationRepository";
 import { PrismaClient } from "@/database/client";
@@ -51,5 +52,15 @@ export class SqlLocationRepository extends LocationRepository {
       ...location,
       parentId: location.parentId ?? undefined,
     };
+  }
+
+  async findAllByTopic(
+    topicId: TopicId
+  ): Promise<{ name: string; id: number }[]> {
+    const result = await this.client.$queryRaw<{ name: string; id: number }[]>`
+    select id, name from "location" l where exists (select * from "value" v where l.id = v."locationId" and v."topicId" = ${topicId}::uuid);
+    `;
+
+    return result;
   }
 }
