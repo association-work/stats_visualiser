@@ -27,7 +27,7 @@ select
 			COALESCE(json_agg(_child) FILTER (WHERE _child.id is not null), '[]') children from topic _root
 		left join 
 		(
-			select _t.id, _t.name, _t."parentId", _t.unit, _t."externalId", 
+			select _t.id, _t.name, _t."parentId", _t.unit, _t."externalId", '[]'::json values, 
 				json_build_object(
 					'name', _t."sourceName",
 					'url', _t."sourceUrl"
