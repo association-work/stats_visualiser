@@ -1,4 +1,4 @@
-export const topicTreeRequest = `
+export const topicTreeRequest = (location: string) => `
 select 
 	_topic.*,
 	json_build_object(
@@ -15,19 +15,36 @@ select
 				)	
 			) FROM "value" _val 
 			inner join "year" _y on _y.id = _val."yearId"
-			inner join data_series _ds on _ds.id = _val."seriesId"
+			inner join data_series _d on _d.id = _val."seriesId"
 
-			where _ds."topicId" = _topic.id 
+			where _d."topicId" = _topic.id and _d."locationId" = _loc.id
 		),
 		'[]'::json
 	) values FROM 
 	(
 		select  _root.id, _root.name, _root."parentId", _root."externalId", 
-			COALESCE(json_agg(_child) FILTER (WHERE _child.id is not null), '[]') children from topic _root
+			COALESCE(json_agg(_child) FILTER (WHERE _child.id is not null), '[]') children 
+		from topic _root
 
 		left join
 		(
-			select _t.id, _t.name, _t."parentId", _d.unit, _t."externalId",  '[]'::json values, 
+			select _t.id, _t.name, _t."parentId", _d.unit, _t."externalId",  
+				COALESCE(
+					(
+						SELECT json_agg
+						(
+							jsonb_build_array(
+								_y.year,
+								_val."value"
+							)	
+						) FROM "value" _val 
+						inner join "year" _y on _y.id = _val."yearId"
+						inner join data_series _ds on _d.id = _val."seriesId"
+
+						where _ds."topicId" = _d."topicId" and _ds."locationId" = _d."locationId"
+					),
+					'[]'::json
+				) values, 
 				json_build_object(
 					'name', _d."sourceName",
 					'url', _d."sourceUrl"
@@ -35,6 +52,8 @@ select
 				exists(select 1 from topic _c where _c."parentId" = _t.id) "hasChildren" 
 				from topic _t
 				inner join data_series _d on _d."topicId" = _t.id
+				inner join "location" _l on _d."locationId" = _l.id
+			where _l."name" = '${location}'
 		) _child on _child."parentId" = _root."id"
 	
 		group by _root.id

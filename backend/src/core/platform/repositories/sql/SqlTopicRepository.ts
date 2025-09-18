@@ -48,13 +48,17 @@ export class SqlTopicRepository extends TopicRepository {
 
   findAll(): Promise<TopicDataTree[]> {
     return this.client.$queryRawUnsafe(
-      `${topicTreeRequest} WHERE _topic."parentId" is null`
+      `${topicTreeRequest(
+        "France"
+      )} WHERE _topic."parentId" is null and _loc.name = 'France'`
     );
   }
 
   async findById(id: TopicId): Promise<TopicDataTree | null> {
     const data: TopicDataTree[] = await this.client.$queryRawUnsafe(
-      `${topicTreeRequest} WHERE _topic.id = '${id}'`
+      `${topicTreeRequest(
+        "France"
+      )} WHERE _topic.id = '${id}' and _loc.name = 'France'`
     );
 
     return data[0] ?? null;
