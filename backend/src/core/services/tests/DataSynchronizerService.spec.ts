@@ -19,7 +19,7 @@ describe("DataSynchronizerService Tests", () => {
     const dataRepo: DataRepository = new SqlDataRepository(client);
     const locationRepo: LocationRepository = new SqlLocationRepository(client);
 
-    const synchronizer = new GesDataJob(topicRepo, locationRepo, dataRepo);
+    const synchronizer = new GesDataJob(dataRepo, topicRepo, locationRepo);
 
     await synchronizer.run();
 

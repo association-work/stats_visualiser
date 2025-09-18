@@ -1,5 +1,7 @@
 import express from "express";
 import { serviceMap } from "./config/services";
+import * as z from "zod";
+import { validate } from "./validate";
 
 export const router = express.Router();
 
@@ -21,3 +23,23 @@ router.get("/topic/:id", async (req, resp, next) => {
     next(e);
   }
 });
+
+const schema = z.strictObject({
+  topic: z.uuid(),
+});
+
+router.get(
+  "/location",
+  validate(schema, (req) => req.query),
+  async (req, resp, next) => {
+    try {
+      const data = await serviceMap.locationRepo.findAllByTopic(
+        req.query["topic"] as string
+      );
+
+      resp.set("Content-Type", "application/json").send(data);
+    } catch (e) {
+      next(e);
+    }
+  }
+);

@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { RawData } from "../domain/RawData";
+import { RawDataSeries } from "../domain/RawDataSeries";
 import { Topic } from "../domain/Topic";
 import { TopicRepository } from "../repositories/TopicRepository";
 import { DataRepository } from "../repositories/DataRepository";
@@ -49,7 +49,7 @@ export class TopicService {
     return location;
   }
 
-  async addData(rawData: RawData[]) {
+  async addData(rawData: RawDataSeries[]) {
     const topics: Map<string, Topic> = new Map();
     const locations: Map<string, Location> = new Map();
 
@@ -59,7 +59,7 @@ export class TopicService {
     }
 
     for (const data of rawData) {
-      let topic = await this.findTopic(topics, data.topicName, data.externalId);
+      let topic = await this.findTopic(topics, data.topicName, data.topicExternalId);
 
       if (!topic) {
         // create
@@ -68,7 +68,7 @@ export class TopicService {
           name: data.topicName,
           source: data.source,
           unit: data.valuesUnit,
-          externalId: data.externalId,
+          externalId: data.topicExternalId,
         };
 
         topics.set(data.topicName, topic);

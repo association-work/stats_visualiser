@@ -1,7 +1,7 @@
 import * as fs from "fs/promises";
 import { DataReader } from "./DataReader";
 import { DataAdapter } from "./DataAdapter";
-import { RawData } from "../domain/RawData";
+import { RawDataSeries } from "../domain/RawDataSeries";
 import { CsvLineReader } from "./CsvLineReader";
 
 export interface CsvDataAdapterOptions<T> {
@@ -39,11 +39,11 @@ export class CsvDataAdapter<T>
 }
 
 class CsvDataReader<T> extends DataReader<T> {
-  lines: AsyncIterable<string>;
+  lines!: AsyncIterable<string>;
   firstRowSkipped = false;
 
   constructor(
-    file: fs.FileHandle,
+    private file: fs.FileHandle,
     private lineReader: CsvLineReader<T>,
     private separator: string,
     private keepFirstRow: boolean = false,
@@ -51,22 +51,28 @@ class CsvDataReader<T> extends DataReader<T> {
   ) {
     super((cursor, count) => this.next(cursor, count));
 
-    // replace with something better
-    this.lines = file.readLines({
-      autoClose: false,
-    });
+    // // replace with something better
+    // this.lines = file.readLines({
+    //   autoClose: true,
+    // });
   }
 
-  async next(_: number, count: number = Infinity): Promise<T[] | null> {
+  async next(it: number, count: number = Infinity): Promise<T[] | null> {
     if (count < 1) {
       throw new Error("");
     }
+
+    if (count !== Infinity) throw new Error("Not supported");
 
     let i = 0;
     let rowNumber = 0;
     const result: T[] = [];
 
-    for await (const line of this.lines) {
+    if (it > 1) {
+      return null;
+    }
+    
+    for await (const line of this.file.readLines()) {
       rowNumber++;
 
       if (!this.keepFirstRow && !this.firstRowSkipped) {

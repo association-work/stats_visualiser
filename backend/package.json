@@ -9,11 +9,12 @@
     "start:js": "node -r tsconfig-paths/register --enable-source-maps src/server/index.js",
     "test": "jest --verbose",
     "dotenv": "dotenv",
+    "job:setup": "ts-node --files -r tsconfig-paths/register src/scripts/setup.ts",
     "job:geo": "ts-node --files -r tsconfig-paths/register src/scripts/geo.ts",
     "job:ges": "ts-node --files -r tsconfig-paths/register src/scripts/ges.ts",
     "job:pop": "ts-node --files -r tsconfig-paths/register src/scripts/population.ts",
-    "job:setup": "ts-node --files -r tsconfig-paths/register src/scripts/setup.ts",
-    "db:test-migrate": "dotenv -e .env.test -- npx prisma migrate dev  --schema ./src/database/prisma/schema.prisma"
+    "db:test-migrate": "dotenv -e .env.test -- npx prisma migrate dev  --schema ./src/database/prisma/schema.prisma",
+    "db:migrate": "npx prisma migrate dev --schema ./src/database/prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^6.14.0",
@@ -26,7 +27,8 @@
     "pg": "~8.16.3",
     "prisma": "~6.14.0",
     "reflect-metadata": "0.2.2",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "zod": "~4.1.5"
   },
   "devDependencies": {
     "@tsconfig/node22": "~22.0.2",

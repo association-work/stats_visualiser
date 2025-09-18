@@ -1,11 +1,11 @@
 import * as path from "path";
 import { CsvDataAdapter } from "../CsvDataAdapter";
-import { RawData } from "@/core/domain/RawData";
+import { RawDataSeries } from "@/core/domain/RawDataSeries";
 import { GesLineReader } from "../lineReaders/GesLineReader";
 
 describe("CsvDataAdapter Tests", () => {
   test("Should return all CSV file lines", async () => {
-    const adapter = new CsvDataAdapter<RawData>();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -22,7 +22,7 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("Should return the 15 first lines", async () => {
-    const adapter = new CsvDataAdapter<RawData>();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -43,7 +43,7 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("Should should all the lines two by two", async () => {
-    const adapter = new CsvDataAdapter<RawData>();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -55,7 +55,7 @@ describe("CsvDataAdapter Tests", () => {
     });
 
     let data = await dataReader.read(2);
-    const result: RawData[] = [];
+    const result: RawDataSeries[] = [];
 
     while (!data.done) {
       result.push(...data.value);
@@ -70,7 +70,7 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("toIterable method should return an async iterable", async () => {
-    const adapter = new CsvDataAdapter<RawData>();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -81,7 +81,7 @@ describe("CsvDataAdapter Tests", () => {
       skipRows: 2,
     });
 
-    let result: RawData[] = [];
+    let result: RawDataSeries[] = [];
     for await (const data of dataReader.toIterable(Infinity)) {
       result = data;
     }
@@ -91,7 +91,7 @@ describe("CsvDataAdapter Tests", () => {
   });
 
    test("toIterable method should return an async iterable", async () => {
-    const adapter = new CsvDataAdapter<RawData>();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
@@ -102,7 +102,7 @@ describe("CsvDataAdapter Tests", () => {
       skipRows: 2,
     });
 
-    let result: RawData[] = [];
+    let result: RawDataSeries[] = [];
     for await (const data of dataReader.toIterable(Infinity)) {
       result = data;
     }

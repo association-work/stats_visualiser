@@ -1,5 +1,5 @@
-export interface RawData {
-  externalId: string;
+export interface RawDataSeries {
+  topicExternalId: string;
   topicName: string;
   parent?: {
     topicName: string;
@@ -14,7 +14,7 @@ export interface RawData {
   values: [number, number][];
 }
 
-export interface LocationData {
+export interface RawLocationData {
   name: string;
   externalId: string;
 

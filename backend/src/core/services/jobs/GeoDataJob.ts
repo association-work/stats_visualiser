@@ -1,4 +1,4 @@
-import { LocationData } from "@/core/domain/RawData";
+import { RawLocationData } from "@/core/domain/RawDataSeries";
 import { CsvDataAdapter } from "../CsvDataAdapter";
 import * as path from "path";
 import { GeographyLineReader } from "../lineReaders/GeographyLineReader";
@@ -8,7 +8,7 @@ import { Location } from "@/core/domain/Location";
 export class GeoDataJob {
   constructor(private readonly repo: LocationRepository) {}
   async run() {
-    const adapter = new CsvDataAdapter<LocationData>();
+    const adapter = new CsvDataAdapter<RawLocationData>();
     const locations: Map<string, Location> = new Map();
 
     const dataReader = await adapter.open({

@@ -1,4 +1,4 @@
-import { RawData } from "@/core/domain/RawData";
+import { RawDataSeries } from "@/core/domain/RawDataSeries";
 import { TopicRepository } from "@/core/repositories/TopicRepository";
 import { LocationRepository } from "@/core/repositories/LocationRepository";
 import { DataRepository } from "@/core/repositories/DataRepository";
@@ -6,7 +6,8 @@ import { Topic } from "@/core/domain/Topic";
 import { Location } from "@/core/domain/Location";
 import { Year } from "@/core/domain/Year";
 import { randomUUID } from "crypto";
-import { LocatedTimedTopicData } from "@/core/domain/TopicData";
+import { Dataset } from "@/core/domain/Dataset";
+import { DataSeries } from "@/core/domain/DataSeries";
 
 export abstract class DataSynchronizationBaseJob {
   private yearsMap!: Map<number, Year>;
@@ -17,7 +18,7 @@ export abstract class DataSynchronizationBaseJob {
     private readonly dataRepo: DataRepository
   ) {}
 
-  protected async addData(rawData: RawData[]) {
+  protected async addData(dataset: Dataset, rawData: RawDataSeries[]) {
     const topics: Map<string, Topic> = new Map();
     const locations: Map<string, Location> = new Map();
 
@@ -27,24 +28,21 @@ export abstract class DataSynchronizationBaseJob {
     }
 
     for (const data of rawData) {
-      let topic = await this.findTopic(topics, data.topicName, data.externalId);
+      let topic = await this.findTopic(topics, data.topicExternalId);
 
       if (!topic) {
         // create
         topic = {
           id: randomUUID().toString(),
           name: data.topicName,
-          source: data.source,
-          unit: data.valuesUnit,
-          externalId: data.externalId,
+          externalId: data.topicExternalId,
         };
 
-        topics.set(data.topicName, topic);
+        topics.set(data.topicExternalId, topic);
 
         if (data.parent) {
           const parentTopic = await this.findTopic(
             topics,
-            data.parent.topicName,
             data.parent.externalId
           );
 
@@ -61,26 +59,30 @@ export abstract class DataSynchronizationBaseJob {
       let location = await this.getLocation(locations, data.locationExternalId);
 
       const values = data.values
-        .map((v) => [this.yearsMap.get(v[0])?.id!, location.id, v[1]])
-        .filter((v) => !isNaN(v[2]));
+        .map((v) => [this.yearsMap.get(v[0])?.id!, v[1]])
+        .filter((v) => !isNaN(v[1])) as [number, number][];
 
-      await this.topicRepo.saveData(
-        topic.id,
+      const series: Omit<DataSeries, "id"> = {
+        datasetId: dataset.id,
+        locationId: location.id,
+        topicId: topic.id,
+        source: data.source,
+        valuesUnit: data.valuesUnit,
+        values,
+      };
 
-        values as LocatedTimedTopicData
-      );
+      await this.dataRepo.insertSeries(series);
     }
   }
 
   private async findTopic(
     cache: Map<string, Topic>,
-    name: string,
     exId: string
   ): Promise<Topic | null> {
     let topic: Topic | null = null;
 
-    if (cache.has(name)) {
-      topic = cache.get(name)!;
+    if (cache.has(exId)) {
+      topic = cache.get(exId)!;
     }
 
     // look up in storage

@@ -1,10 +1,7 @@
-import { RawData } from "@/core/domain/RawData";
 import { Topic, TopicId } from "@/core/domain/Topic";
-import { LocatedTimedTopicData, TimedTopicData } from "@/core/domain/TopicData";
 import { TopicDataTree } from "@/core/domain/TopicDataTree";
 import { TopicRepository } from "@/core/repositories/TopicRepository";
 import { PrismaClient } from "@/database/client";
-import { Decimal } from "@/database/generated/prisma/runtime/library";
 import { injectable } from "inversify";
 import { topicTreeRequest } from "./scripts/topicTree";
 
@@ -24,16 +21,10 @@ export class SqlTopicRepository extends TopicRepository {
         externalId: topic.externalId,
         parentId: topic.parentId,
         name: topic.name,
-        unit: topic.unit,
-        sourceName: topic.source.name,
-        sourceUrl: topic.source.url,
       },
       update: {
         name: topic.name,
-        unit: topic.unit,
         parentId: topic.parentId,
-        sourceName: topic.source.name,
-        sourceUrl: topic.source.url,
       },
     });
   }
@@ -52,49 +43,24 @@ export class SqlTopicRepository extends TopicRepository {
     return {
       ...topic,
       parentId: topic.parentId ?? undefined,
-      source: {
-        name: topic.name,
-        url: topic.sourceUrl,
-      },
     };
   }
 
   findAll(): Promise<TopicDataTree[]> {
     return this.client.$queryRawUnsafe(
-      `${topicTreeRequest} WHERE _topic."parentId" is null`
+      `${topicTreeRequest(
+        "France"
+      )} WHERE _topic."parentId" is null and _loc.name = 'France'`
     );
   }
 
   async findById(id: TopicId): Promise<TopicDataTree | null> {
     const data: TopicDataTree[] = await this.client.$queryRawUnsafe(
-      `${topicTreeRequest} WHERE _topic.id = '${id}'`
+      `${topicTreeRequest(
+        "France"
+      )} WHERE _topic.id = '${id}' and _loc.name = 'France'`
     );
 
     return data[0] ?? null;
-  }
-
-  async saveData(id: TopicId, data: LocatedTimedTopicData): Promise<void> {
-    await this.client.$transaction(
-      data.map((d) => {
-        return this.client.value.upsert({
-          where: {
-            topicId_yearId_locationId: {
-              topicId: id,
-              yearId: d[0],
-              locationId: d[1],
-            },
-          },
-          create: {
-            topicId: id,
-            yearId: d[0],
-            locationId: d[1],
-            value: new Decimal(d[2]),
-          },
-          update: {
-            value: new Decimal(d[2]),
-          },
-        });
-      })
-    );
   }
 }
