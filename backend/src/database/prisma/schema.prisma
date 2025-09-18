@@ -23,6 +23,8 @@ model topic {
   parent      topic?        @relation("TopicParent", fields: [parentId], references: [id])
   children    topic[]       @relation("TopicParent")
   data_series data_series[]
+
+  @@index([parentId])
 }
 
 model year {
@@ -41,6 +43,9 @@ model location {
   parent      location?     @relation("LocationParent", fields: [parentId], references: [id])
   children    location[]    @relation("LocationParent")
   data_series data_series[]
+
+  @@index([parentId])
+  @@index([name])
 }
 
 model value {
@@ -67,6 +72,10 @@ model data_series {
   location location @relation(fields: [locationId], references: [id])
   dataset  dataset  @relation(fields: [datasetId], references: [id])
   values   value[]
+
+  @@index([topicId])
+  @@index([locationId])
+  @@index([datasetId])
 }
 
 model dataset {
