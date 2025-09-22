@@ -1,21 +1,24 @@
-import { RawData } from "../domain/RawData";
-
-export interface DataValue {
-  value: RawData[];
+export interface DataValue<T> {
+  value: T[];
   done: boolean;
 }
 
-export class DataReader {
+export class DataReader<T> {
+  private cursor = 0;
+
   constructor(
-    private readonly onNext: (count?: number) => Promise<RawData[] | null>
+    private readonly onNext: (
+      cursor: number,
+      count?: number
+    ) => Promise<T[] | null>
   ) {}
 
-  async read(count?: number): Promise<DataValue> {
+  async read(count?: number): Promise<DataValue<T>> {
     if (typeof count === "number" && count < 1) {
       throw new Error("Invalid count value: must be greater of 0 if specified");
     }
 
-    const data = await this.onNext(count);
+    const data = await this.onNext(++this.cursor, count);
 
     if (!data) {
       return {
@@ -30,7 +33,7 @@ export class DataReader {
     };
   }
 
-  toIterable(count: number = 1): AsyncIterable<RawData[]> {
+  toIterable(count: number = 1): AsyncIterable<T[]> {
     if (typeof count === "number" && count < 1) {
       throw new Error("Invalid count value: must be greater of 0 if specified");
     }
@@ -38,7 +41,7 @@ export class DataReader {
     return {
       [Symbol.asyncIterator]: () => ({
         next: async () => {
-          const result = await this.onNext(count);
+          const result = await this.onNext(++this.cursor, count);
           if (result === null) {
             return {
               value: [],

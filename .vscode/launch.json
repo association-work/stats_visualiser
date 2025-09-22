@@ -11,6 +11,30 @@
             "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
             "cwd": "${workspaceFolder}/backend",
             "args": ["${workspaceFolder}/backend/src/server/index.ts"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Geo Sync",
+            "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
+            "cwd": "${workspaceFolder}/backend",
+            "args": ["${workspaceFolder}/backend/src/scripts/geo.ts"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch GES Sync",
+            "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
+            "cwd": "${workspaceFolder}/backend",
+            "args": ["${workspaceFolder}/backend/src/scripts/ges.ts"]
+        },
+         {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Population Sync",
+            "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
+            "cwd": "${workspaceFolder}/backend",
+            "args": ["${workspaceFolder}/backend/src/scripts/population.ts"]
         }
     ]
 }

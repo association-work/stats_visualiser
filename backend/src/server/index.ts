@@ -7,7 +7,6 @@ import cors from "cors";
 import bodyParser = require("body-parser");
 import helmet from "helmet";
 import { router } from "./routes";
-import { serviceMap } from "./config/services";
 
 const app = express();
 
@@ -28,17 +27,10 @@ process.on("unhandledRejection", (e) => {
   throw e;
 });
 
-serviceMap.synchronizationService
-  .start()
-  .then((_) =>
-    app.listen(process.env.PORT, (e) => {
-      if (e) {
-        console.error(e);
-      } else {
-        console.log(`Server listening on port ${process.env.PORT}`);
-      }
-    })
-  )
-  .catch((e) => {
+app.listen(process.env.PORT, (e) => {
+  if (e) {
     console.error(e);
-  });
+  } else {
+    console.log(`Server listening on port ${process.env.PORT}`);
+  }
+});

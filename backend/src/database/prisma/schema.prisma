@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model topic {
+  id         String  @id @db.Uuid()
+  name       String  @db.VarChar()
+  externalId String  @unique @db.VarChar()
+  parentId   String? @db.Uuid()
+
+  parent      topic?        @relation("TopicParent", fields: [parentId], references: [id])
+  children    topic[]       @relation("TopicParent")
+  data_series data_series[]
+
+  @@index([parentId])
+}
+
+model year {
+  id   Int @id @default(autoincrement())
+  year Int @db.SmallInt()
+
+  values value[]
+}
+
+model location {
+  id         Int    @id @default(autoincrement())
+  name       String @db.VarChar()
+  externalId String @unique @db.VarChar()
+  parentId   Int?
+
+  parent      location?     @relation("LocationParent", fields: [parentId], references: [id])
+  children    location[]    @relation("LocationParent")
+  data_series data_series[]
+
+  @@index([parentId])
+  @@index([name])
+}
+
+model value {
+  seriesId Int
+  yearId   Int
+  value    Decimal @db.Decimal()
+
+  year        year        @relation(fields: [yearId], references: [id])
+  data_series data_series @relation(fields: [seriesId], references: [id])
+
+  @@id([seriesId, yearId])
+}
+
+model data_series {
+  id         Int    @id @default(autoincrement())
+  topicId    String @db.Uuid()
+  locationId Int
+  datasetId  Int
+  unit       String
+  sourceName String
+  sourceUrl  String
+
+  topic    topic    @relation(fields: [topicId], references: [id])
+  location location @relation(fields: [locationId], references: [id])
+  dataset  dataset  @relation(fields: [datasetId], references: [id])
+  values   value[]
+
+  @@index([topicId])
+  @@index([locationId])
+  @@index([datasetId])
+}
+
+model dataset {
+  id           Int           @id @default(autoincrement())
+  name         String
+  creationDate DateTime      @db.Timestamp()
+  data_series  data_series[]
+}

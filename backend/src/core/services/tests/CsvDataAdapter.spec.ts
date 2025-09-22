@@ -1,16 +1,19 @@
 import * as path from "path";
 import { CsvDataAdapter } from "../CsvDataAdapter";
-import { RawData } from "@/core/domain/RawData";
+import { RawDataSeries } from "@/core/domain/RawDataSeries";
+import { GesLineReader } from "../lineReaders/GesLineReader";
 
 describe("CsvDataAdapter Tests", () => {
   test("Should return all CSV file lines", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
         "../../../../data/Z_CITEPA_emissions_GES_structure_1.4_v4.csv"
       ),
       separator: ";",
+      lineReaderProvider: () => new GesLineReader(),
+      skipRows: 2,
     });
 
     const data = await dataReader.read();
@@ -19,13 +22,15 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("Should return the 15 first lines", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
         "../../../../data/Z_CITEPA_emissions_GES_structure_1.4_v4.csv"
       ),
       separator: ";",
+      lineReaderProvider: () => new GesLineReader(),
+      skipRows: 2,
     });
 
     const data = await dataReader.read(15);
@@ -38,17 +43,19 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("Should should all the lines two by two", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
         "../../../../data/Z_CITEPA_emissions_GES_structure_1.4_v4.csv"
       ),
       separator: ";",
+      lineReaderProvider: () => new GesLineReader(),
+      skipRows: 2,
     });
 
     let data = await dataReader.read(2);
-    const result: RawData[] = [];
+    const result: RawDataSeries[] = [];
 
     while (!data.done) {
       result.push(...data.value);
@@ -63,21 +70,41 @@ describe("CsvDataAdapter Tests", () => {
   });
 
   test("toIterable method should return an async iterable", async () => {
-    const adapter = new CsvDataAdapter();
+    const adapter = new CsvDataAdapter<RawDataSeries>();
     const dataReader = await adapter.open({
       filePath: path.resolve(
         __dirname,
         "../../../../data/Z_CITEPA_emissions_GES_structure_1.4_v4.csv"
       ),
       separator: ";",
+      lineReaderProvider: () => new GesLineReader(),
+      skipRows: 2,
     });
 
-    let result: RawData[] = [];
+    let result: RawDataSeries[] = [];
     for await (const data of dataReader.toIterable(Infinity)) {
       result = data;
     }
 
     expect(result.length).toStrictEqual(157);
     expect(result[0].topicName).toStrictEqual("Emissions GES");
+  });
+
+   test("toIterable method should return an async iterable", async () => {
+    const adapter = new CsvDataAdapter<RawDataSeries>();
+    const dataReader = await adapter.open({
+      filePath: path.resolve(
+        __dirname,
+        "../../../../data/Z_Banque_mond_Population_v1.csv"
+      ),
+      separator: ";",
+      lineReaderProvider: () => new GesLineReader(),
+      skipRows: 2,
+    });
+
+    let result: RawDataSeries[] = [];
+    for await (const data of dataReader.toIterable(Infinity)) {
+      result = data;
+    }
   });
 });

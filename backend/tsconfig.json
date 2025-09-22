@@ -26,6 +26,6 @@
     "sourceRoot": "src",
     "outDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "./.config/*"],
   "exclude": ["node_modules"]
 }
