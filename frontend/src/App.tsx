@@ -11,7 +11,21 @@ import Loader from "./pages/Loader/Loader";
 function App() {
   const [isYear, setIsYear] = useState<number>(2023);
 
-  const [topicOrigin, setTopicOrigin] = useState<topicBranch>({
+  const [topicOriginEnvironment, setTopicOriginEnvironment] =
+    useState<topicBranch>({
+      id: "",
+      name: "",
+      source: {
+        name: "CITEPA",
+        url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+      },
+      unit: "",
+      values: [],
+      hasChildren: false,
+      parentId: "",
+    });
+
+  const [topicOriginHuman, setTopicOriginHuman] = useState<topicBranch>({
     id: "",
     name: "",
     source: {
@@ -43,7 +57,8 @@ function App() {
         },
         unit: "",
         values: [],
-        hasChildren: false,
+        children: [topicOriginHuman],
+        hasChildren: true,
         parentId: "00_welcome",
       },
       {
@@ -56,7 +71,7 @@ function App() {
         unit: "",
         values: [],
         children: [
-          topicOrigin,
+          topicOriginEnvironment,
           {
             id: "1_matières premières",
             name: "Matières premières",
@@ -131,9 +146,15 @@ function App() {
   useEffect(() => {
     GetTopics().then((data) => {
       // setCurrentBranch(data[0]); A remettre en place une fois la BDD mise à jour avec les nouvelles informations
-      setTopicOrigin(data[0]);
-      if (currentBranch.children && currentBranch.children[1].children) {
+      setTopicOriginEnvironment(data[0]);
+      setTopicOriginHuman(data[1]);
+      if (
+        currentBranch.children &&
+        currentBranch.children[1].children &&
+        currentBranch.children[0].children
+      ) {
         currentBranch.children[1].children[0] = data[0];
+        currentBranch.children[0].children[0] = data[1];
         setCurrentBranch(currentBranch);
         setChosenPath([currentBranch]);
       }
@@ -150,7 +171,7 @@ function App() {
       <nav>
         <Navbar
           setIsYear={setIsYear}
-          topicOrigin={topicOrigin}
+          topicOrigin={topicOriginEnvironment}
           currentBranch={currentBranch}
         />
       </nav>

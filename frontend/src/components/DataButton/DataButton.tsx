@@ -69,7 +69,7 @@ export default function DataButton({
 
   return (
     <>
-      {nextBranch && nextBranch.hasChildren ? (
+      {nextBranch && nextBranch.children && nextBranch.children.length > 0 ? (
         <button
           type="button"
           className={

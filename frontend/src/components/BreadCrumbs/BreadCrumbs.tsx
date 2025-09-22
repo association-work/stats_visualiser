@@ -28,8 +28,6 @@ export default function BreadCrumbs({
     });
   };
 
-  console.log(chosenPath);
-
   return (
     <aside className="breadcrumbs">
       <section className="static_crumbs" aria-label="Breadcrumb">

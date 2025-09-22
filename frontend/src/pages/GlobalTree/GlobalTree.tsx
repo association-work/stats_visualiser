@@ -30,14 +30,14 @@ export default function GlobalTree({
   // permet de récupérer la valeur de la branche actuelle
   const isvalue = currentBranch.values.filter((info) => info[0] === isYear);
 
-  useEffect(() => {
-    if (currentBranch && currentBranch.children) {
-      setHasValue(currentBranch.children[1].values.length);
-    }
-  }, [currentBranch]);
-
   //contrôle de l'affichage de certain éléments
   const [hasValue, setHasValue] = useState(0);
+
+  useEffect(() => {
+    if (currentBranch && currentBranch.children) {
+      setHasValue(currentBranch.children[0].values.length);
+    }
+  }, [currentBranch]);
 
   const [showLineChart, setShowLineChart] = useState(false);
 
@@ -70,6 +70,8 @@ export default function GlobalTree({
     setChosenPath(chosenPath);
   };
 
+  console.log(currentBranch);
+
   return (
     isYear !== 0 &&
     isvalue && (
@@ -90,11 +92,16 @@ export default function GlobalTree({
             <article className="value_chart">
               {isvalue.length !== 0 ? (
                 <div className="branch_value">
-                  <p>{isvalue[0][1].toFixed(2) + " Mt CO2e"}</p>
+                  <p>
+                    {isvalue[0][1].toFixed(2)} {currentBranch.unit ?? "Mt CO2e"}
+                  </p>
                 </div>
               ) : childValueTotalWithYear !== 0 ? (
                 <div className="branch_value">
-                  <p> {childValueTotalWithYear.toFixed(2) + " Mt CO2e"}</p>
+                  <p>
+                    {childValueTotalWithYear.toFixed(2)}
+                    {currentBranch.unit ?? "Mt CO2e"}
+                  </p>
                 </div>
               ) : (
                 <></>
