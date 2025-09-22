@@ -15,7 +15,7 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
   useEffect(() => {
     if (
       currentBranch.children !== undefined &&
-      currentBranch.children[1].values.length > 0
+      currentBranch.children[0].values.length > 0
     ) {
       let autreValue = 0;
       let futureChartedDataTree = [];
