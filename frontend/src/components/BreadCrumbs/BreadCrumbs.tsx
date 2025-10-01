@@ -1,6 +1,8 @@
 import "./BreadCrumbs.css";
 import type { topicBranch } from "../../types/dataTypes";
-import home from "../../../src/assets/house.svg";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Button from "@mui/material/Button";
 
 interface BreadCrumbsProps {
   chosenPath: topicBranch[];
@@ -29,29 +31,53 @@ export default function BreadCrumbs({
   };
 
   return (
-    <aside className="breadcrumbs">
-      <section className="static_crumbs" aria-label="Breadcrumb">
-        {chosenPath &&
-          chosenPath.length > 0 &&
-          chosenPath.map((choice, index) => (
-            <button
-              type="button"
+    <Breadcrumbs
+      maxItems={2}
+      aria-label="breadcrumb"
+      className="footer"
+      sx={{
+        marginBottom: "6px",
+        backgroundColor: "#EDEFF2",
+        borderRadius: "16px",
+        padding: "8px",
+      }}
+    >
+      {chosenPath &&
+        chosenPath.length > 0 &&
+        chosenPath.map((choice, index) =>
+          index === 0 ? (
+            <Button
+              variant="contained"
               key={index}
-              className="crumbs"
               onClick={() => handleRewindBranch(index)}
+              sx={{
+                backgroundColor: "#434D5F",
+                minWidth: "20px",
+                padding: "7px 10px",
+                borderRadius: "8px",
+              }}
             >
-              {index === 0 ? (
-                <img src={home} alt="retour home" />
-              ) : (
-                <p>
-                  {choice.name.length < 15
-                    ? choice.name
-                    : choice.name.slice(0, 16)}
-                </p>
-              )}
-            </button>
-          ))}
-      </section>
-    </aside>
+              <HomeOutlinedIcon />
+            </Button>
+          ) : (
+            <Button
+              variant="text"
+              key={index}
+              onClick={() => handleRewindBranch(index)}
+              sx={{
+                border: " 1px solid #434D5F",
+                borderRadius: "8px",
+                color: "#434D5F",
+              }}
+            >
+              <p>
+                {choice.name.length < 15
+                  ? choice.name
+                  : choice.name.slice(0, 20)}
+              </p>
+            </Button>
+          )
+        )}
+    </Breadcrumbs>
   );
 }

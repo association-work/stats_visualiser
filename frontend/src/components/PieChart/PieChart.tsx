@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell } from "recharts";
+// import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell } from "recharts";
 import type { topicBranch } from "../../types/dataTypes";
+import { PieChart } from "@mui/x-charts/PieChart";
 
 interface PieChartProps {
   isYear: number;
@@ -8,9 +9,12 @@ interface PieChartProps {
 }
 
 export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
-  const [chartedDataTree, setChartedDataTree] = useState<
-    { name: string; value: number }[]
-  >([]);
+  const [data, setData] = useState<{ value: number; label: string }[]>([]);
+
+  const size = {
+    width: 200,
+    height: 200,
+  };
 
   useEffect(() => {
     if (
@@ -26,8 +30,8 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
             autreValue = autreValue + childValue[1];
           } else {
             futureChartedDataTree.push({
-              name: element.name,
               value: childValue[1],
+              label: element.name,
             });
           }
         }
@@ -36,9 +40,9 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
         autreValue = 0;
       }
       autreValue = Number(autreValue.toFixed(2));
-      futureChartedDataTree.push({ name: "autre", value: autreValue });
+      futureChartedDataTree.push({ value: autreValue, label: "autre" });
       futureChartedDataTree.sort((a, b) => b.value - a.value);
-      setChartedDataTree(futureChartedDataTree);
+      setData(futureChartedDataTree);
     }
   }, [currentBranch, isYear]);
 
@@ -56,26 +60,10 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
   ];
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <PieChart width={400} height={400}>
-        <Pie
-          dataKey="value"
-          isAnimationActive={true}
-          data={chartedDataTree}
-          cx="50%"
-          cy="50%"
-          outerRadius={80}
-          innerRadius={20}
-        >
-          {chartedDataTree.map((entry, index) => (
-            <Cell
-              key={`cell-${entry.name}`}
-              fill={COLORS[index % COLORS.length]}
-            />
-          ))}
-        </Pie>
-        <Tooltip />
-      </PieChart>
-    </ResponsiveContainer>
+    <PieChart
+      series={[{ data, innerRadius: 30 }]}
+      {...size}
+      colors={COLORS}
+    ></PieChart>
   );
 }

@@ -3,7 +3,7 @@ import type { topicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
 import go_next from "../../assets/corner-up-right.svg";
-import LineChart from "../LineChart/LineChart";
+// import LineChart from "../LineChart/LineChart";
 import line_chart from "../../../src/assets/activity.svg";
 
 interface DataButtonProps {
@@ -16,6 +16,10 @@ interface DataButtonProps {
   isYear: number;
   previousBranchName: string;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
+  setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
+  setLineChartToShow: React.Dispatch<
+    React.SetStateAction<topicBranch | undefined>
+  >;
 }
 
 export default function DataButton({
@@ -28,6 +32,8 @@ export default function DataButton({
   isYear,
   previousBranchName,
   setPreviousBranchName,
+  setShowLineChart,
+  setLineChartToShow,
 }: DataButtonProps) {
   const [nextBranch, setNextBranch] = useState<topicBranch>(information);
 
@@ -65,7 +71,7 @@ export default function DataButton({
     }
   }
 
-  const [showChildrenLineChart, setShowChildrenLineChart] = useState(false);
+  // const [showChildrenLineChart, setShowChildrenLineChart] = useState(false);
 
   return (
     <>
@@ -99,7 +105,10 @@ export default function DataButton({
           </button>
           <button
             type="button"
-            onClick={() => setShowChildrenLineChart(true)}
+            onClick={() => {
+              setShowLineChart(true);
+              setLineChartToShow(nextBranch);
+            }}
             className="icon_linechart"
           >
             <img src={line_chart} alt="afficher le graphique de l'évolution" />
@@ -115,24 +124,6 @@ export default function DataButton({
           <p>{nextBranch.name}</p>
           <p>en construction</p>
         </button>
-      )}
-      {showChildrenLineChart && (
-        <article className="popup_linechart">
-          <button
-            type="button"
-            onClick={() => setShowChildrenLineChart(false)}
-            className="closeButton"
-          >
-            X
-          </button>
-          <LineChart currentBranch={nextBranch} />
-          <div className="references">
-            <p>Source : </p>
-            <a href={nextBranch.source.url} target="_blank">
-              {nextBranch.source.name}
-            </a>
-          </div>
-        </article>
       )}
     </>
   );

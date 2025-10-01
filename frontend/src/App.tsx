@@ -52,8 +52,8 @@ function App() {
         id: "0_être_humain",
         name: "Être humain",
         source: {
-          name: "CITEPA",
-          url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+          name: "Banque Mondiale",
+          url: "https://databank.worldbank.org/source/population-estimates-and-projections#",
         },
         unit: "",
         values: [],
@@ -168,13 +168,11 @@ function App() {
 
   return (
     <>
-      <nav>
-        <Navbar
-          setIsYear={setIsYear}
-          topicOrigin={topicOriginEnvironment}
-          currentBranch={currentBranch}
-        />
-      </nav>
+      <Navbar
+        setIsYear={setIsYear}
+        topicOrigin={topicOriginEnvironment}
+        currentBranch={currentBranch}
+      />
       <main>
         {!topicIsReady ? (
           <Loader />
@@ -190,14 +188,12 @@ function App() {
           />
         )}
       </main>
-      <footer>
-        <BreadCrumbs
-          chosenPath={chosenPath}
-          setChosenPath={setChosenPath}
-          setCurrentBranch={setCurrentBranch}
-          setPreviousBranchName={setPreviousBranchName}
-        />
-      </footer>
+      <BreadCrumbs
+        chosenPath={chosenPath}
+        setChosenPath={setChosenPath}
+        setCurrentBranch={setCurrentBranch}
+        setPreviousBranchName={setPreviousBranchName}
+      />
     </>
   );
 }

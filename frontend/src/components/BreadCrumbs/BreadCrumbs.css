@@ -1,57 +1,7 @@
-.breadcrumbs {
-  display: flex;
-  align-items: flex-start;
-  margin: 0 0 0 3vh;
-  border-radius: 8px;
-  overflow-x: auto;
-}
-
-.static_crumbs {
-  background-color: var(--light-highligth-color);
-  color: var(--dark-highligth-color);
-  display: flex;
-  font-size: 14px;
-  position: relative;
-}
-
-.crumbs {
-  padding: 0 0 0 30px;
-  height: 5vh;
-  display: flex;
-  align-items: center;
-  width: max-content;
-  border: none;
-  background-color: var(--light-highligth-color);
-  border-radius: 0;
-}
-
-.crumbs img {
-  height: 2.5em;
-  width: auto;
-}
-
-.crumbs:first-child {
-  padding: 0 0 0 10px;
-}
-
-.crumbs:last-child {
-  background-color: var(--medium-highligth-color);
-}
-
-.crumbs::after {
-  content: "";
-  display: block;
-  width: 26px;
-  height: 26px;
-  transform: rotate(130deg) skew(-10deg);
-  float: right;
-  position: relative;
-  left: 16px;
-  border-top: 3px solid var(--bg-color-ligth);
-  border-left: 3px solid var(--bg-color-ligth);
-  background-color: var(--light-highligth-color);
-}
-
-.crumbs:last-child::after {
-  background-color: var(--medium-highligth-color);
+.footer {
+  position: fixed;
+  width: 93%;
+  bottom: 0;
+  background-color: var(--bg-color-ligth);
+  left: 3%;
 }

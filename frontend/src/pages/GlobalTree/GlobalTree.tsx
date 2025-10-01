@@ -70,7 +70,7 @@ export default function GlobalTree({
     setChosenPath(chosenPath);
   };
 
-  console.log(currentBranch);
+  const [lineChartToShow, setLineChartToShow] = useState<topicBranch>();
 
   return (
     isYear !== 0 &&
@@ -93,14 +93,14 @@ export default function GlobalTree({
               {isvalue.length !== 0 ? (
                 <div className="branch_value">
                   <p>
-                    {isvalue[0][1].toFixed(2)} {currentBranch.unit ?? "Mt CO2e"}
+                    {parseFloat(isvalue[0][1].toFixed(2))} {currentBranch.unit}
                   </p>
                 </div>
               ) : childValueTotalWithYear !== 0 ? (
                 <div className="branch_value">
                   <p>
-                    {childValueTotalWithYear.toFixed(2)}
-                    {currentBranch.unit ?? "Mt CO2e"}
+                    {parseFloat(childValueTotalWithYear.toFixed(2))}
+                    {currentBranch.unit}
                   </p>
                 </div>
               ) : (
@@ -109,7 +109,10 @@ export default function GlobalTree({
               {currentBranch.values.length !== 0 && (
                 <button
                   type="button"
-                  onClick={() => setShowLineChart(true)}
+                  onClick={() => {
+                    setShowLineChart(true);
+                    setLineChartToShow(currentBranch);
+                  }}
                   className="icon_linechart"
                 >
                   <img
@@ -119,7 +122,7 @@ export default function GlobalTree({
                 </button>
               )}
             </article>
-            {showLineChart && (
+            {showLineChart && lineChartToShow && (
               <article className="popup_linechart">
                 <button
                   type="button"
@@ -128,7 +131,7 @@ export default function GlobalTree({
                 >
                   X
                 </button>
-                <LineChart currentBranch={currentBranch} />
+                <LineChart currentBranch={lineChartToShow} />
                 <div className="references">
                   <p>Source : </p>
                   <a href={currentBranch.source.url} target="_blank">
@@ -177,6 +180,8 @@ export default function GlobalTree({
                     isYear={isYear}
                     previousBranchName={previousBranchName}
                     setPreviousBranchName={setPreviousBranchName}
+                    setShowLineChart={setShowLineChart}
+                    setLineChartToShow={setLineChartToShow}
                   />
                 ))}
             </article>
