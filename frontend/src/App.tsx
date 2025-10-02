@@ -9,7 +9,7 @@ import GlobalTree from "./pages/GlobalTree/GlobalTree";
 import Loader from "./pages/Loader/Loader";
 
 function App() {
-  const [isYear, setIsYear] = useState<number>(2023);
+  const [isYear, setIsYear] = useState<number>(10);
 
   const [topicOriginEnvironment, setTopicOriginEnvironment] =
     useState<topicBranch>({
@@ -39,7 +39,7 @@ function App() {
   });
 
   const [currentBranch, setCurrentBranch] = useState<topicBranch>({
-    id: "00_welcome",
+    id: "0_welcome",
     name: "Welcome",
     source: {
       name: "CITEPA",
@@ -49,20 +49,20 @@ function App() {
     values: [],
     children: [
       {
-        id: "0_être_humain",
+        id: "1_être_humain",
         name: "Être humain",
         source: {
-          name: "CITEPA",
-          url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+          name: "Banque Mondiale",
+          url: "https://databank.worldbank.org/source/population-estimates-and-projections#",
         },
         unit: "",
         values: [],
         children: [topicOriginHuman],
         hasChildren: true,
-        parentId: "00_welcome",
+        parentId: "0_welcome",
       },
       {
-        id: "0_environnement",
+        id: "1_environnement",
         name: "Environnement",
         source: {
           name: "CITEPA",
@@ -73,7 +73,7 @@ function App() {
         children: [
           topicOriginEnvironment,
           {
-            id: "1_matières premières",
+            id: "2_matières premières",
             name: "Matières premières",
             source: {
               name: "CITEPA",
@@ -82,10 +82,10 @@ function App() {
             unit: "",
             values: [],
             hasChildren: false,
-            parentId: "0_environnement",
+            parentId: "1_environnement",
           },
           {
-            id: "1_surfaces_disponibles",
+            id: "2_surfaces_disponibles",
             name: "Surfaces disponibles",
             source: {
               name: "CITEPA",
@@ -94,10 +94,10 @@ function App() {
             unit: "",
             values: [],
             hasChildren: false,
-            parentId: "0_environnement",
+            parentId: "1_environnement",
           },
           {
-            id: "1_énergie",
+            id: "2_énergie",
             name: "Énergie",
             source: {
               name: "CITEPA",
@@ -106,10 +106,10 @@ function App() {
             unit: "",
             values: [],
             hasChildren: false,
-            parentId: "0_environnement",
+            parentId: "1_environnement",
           },
           {
-            id: "1_climat",
+            id: "2_climat",
             name: "Climat",
             source: {
               name: "CITEPA",
@@ -118,14 +118,14 @@ function App() {
             unit: "",
             values: [],
             hasChildren: false,
-            parentId: "0_environnement",
+            parentId: "1_environnement",
           },
         ],
         hasChildren: true,
-        parentId: "00_welcome",
+        parentId: "0_welcome",
       },
       {
-        id: "0_économie",
+        id: "1_économie",
         name: "Économie",
         source: {
           name: "CITEPA",
@@ -134,7 +134,7 @@ function App() {
         unit: "",
         values: [],
         hasChildren: false,
-        parentId: "00_welcome",
+        parentId: "0_welcome",
       },
     ],
     hasChildren: true,
@@ -168,13 +168,11 @@ function App() {
 
   return (
     <>
-      <nav>
-        <Navbar
-          setIsYear={setIsYear}
-          topicOrigin={topicOriginEnvironment}
-          currentBranch={currentBranch}
-        />
-      </nav>
+      <Navbar
+        setIsYear={setIsYear}
+        topicOrigin={topicOriginEnvironment}
+        currentBranch={currentBranch}
+      />
       <main>
         {!topicIsReady ? (
           <Loader />
@@ -190,14 +188,12 @@ function App() {
           />
         )}
       </main>
-      <footer>
-        <BreadCrumbs
-          chosenPath={chosenPath}
-          setChosenPath={setChosenPath}
-          setCurrentBranch={setCurrentBranch}
-          setPreviousBranchName={setPreviousBranchName}
-        />
-      </footer>
+      <BreadCrumbs
+        chosenPath={chosenPath}
+        setChosenPath={setChosenPath}
+        setCurrentBranch={setCurrentBranch}
+        setPreviousBranchName={setPreviousBranchName}
+      />
     </>
   );
 }

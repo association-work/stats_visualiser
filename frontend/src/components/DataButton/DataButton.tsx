@@ -2,8 +2,7 @@ import "./DataButton.css";
 import type { topicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
-import go_next from "../../assets/corner-up-right.svg";
-import LineChart from "../LineChart/LineChart";
+import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import line_chart from "../../../src/assets/activity.svg";
 
 interface DataButtonProps {
@@ -12,10 +11,13 @@ interface DataButtonProps {
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   childValueTotalWithYear: number;
-  setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
   isYear: number;
   previousBranchName: string;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
+  setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
+  setLineChartToShow: React.Dispatch<
+    React.SetStateAction<topicBranch | undefined>
+  >;
 }
 
 export default function DataButton({
@@ -24,10 +26,11 @@ export default function DataButton({
   setChosenPath,
   setCurrentBranch,
   childValueTotalWithYear,
-  setChildValueTotalWithYear,
   isYear,
   previousBranchName,
   setPreviousBranchName,
+  setShowLineChart,
+  setLineChartToShow,
 }: DataButtonProps) {
   const [nextBranch, setNextBranch] = useState<topicBranch>(information);
 
@@ -43,7 +46,6 @@ export default function DataButton({
     setChosenPath(chosenPath);
     chosenPath.push(nextBranch);
     setCurrentBranch(nextBranch);
-    setChildValueTotalWithYear(0);
     setPreviousBranchName("");
   };
 
@@ -65,8 +67,6 @@ export default function DataButton({
     }
   }
 
-  const [showChildrenLineChart, setShowChildrenLineChart] = useState(false);
-
   return (
     <>
       {nextBranch && nextBranch.children && nextBranch.children.length > 0 ? (
@@ -79,11 +79,12 @@ export default function DataButton({
           }
           key={nextBranch.id}
           onClick={handleChangingBranch}
+          disabled={isYear === 10 && !nextBranch.id.includes("1_")}
         >
           <p>{nextBranch.name[0].toUpperCase() + nextBranch.name.slice(1)}</p>
           <p>
             {percentage !== "0" && percentage + " %"}
-            <img src={go_next} alt="show more data" />
+            <ChevronRightOutlinedIcon />
           </p>
         </button>
       ) : nextBranchValue ? (
@@ -99,7 +100,10 @@ export default function DataButton({
           </button>
           <button
             type="button"
-            onClick={() => setShowChildrenLineChart(true)}
+            onClick={() => {
+              setShowLineChart(true);
+              setLineChartToShow(nextBranch);
+            }}
             className="icon_linechart"
           >
             <img src={line_chart} alt="afficher le graphique de l'évolution" />
@@ -115,24 +119,6 @@ export default function DataButton({
           <p>{nextBranch.name}</p>
           <p>en construction</p>
         </button>
-      )}
-      {showChildrenLineChart && (
-        <article className="popup_linechart">
-          <button
-            type="button"
-            onClick={() => setShowChildrenLineChart(false)}
-            className="closeButton"
-          >
-            X
-          </button>
-          <LineChart currentBranch={nextBranch} />
-          <div className="references">
-            <p>Source : </p>
-            <a href={nextBranch.source.url} target="_blank">
-              {nextBranch.source.name}
-            </a>
-          </div>
-        </article>
       )}
     </>
   );

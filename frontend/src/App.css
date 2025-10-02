@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Patrick+Hand&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Patrick+Hand&display=swap"); */
+
+@import "@fontsource-variable/nunito";
 
 :root {
   --bg-color-ligth: #ffffff;
@@ -15,7 +17,7 @@
   --medium-highligth-color: #8698fd;
   --light-highligth-color: #d4dbff;
   --hidden-color: #7b88a2;
-  --main-font: "Nunito", sans-serif;
+  --main-font: "Nunito Variable", sans-serif;
   --title-font: "Patrick Hand", cursive;
   line-height: 1.5;
   font-weight: 400;
@@ -45,11 +47,6 @@ body {
   place-items: center;
 }
 
-nav {
-  height: 17vh;
-  width: 100vw;
-}
-
 main {
   height: 77vh;
   width: 100vw;
@@ -57,15 +54,12 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  top: 60px;
 }
 
 main h1 {
   margin: 0.3em 0;
-}
-
-footer {
-  height: 6vh;
-  width: 100vw;
 }
 
 h1 {
