@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import type { topicBranch } from "../../types/dataTypes";
-import dropDownArrow from "../../assets/chevron-down.svg";
 import { useState } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import PublicSharpIcon from "@mui/icons-material/PublicSharp";
@@ -10,7 +9,8 @@ import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { type SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
+import { Button } from "@mui/material";
 
 interface NavBarProps {
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
@@ -23,7 +23,6 @@ export default function Navbar({
   topicOrigin,
   currentBranch,
 }: NavBarProps) {
-  // à mettre en place une fois les données géographiques ajouter à la BDD pour activer le toggle boutton
   const [topicOrLocation, setTopicOrLocation] = useState(true);
 
   const changeParameter = () => {
@@ -36,47 +35,42 @@ export default function Navbar({
 
   const years = topicOrigin.values.sort((a, b) => b[0] - a[0]);
 
-  const [subject, setSubject] = useState("");
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setSubject(event.target.value as string);
-  };
-
   return (
     <>
       <section className="topNav">
         <Link to="/">
           <h1>Logo</h1>
         </Link>
-        <ToggleButton
-          value="bold"
-          aria-label="bold"
-          onClick={() => changeParameter()}
-          disableRipple
-          sx={{ border: "none", "&:hover": { bgcolor: "#77869f" } }}
-          // borderRadius: "50%",
-        >
-          {topicOrLocation ? <AccountTreeOutlinedIcon /> : <PublicSharpIcon />}
-        </ToggleButton>
-        {/* à mettre en place une fois les données géographiques ajouter à la BDD */}
+        {!currentBranch.id.includes("0_") && (
+          <ToggleButton
+            value="bold"
+            aria-label="bold"
+            onClick={() => changeParameter()}
+            disableRipple
+            sx={{
+              border: "none",
+              "&:hover": { bgcolor: "var(--bg-color-medium)" },
+            }}
+          >
+            {topicOrLocation ? (
+              <AccountTreeOutlinedIcon />
+            ) : (
+              <PublicSharpIcon />
+            )}
+          </ToggleButton>
+        )}
+        {/* function d'appel à l'API à mettre en place une fois les données géographiques ajouter à la BDD */}
       </section>
-      {currentBranch.unit !== "" && (
+      {!currentBranch.id.includes("0_") && (
         <section className="navigation">
-          <Box className="environnement_list">
-            <FormControl fullWidth>
-              <InputLabel>Environnement</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={subject}
-                label="sujet montrer"
-                onChange={handleChange}
-              >
-                <MenuItem value="France">France</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          <Box className="year_list">
+          <Button
+            disabled
+            variant="outlined"
+            sx={{ borderRadius: "8px", width: "65%" }}
+          >
+            {topicOrLocation ? "DESTINATION" : currentBranch.name}
+          </Button>
+          <Box sx={{ width: "30%" }}>
             <FormControl fullWidth>
               <InputLabel>Année</InputLabel>
               <Select
@@ -87,6 +81,7 @@ export default function Navbar({
                   setIsYear(Number(event.target.value));
                 }}
                 defaultValue={""}
+                sx={{ borderRadius: "8px" }}
               >
                 {years &&
                   years.map((year) => (

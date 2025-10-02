@@ -47,7 +47,7 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
   }, [currentBranch, isYear]);
 
   const COLORS = [
-    "#061EA5",
+    "var(--highligth-color)",
     "#1D33AF",
     "#3448B9",
     "#4B5DC3",
@@ -56,7 +56,7 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
     "#8F9CE1",
     "#A6B1EB",
     "#BDC6F5",
-    "#D4DBFF",
+    "var(--light-highligth-color)",
   ];
 
   return (

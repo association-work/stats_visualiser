@@ -16,17 +16,9 @@
   flex-direction: row;
   justify-content: space-around;
   padding: 0 1em;
-  gap: 5px;
+  gap: 5%;
   position: absolute;
   width: 100vw;
-}
-
-.environnement_list {
-  min-width: 50%;
-}
-
-.year_list {
-  min-width: 25%;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {

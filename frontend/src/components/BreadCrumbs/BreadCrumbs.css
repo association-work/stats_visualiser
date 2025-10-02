@@ -1,6 +1,6 @@
 .footer {
   position: fixed;
-  width: 93%;
+  width: 100%;
   bottom: 0;
   background-color: var(--bg-color-ligth);
   left: 3%;

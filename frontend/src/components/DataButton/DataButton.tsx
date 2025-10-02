@@ -2,8 +2,7 @@ import "./DataButton.css";
 import type { topicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
-import go_next from "../../assets/corner-up-right.svg";
-// import LineChart from "../LineChart/LineChart";
+import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import line_chart from "../../../src/assets/activity.svg";
 
 interface DataButtonProps {
@@ -12,7 +11,6 @@ interface DataButtonProps {
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   childValueTotalWithYear: number;
-  setChildValueTotalWithYear: React.Dispatch<React.SetStateAction<number>>;
   isYear: number;
   previousBranchName: string;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
@@ -28,7 +26,6 @@ export default function DataButton({
   setChosenPath,
   setCurrentBranch,
   childValueTotalWithYear,
-  setChildValueTotalWithYear,
   isYear,
   previousBranchName,
   setPreviousBranchName,
@@ -49,7 +46,6 @@ export default function DataButton({
     setChosenPath(chosenPath);
     chosenPath.push(nextBranch);
     setCurrentBranch(nextBranch);
-    setChildValueTotalWithYear(0);
     setPreviousBranchName("");
   };
 
@@ -71,8 +67,6 @@ export default function DataButton({
     }
   }
 
-  // const [showChildrenLineChart, setShowChildrenLineChart] = useState(false);
-
   return (
     <>
       {nextBranch && nextBranch.children && nextBranch.children.length > 0 ? (
@@ -85,11 +79,12 @@ export default function DataButton({
           }
           key={nextBranch.id}
           onClick={handleChangingBranch}
+          disabled={isYear === 10 && !nextBranch.id.includes("1_")}
         >
           <p>{nextBranch.name[0].toUpperCase() + nextBranch.name.slice(1)}</p>
           <p>
             {percentage !== "0" && percentage + " %"}
-            <img src={go_next} alt="show more data" />
+            <ChevronRightOutlinedIcon />
           </p>
         </button>
       ) : nextBranchValue ? (
