@@ -1,9 +1,11 @@
 import { Location, LocationId } from "@/core/domain/Location";
 import { TopicId } from "@/core/domain/Topic";
+import { TopicDataTree } from "@/core/domain/TopicDataTree";
 import { Year } from "@/core/domain/Year";
 import { LocationRepository } from "@/core/repositories/LocationRepository";
 import { PrismaClient } from "@/database/client";
 import { injectable } from "inversify";
+import { locationTreeRequest } from "./scripts/topicTree";
 
 @injectable()
 export class SqlLocationRepository extends LocationRepository {
@@ -62,5 +64,26 @@ export class SqlLocationRepository extends LocationRepository {
     `;
 
     return result;
+  }
+
+  getTreeByTopic(topic: TopicId): Promise<TopicDataTree[]> {
+    return this.client.$queryRawUnsafe(
+      `${locationTreeRequest(
+        topic
+      )} WHERE _location."parentId" is null and _ds."topicId" = '${topic}'`
+    );
+  }
+
+  async getTreeById(
+    topic: TopicId,
+    geoId: number
+  ): Promise<TopicDataTree | null> {
+    const data: TopicDataTree[] = await this.client.$queryRawUnsafe(
+      `${locationTreeRequest(
+        topic
+      )} WHERE _ds."topicId" ='${topic}' ADN _location.id = ${geoId}`
+    );
+
+    return data[0] ?? null;
   }
 }
