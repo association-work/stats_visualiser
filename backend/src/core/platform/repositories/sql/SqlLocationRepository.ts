@@ -81,7 +81,7 @@ export class SqlLocationRepository extends LocationRepository {
     const data: TopicDataTree[] = await this.client.$queryRawUnsafe(
       `${locationTreeRequest(
         topic
-      )} WHERE _ds."topicId" ='${topic}' ADN _location.id = ${geoId}`
+      )} WHERE _ds."topicId" ='${topic}' AND _location.id = ${geoId}`
     );
 
     return data[0] ?? null;
