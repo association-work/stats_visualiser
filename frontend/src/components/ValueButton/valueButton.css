@@ -1,0 +1,22 @@
+.branch_value {
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--bg-color-medium-ligth);
+  text-align: left;
+  gap: 10px;
+  padding: 0.6em 1.2em;
+  font-weight: 800;
+}
+
+.value_evolution {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8em;
+  gap: 5px;
+  font-weight: 700;
+}
+
+.value_evolution span {
+  font-weight: 400;
+  padding-left: 3px;
+}

@@ -76,8 +76,6 @@ export default function GlobalTree({
 
   const [lineChartToShow, setLineChartToShow] = useState<topicBranch>();
 
-  console.log(isYear, currentBranch.id);
-
   return (
     isYear !== 0 &&
     currentValue &&

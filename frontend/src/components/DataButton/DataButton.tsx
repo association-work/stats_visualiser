@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import line_chart from "../../../src/assets/activity.svg";
+import { Button } from "@mui/material";
+import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
 
 interface DataButtonProps {
   information: topicBranch;
@@ -98,16 +100,21 @@ export default function DataButton({
             <p>{nextBranch.name}</p>
             <p>{percentage + " %"}</p>
           </button>
-          <button
-            type="button"
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: "8px",
+              backgroundColor: "var(--highligth-color)",
+              padding: "6px",
+              minWidth: "3em",
+            }}
             onClick={() => {
               setShowLineChart(true);
               setLineChartToShow(nextBranch);
             }}
-            className="icon_linechart"
           >
-            <img src={line_chart} alt="afficher le graphique de l'évolution" />
-          </button>
+            <ShowChartOutlinedIcon />
+          </Button>
         </section>
       ) : (
         <button

@@ -14,15 +14,10 @@ import { Button } from "@mui/material";
 
 interface NavBarProps {
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  topicOrigin: topicBranch;
   currentBranch: topicBranch;
 }
 
-export default function Navbar({
-  setIsYear,
-  topicOrigin,
-  currentBranch,
-}: NavBarProps) {
+export default function Navbar({ setIsYear, currentBranch }: NavBarProps) {
   const [topicOrLocation, setTopicOrLocation] = useState(true);
 
   const changeParameter = () => {
@@ -33,7 +28,15 @@ export default function Navbar({
     }
   };
 
-  const years = topicOrigin.values.sort((a, b) => b[0] - a[0]);
+  let years: [number, number][] = [];
+
+  if (currentBranch.values.length > 0) {
+    years = currentBranch.values.sort((a, b) => b[0] - a[0]);
+  } else {
+    if (currentBranch.children && currentBranch.children[0].values.length > 0) {
+      years = currentBranch.children[0].values.sort((a, b) => b[0] - a[0]);
+    }
+  }
 
   return (
     <>

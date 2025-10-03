@@ -1,4 +1,5 @@
 import type { topicBranch } from "../../types/dataTypes";
+import "./valueButton.css";
 
 interface ValueButtonProps {
   isYear: number;
@@ -15,12 +16,12 @@ export default function ValueButton({
 }: ValueButtonProps) {
   let maxYearPossible = 0;
   if (currentBranch.values.length > 0) {
-    maxYearPossible = currentBranch.values[currentBranch.values.length - 1][0];
+    maxYearPossible = currentBranch.values[0][0];
   }
 
   let minYearPossible = 0;
   if (currentBranch.values.length > 0) {
-    minYearPossible = currentBranch.values[0][0];
+    minYearPossible = currentBranch.values[currentBranch.values.length - 1][0];
   }
 
   // taux d'évolution = (finale - initiale / initiale) * 100
@@ -47,9 +48,6 @@ export default function ValueButton({
         ((currentValue[0][1] - currentMinus2Value) / currentMinus2Value) *
         100
       ).toFixed(1) + " %";
-    console.log(
-      ((currentValue[0][1] - currentMinus2Value) / currentMinus2Value) * 100
-    );
   }
 
   let Minus5YearsPercentage = "";
@@ -65,42 +63,44 @@ export default function ValueButton({
   }
 
   return (
-    <div className="branch_value">
-      {currentValue.length !== 0 ? (
-        <p>
-          {parseFloat(currentValue[0][1].toFixed(2))}
-          {currentBranch.unit}
-        </p>
-      ) : childValueTotalWithYear !== 0 ? (
-        <p>
-          {parseFloat(childValueTotalWithYear.toFixed(2))}
-          {currentBranch.unit}
-        </p>
-      ) : (
-        <></>
-      )}
-      {currentBranch.values.length > 0 && (
-        <div className="value_evolution">
-          {isYear <= maxYearPossible - 2 && Plus2YearsPercentage && (
+    <>
+      {currentValue.length !== 0 && (
+        <div className="branch_value">
+          {currentValue.length !== 0 ? (
             <p>
-              {Plus2YearsPercentage}
-              <span>vs {isYear + 2} </span>
+              {parseFloat(currentValue[0][1].toFixed(2)) + " "}
+              {currentBranch.unit}
             </p>
-          )}
-          {isYear - 2 >= minYearPossible && Minus2YearsPercentage && (
+          ) : childValueTotalWithYear !== 0 ? (
             <p>
-              {Minus2YearsPercentage}
-              <span>vs {isYear - 2} </span>
+              {parseFloat(childValueTotalWithYear.toFixed(2)) + " "}
+              {currentBranch.unit}
             </p>
+          ) : (
+            <></>
           )}
-          {isYear - 5 >= minYearPossible && Minus5YearsPercentage && (
-            <p>
-              {Minus5YearsPercentage}
-              <span>vs {isYear - 5} </span>
-            </p>
-          )}
+          <div className="value_evolution">
+            {isYear <= maxYearPossible - 2 && Plus2YearsPercentage && (
+              <p>
+                {Plus2YearsPercentage}
+                <span>vs {isYear + 2} </span>
+              </p>
+            )}
+            {isYear - 2 >= minYearPossible && Minus2YearsPercentage && (
+              <p>
+                {Minus2YearsPercentage}
+                <span>vs {isYear - 2} </span>
+              </p>
+            )}
+            {isYear - 5 >= minYearPossible && Minus5YearsPercentage && (
+              <p>
+                {Minus5YearsPercentage}
+                <span>vs {isYear - 5} </span>
+              </p>
+            )}
+          </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

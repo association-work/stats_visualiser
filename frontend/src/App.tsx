@@ -168,11 +168,7 @@ function App() {
 
   return (
     <>
-      <Navbar
-        setIsYear={setIsYear}
-        topicOrigin={topicOriginEnvironment}
-        currentBranch={currentBranch}
-      />
+      <Navbar setIsYear={setIsYear} currentBranch={currentBranch} />
       <main>
         {!topicIsReady ? (
           <Loader />
