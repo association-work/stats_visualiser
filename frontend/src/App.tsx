@@ -9,9 +9,23 @@ import GlobalTree from "./pages/GlobalTree/GlobalTree";
 import Loader from "./pages/Loader/Loader";
 
 function App() {
-  const [isYear, setIsYear] = useState<number>(2023);
+  const [isYear, setIsYear] = useState<number>(10);
 
-  const [topicOrigin, setTopicOrigin] = useState<topicBranch>({
+  const [topicOriginEnvironment, setTopicOriginEnvironment] =
+    useState<topicBranch>({
+      id: "",
+      name: "",
+      source: {
+        name: "CITEPA",
+        url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+      },
+      unit: "",
+      values: [],
+      hasChildren: false,
+      parentId: "",
+    });
+
+  const [topicOriginHuman, setTopicOriginHuman] = useState<topicBranch>({
     id: "",
     name: "",
     source: {
@@ -25,7 +39,7 @@ function App() {
   });
 
   const [currentBranch, setCurrentBranch] = useState<topicBranch>({
-    id: "00_welcome",
+    id: "0_welcome",
     name: "Welcome",
     source: {
       name: "CITEPA",
@@ -35,19 +49,20 @@ function App() {
     values: [],
     children: [
       {
-        id: "0_être_humain",
+        id: "1_être_humain",
         name: "Être humain",
         source: {
-          name: "CITEPA",
-          url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
+          name: "Banque Mondiale",
+          url: "https://databank.worldbank.org/source/population-estimates-and-projections#",
         },
         unit: "",
         values: [],
-        hasChildren: false,
-        parentId: "00_welcome",
+        children: [topicOriginHuman],
+        hasChildren: true,
+        parentId: "0_welcome",
       },
       {
-        id: "0_environnement",
+        id: "1_environnement",
         name: "Environnement",
         source: {
           name: "CITEPA",
@@ -56,9 +71,9 @@ function App() {
         unit: "",
         values: [],
         children: [
-          topicOrigin,
+          topicOriginEnvironment,
           {
-            id: "1_matières premières",
+            id: "2_matières premières",
             name: "Matières premières",
             source: {
               name: "CITEPA",
@@ -67,10 +82,10 @@ function App() {
             unit: "",
             values: [],
             hasChildren: false,
-            parentId: "0_environnement",
+            parentId: "1_environnement",
           },
           {
-            id: "1_surfaces_disponibles",
+            id: "2_surfaces_disponibles",
             name: "Surfaces disponibles",
             source: {
               name: "CITEPA",
@@ -79,10 +94,10 @@ function App() {
             unit: "",
             values: [],
             hasChildren: false,
-            parentId: "0_environnement",
+            parentId: "1_environnement",
           },
           {
-            id: "1_énergie",
+            id: "2_énergie",
             name: "Énergie",
             source: {
               name: "CITEPA",
@@ -91,10 +106,10 @@ function App() {
             unit: "",
             values: [],
             hasChildren: false,
-            parentId: "0_environnement",
+            parentId: "1_environnement",
           },
           {
-            id: "1_climat",
+            id: "2_climat",
             name: "Climat",
             source: {
               name: "CITEPA",
@@ -103,14 +118,14 @@ function App() {
             unit: "",
             values: [],
             hasChildren: false,
-            parentId: "0_environnement",
+            parentId: "1_environnement",
           },
         ],
         hasChildren: true,
-        parentId: "00_welcome",
+        parentId: "0_welcome",
       },
       {
-        id: "0_économie",
+        id: "1_économie",
         name: "Économie",
         source: {
           name: "CITEPA",
@@ -119,7 +134,7 @@ function App() {
         unit: "",
         values: [],
         hasChildren: false,
-        parentId: "00_welcome",
+        parentId: "0_welcome",
       },
     ],
     hasChildren: true,
@@ -131,9 +146,15 @@ function App() {
   useEffect(() => {
     GetTopics().then((data) => {
       // setCurrentBranch(data[0]); A remettre en place une fois la BDD mise à jour avec les nouvelles informations
-      setTopicOrigin(data[0]);
-      if (currentBranch.children && currentBranch.children[1].children) {
+      setTopicOriginEnvironment(data[0]);
+      setTopicOriginHuman(data[1]);
+      if (
+        currentBranch.children &&
+        currentBranch.children[1].children &&
+        currentBranch.children[0].children
+      ) {
         currentBranch.children[1].children[0] = data[0];
+        currentBranch.children[0].children[0] = data[1];
         setCurrentBranch(currentBranch);
         setChosenPath([currentBranch]);
       }
@@ -147,13 +168,11 @@ function App() {
 
   return (
     <>
-      <nav>
-        <Navbar
-          setIsYear={setIsYear}
-          topicOrigin={topicOrigin}
-          currentBranch={currentBranch}
-        />
-      </nav>
+      <Navbar
+        setIsYear={setIsYear}
+        topicOrigin={topicOriginEnvironment}
+        currentBranch={currentBranch}
+      />
       <main>
         {!topicIsReady ? (
           <Loader />
@@ -169,14 +188,12 @@ function App() {
           />
         )}
       </main>
-      <footer>
-        <BreadCrumbs
-          chosenPath={chosenPath}
-          setChosenPath={setChosenPath}
-          setCurrentBranch={setCurrentBranch}
-          setPreviousBranchName={setPreviousBranchName}
-        />
-      </footer>
+      <BreadCrumbs
+        chosenPath={chosenPath}
+        setChosenPath={setChosenPath}
+        setCurrentBranch={setCurrentBranch}
+        setPreviousBranchName={setPreviousBranchName}
+      />
     </>
   );
 }

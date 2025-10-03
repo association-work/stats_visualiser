@@ -12,7 +12,8 @@
 .last_chosen_tree_node {
   border: 2px solid var(--highligth-color);
   border-radius: 8px;
-  background-color: var(--medium-highligth-color);
+  background-color: var(--light-highligth-color);
+  color: var(--highligth-color);
   display: flex;
   justify-content: space-between;
   align-items: center;

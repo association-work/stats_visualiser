@@ -1,64 +1,37 @@
 import { useEffect, useState } from "react";
 import type { topicBranch } from "../../types/dataTypes";
-import {
-  LineChart as LineCharts,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Line as Lines,
-  Tooltip as CoolTip,
-  ResponsiveContainer,
-} from "recharts";
+import { LineChart as LineCharts } from "@mui/x-charts";
+import Box from "@mui/material/Box";
 
 interface LineChartProps {
   currentBranch: topicBranch;
 }
 
 export default function LineChart({ currentBranch }: LineChartProps) {
-  const [chartedLineDataTree, setChartedLineDataTree] = useState<
-    { name: number; value: number }[]
-  >([]);
+  const [lineDataTreeValues, setLineDataTreeValues] = useState<number[]>([]);
+  const [lineDataTreeLabels, setLineDataTreeLabels] = useState<string[]>([]);
 
   useEffect(() => {
     if (currentBranch && currentBranch.values.length > 0) {
-      let futureChartedDataTree: { name: number; value: number }[] = [];
+      let futureChartedDataValues: number[] = [];
+      let futureChartedDataLabels: string[] = [];
       currentBranch.values.forEach((element) => {
-        futureChartedDataTree.push({
-          name: element[0],
-          value: element[1],
-        });
+        futureChartedDataValues.push(element[1]);
+        futureChartedDataLabels.push(element[0].toString());
       });
-      setChartedLineDataTree(
-        futureChartedDataTree.sort((a, b) => a.name - b.name)
-      );
+      setLineDataTreeValues(futureChartedDataValues);
+      setLineDataTreeLabels(futureChartedDataLabels);
     }
   }, []);
 
   return (
-    <ResponsiveContainer width="100%" height="88%">
+    <Box sx={{ width: "100%", height: "100%" }}>
       <LineCharts
-        width={400}
-        height={200}
-        data={chartedLineDataTree}
-        margin={{
-          top: 5,
-          right: 30,
-          bottom: 5,
-          left: 0,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        {/* domain={["dataMin", "auto"]} permet de mieux cerner les début et fin des axes */}
-        <CoolTip />
-        <Lines
-          type="monotone"
-          dataKey="value"
-          stroke="#061ea5"
-          activeDot={{ r: 8 }}
-        />
-      </LineCharts>
-    </ResponsiveContainer>
+        series={[{ data: lineDataTreeValues, label: currentBranch.name }]}
+        xAxis={[{ scaleType: "point", data: lineDataTreeLabels }]}
+        yAxis={[{ width: 50 }]}
+        margin={{ right: 24 }}
+      />
+    </Box>
   );
 }
