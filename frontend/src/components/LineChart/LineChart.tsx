@@ -25,7 +25,7 @@ export default function LineChart({ currentBranch }: LineChartProps) {
   }, []);
 
   return (
-    <Box sx={{ width: "100%", height: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%", fontFamily: "var(--main-font)" }}>
       <LineCharts
         series={[{ data: lineDataTreeValues, label: currentBranch.name }]}
         xAxis={[{ scaleType: "point", data: lineDataTreeLabels }]}

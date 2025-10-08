@@ -64,6 +64,7 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
       series={[{ data, innerRadius: 30 }]}
       {...size}
       colors={COLORS}
+      sx={{ fontFamily: "var(--main-font)" }}
     ></PieChart>
   );
 }

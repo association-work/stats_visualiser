@@ -16,7 +16,8 @@
   font-weight: 700;
 }
 
-.value_evolution span {
+.value_evolution span,
+.branch_value span {
   font-weight: 400;
   padding-left: 3px;
 }

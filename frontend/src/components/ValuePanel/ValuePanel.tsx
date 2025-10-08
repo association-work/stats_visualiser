@@ -1,19 +1,19 @@
 import type { topicBranch } from "../../types/dataTypes";
-import "./valueButton.css";
+import "./ValuePanel.css";
 
-interface ValueButtonProps {
+interface ValuePanelProps {
   isYear: number;
   currentBranch: topicBranch;
   currentValue: [number, number][];
   childValueTotalWithYear: number;
 }
 
-export default function ValueButton({
+export default function ValuePanel({
   isYear,
   currentBranch,
   currentValue,
   childValueTotalWithYear,
-}: ValueButtonProps) {
+}: ValuePanelProps) {
   let maxYearPossible = 0;
   if (currentBranch.values.length > 0) {
     maxYearPossible = currentBranch.values[0][0];
@@ -69,12 +69,12 @@ export default function ValueButton({
           {currentValue.length !== 0 ? (
             <p>
               {parseFloat(currentValue[0][1].toFixed(2)) + " "}
-              {currentBranch.unit}
+              <span>{currentBranch.unit}</span>
             </p>
           ) : childValueTotalWithYear !== 0 ? (
             <p>
               {parseFloat(childValueTotalWithYear.toFixed(2)) + " "}
-              {currentBranch.unit}
+              <span>{currentBranch.unit}</span>
             </p>
           ) : (
             <></>

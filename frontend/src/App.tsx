@@ -20,7 +20,7 @@ function App() {
         url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
       },
       unit: "",
-      values: [],
+      values: [[2023, 0]],
       hasChildren: false,
       parentId: "",
     });
@@ -33,7 +33,7 @@ function App() {
       url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
     },
     unit: "",
-    values: [],
+    values: [[2020, 0]],
     hasChildren: false,
     parentId: "",
   });
@@ -46,7 +46,7 @@ function App() {
       url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
     },
     unit: "",
-    values: [],
+    values: [[2023, 0]],
     children: [
       {
         id: "1_être_humain",
@@ -160,6 +160,7 @@ function App() {
       }
       setTopicIsReady(true);
     });
+    setIsYear(currentBranch.values[0][0]);
   }, []);
 
   const [previousBranchName, setPreviousBranchName] = useState<string>("");
@@ -168,13 +169,18 @@ function App() {
 
   return (
     <>
-      <Navbar setIsYear={setIsYear} currentBranch={currentBranch} />
+      <Navbar
+        setIsYear={setIsYear}
+        currentBranch={currentBranch}
+        isYear={isYear}
+      />
       <main>
         {!topicIsReady ? (
           <Loader />
         ) : (
           <GlobalTree
             isYear={isYear}
+            setIsYear={setIsYear}
             chosenPath={chosenPath}
             setChosenPath={setChosenPath}
             currentBranch={currentBranch}
