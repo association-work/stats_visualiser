@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import type { topicBranch } from "../../types/dataTypes";
-import { useState } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import PublicSharpIcon from "@mui/icons-material/PublicSharp";
 import AccountTreeOutlinedIcon from "@mui/icons-material/AccountTreeOutlined";
