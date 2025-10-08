@@ -15,17 +15,21 @@ export default function LineChart({ currentBranch }: LineChartProps) {
     if (currentBranch && currentBranch.values.length > 0) {
       let futureChartedDataValues: number[] = [];
       let futureChartedDataLabels: string[] = [];
-      currentBranch.values.forEach((element) => {
-        futureChartedDataValues.push(element[1]);
-        futureChartedDataLabels.push(element[0].toString());
-      });
+      currentBranch.values
+        .sort((a, b) => a[0] - b[0])
+        .forEach((element) => {
+          futureChartedDataValues.push(element[1]);
+          futureChartedDataLabels.push(element[0].toString());
+        });
       setLineDataTreeValues(futureChartedDataValues);
       setLineDataTreeLabels(futureChartedDataLabels);
     }
   }, []);
 
+  // yaxis a faire commencer à 0 et mettre une échelle en Million pour la population ... peut-être avant de faire le graff ?
+
   return (
-    <Box sx={{ width: "100%", height: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%", fontFamily: "var(--main-font)" }}>
       <LineCharts
         series={[{ data: lineDataTreeValues, label: currentBranch.name }]}
         xAxis={[{ scaleType: "point", data: lineDataTreeLabels }]}

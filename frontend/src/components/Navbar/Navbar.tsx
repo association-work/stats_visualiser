@@ -13,18 +13,20 @@ import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
 
 interface NavBarProps {
+  isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  topicOrigin: topicBranch;
   currentBranch: topicBranch;
+  topicOrLocation: boolean;
+  setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Navbar({
+  isYear,
   setIsYear,
-  topicOrigin,
   currentBranch,
+  topicOrLocation,
+  setTopicOrLocation,
 }: NavBarProps) {
-  const [topicOrLocation, setTopicOrLocation] = useState(true);
-
   const changeParameter = () => {
     if (topicOrLocation === true) {
       setTopicOrLocation(false);
@@ -33,7 +35,15 @@ export default function Navbar({
     }
   };
 
-  const years = topicOrigin.values.sort((a, b) => b[0] - a[0]);
+  let years: [number, number][] = [];
+
+  if (currentBranch.values.length > 0) {
+    years = currentBranch.values;
+  } else {
+    if (currentBranch.children && currentBranch.children[0].values.length > 0) {
+      years = currentBranch.children[0].values;
+    }
+  }
 
   return (
     <>
@@ -41,7 +51,7 @@ export default function Navbar({
         <Link to="/">
           <h1>Logo</h1>
         </Link>
-        {!currentBranch.id.includes("0_") && (
+        {currentBranch.id.length > 15 && (
           <ToggleButton
             value="bold"
             aria-label="bold"
@@ -61,14 +71,18 @@ export default function Navbar({
         )}
         {/* function d'appel à l'API à mettre en place une fois les données géographiques ajouter à la BDD */}
       </section>
-      {!currentBranch.id.includes("0_") && (
+      {currentBranch.id.length > 15 && (
         <section className="navigation">
           <Button
             disabled
             variant="outlined"
-            sx={{ borderRadius: "8px", width: "65%" }}
+            sx={{
+              borderRadius: "8px",
+              width: "65%",
+              fontFamily: "var(--main-font)",
+            }}
           >
-            {topicOrLocation ? "DESTINATION" : currentBranch.name}
+            {topicOrLocation ? "FRANCE" : currentBranch.name}
           </Button>
           <Box sx={{ width: "30%" }}>
             <FormControl fullWidth>
@@ -80,15 +94,17 @@ export default function Navbar({
                 onChange={(event) => {
                   setIsYear(Number(event.target.value));
                 }}
-                defaultValue={""}
-                sx={{ borderRadius: "8px" }}
+                value={isYear}
+                sx={{ borderRadius: "8px", fontFamily: "var(--main-font)" }}
               >
                 {years &&
-                  years.map((year) => (
-                    <MenuItem value={year[0]} key={year[0]}>
-                      {year[0]}
-                    </MenuItem>
-                  ))}
+                  years
+                    .sort((a, b) => b[0] - a[0])
+                    .map((year) => (
+                      <MenuItem value={year[0]} key={year[0]}>
+                        {year[0]}
+                      </MenuItem>
+                    ))}
               </Select>
             </FormControl>
           </Box>

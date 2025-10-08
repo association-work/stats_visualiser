@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell } from "recharts";
+import "./PieChart.css";
 import type { topicBranch } from "../../types/dataTypes";
 import { PieChart } from "@mui/x-charts/PieChart";
 
@@ -40,7 +40,9 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
         autreValue = 0;
       }
       autreValue = Number(autreValue.toFixed(2));
-      futureChartedDataTree.push({ value: autreValue, label: "autre" });
+      if (autreValue !== 0) {
+        futureChartedDataTree.push({ value: autreValue, label: "autre" });
+      }
       futureChartedDataTree.sort((a, b) => b.value - a.value);
       setData(futureChartedDataTree);
     }
@@ -64,6 +66,7 @@ export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
       series={[{ data, innerRadius: 30 }]}
       {...size}
       colors={COLORS}
+      sx={{ fontFamily: "var(--main-font)" }}
     ></PieChart>
   );
 }

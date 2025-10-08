@@ -3,17 +3,18 @@ import type { topicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
-import line_chart from "../../../src/assets/activity.svg";
+import { Button } from "@mui/material";
+import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
 
 interface DataButtonProps {
-  information: topicBranch;
+  currentBranch: topicBranch;
   chosenPath: topicBranch[];
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   childValueTotalWithYear: number;
   isYear: number;
+  setIsYear: React.Dispatch<React.SetStateAction<number>>;
   previousBranchName: string;
-  setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
   setLineChartToShow: React.Dispatch<
     React.SetStateAction<topicBranch | undefined>
@@ -21,35 +22,61 @@ interface DataButtonProps {
 }
 
 export default function DataButton({
-  information,
+  currentBranch,
   chosenPath,
   setChosenPath,
   setCurrentBranch,
   childValueTotalWithYear,
   isYear,
+  setIsYear,
   previousBranchName,
-  setPreviousBranchName,
   setShowLineChart,
   setLineChartToShow,
 }: DataButtonProps) {
-  const [nextBranch, setNextBranch] = useState<topicBranch>(information);
+  const [nextBranch, setNextBranch] = useState<topicBranch>(currentBranch);
 
   useEffect(() => {
-    if (information.id.length > 35) {
-      GetTopic(information.id).then((data) => setNextBranch(data));
+    if (currentBranch.id.length > 35) {
+      GetTopic(currentBranch.id).then((data) => setNextBranch(data));
     } else {
-      setNextBranch(information);
+      setNextBranch(currentBranch);
     }
   }, []);
+
+  const nextBranchValue = nextBranch.values.find((info) => info[0] === isYear);
 
   const handleChangingBranch = () => {
     setChosenPath(chosenPath);
     chosenPath.push(nextBranch);
     setCurrentBranch(nextBranch);
-    setPreviousBranchName("");
+    // prend en compte les années possible sur le topic en question
+    if (currentBranch.values.length > 0) {
+      const isYearSelected = currentBranch.values.filter(
+        (info) => info[0] === isYear
+      );
+      if (isYearSelected.length === 0) {
+        setIsYear(currentBranch.values[0][0]);
+      }
+    } else {
+      if (nextBranch.values.length > 0) {
+        if (!nextBranchValue) {
+          setIsYear(nextBranch.values[0][0]);
+        }
+      } else {
+        if (nextBranch.children && nextBranch.children[0].values.length > 0) {
+          const grandChildValue = nextBranch.children[0].values.find(
+            (info) => info[0] === isYear
+          );
+          if (!grandChildValue) {
+            const sortedValues = nextBranch.children[0].values.sort(
+              (a, b) => b[0] - a[0]
+            );
+            setIsYear(sortedValues[0][0]);
+          }
+        }
+      }
+    }
   };
-
-  const nextBranchValue = nextBranch.values.find((info) => info[0] === isYear);
 
   let percentage = "0";
 
@@ -83,7 +110,10 @@ export default function DataButton({
         >
           <p>{nextBranch.name[0].toUpperCase() + nextBranch.name.slice(1)}</p>
           <p>
-            {percentage !== "0" && percentage + " %"}
+            {nextBranch.parentId &&
+              nextBranch.parentId.length > 15 &&
+              percentage !== "0" &&
+              percentage + " %"}
             <ChevronRightOutlinedIcon />
           </p>
         </button>
@@ -98,16 +128,21 @@ export default function DataButton({
             <p>{nextBranch.name}</p>
             <p>{percentage + " %"}</p>
           </button>
-          <button
-            type="button"
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: "8px",
+              backgroundColor: "var(--highligth-color)",
+              padding: "6px",
+              minWidth: "3em",
+            }}
             onClick={() => {
               setShowLineChart(true);
               setLineChartToShow(nextBranch);
             }}
-            className="icon_linechart"
           >
-            <img src={line_chart} alt="afficher le graphique de l'évolution" />
-          </button>
+            <ShowChartOutlinedIcon />
+          </Button>
         </section>
       ) : (
         <button

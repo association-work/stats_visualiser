@@ -20,7 +20,7 @@ function App() {
         url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
       },
       unit: "",
-      values: [],
+      values: [[2023, 0]],
       hasChildren: false,
       parentId: "",
     });
@@ -33,7 +33,7 @@ function App() {
       url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
     },
     unit: "",
-    values: [],
+    values: [[2020, 0]],
     hasChildren: false,
     parentId: "",
   });
@@ -46,7 +46,7 @@ function App() {
       url: "https://www.citepa.org/donnees-air-climat/donnees-gaz-a-effet-de-serre/secten/",
     },
     unit: "",
-    values: [],
+    values: [[2023, 0]],
     children: [
       {
         id: "1_être_humain",
@@ -160,25 +160,33 @@ function App() {
       }
       setTopicIsReady(true);
     });
+    setIsYear(currentBranch.values[0][0]);
   }, []);
 
   const [previousBranchName, setPreviousBranchName] = useState<string>("");
 
   const [topicIsReady, setTopicIsReady] = useState(false);
 
+  const [topicOrLocation, setTopicOrLocation] = useState(true);
+
   return (
     <>
       <Navbar
         setIsYear={setIsYear}
-        topicOrigin={topicOriginEnvironment}
         currentBranch={currentBranch}
+        isYear={isYear}
+        topicOrLocation={topicOrLocation}
+        setTopicOrLocation={setTopicOrLocation}
       />
       <main>
         {!topicIsReady ? (
           <Loader />
+        ) : !topicOrLocation ? (
+          <p>Les datas en fonction des pays sont en construction</p>
         ) : (
           <GlobalTree
             isYear={isYear}
+            setIsYear={setIsYear}
             chosenPath={chosenPath}
             setChosenPath={setChosenPath}
             currentBranch={currentBranch}

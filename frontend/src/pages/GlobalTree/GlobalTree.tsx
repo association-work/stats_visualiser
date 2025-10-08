@@ -8,10 +8,11 @@ import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
 import LineChart from "../../components/LineChart/LineChart";
 import { GetTopic } from "../../functions/GetTopic";
 import { Button } from "@mui/material";
-import ValueButton from "../../components/ValueButton/ValueButton";
+import ValuePanel from "../../components/ValuePanel/ValuePanel";
 
 interface GlobalTreeProps {
   isYear: number;
+  setIsYear: React.Dispatch<React.SetStateAction<number>>;
   chosenPath: topicBranch[];
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   currentBranch: topicBranch;
@@ -22,6 +23,7 @@ interface GlobalTreeProps {
 
 export default function GlobalTree({
   isYear,
+  setIsYear,
   chosenPath,
   setChosenPath,
   currentBranch,
@@ -72,11 +74,34 @@ export default function GlobalTree({
     setPreviousBranchName(chosenPath[chosenPath.length - 1].name);
     chosenPath.pop();
     setChosenPath(chosenPath);
+    // prend en compte les années possible sur le topic en question
+    const lastElementOfPath = chosenPath[chosenPath.length - 1];
+    if (lastElementOfPath.values.length > 0) {
+      const isYearSelected = lastElementOfPath.values.filter(
+        (info) => info[0] === isYear
+      );
+      if (isYearSelected.length === 0) {
+        setIsYear(lastElementOfPath.values[0][0]);
+      }
+    } else {
+      if (
+        lastElementOfPath.children &&
+        lastElementOfPath.children[0].values.length > 0
+      ) {
+        const childValue = lastElementOfPath.children[0].values.find(
+          (info) => info[0] === isYear
+        );
+        if (!childValue) {
+          const sortedValues = lastElementOfPath.children[0].values.sort(
+            (a, b) => b[0] - a[0]
+          );
+          setIsYear(sortedValues[0][0]);
+        }
+      }
+    }
   };
 
   const [lineChartToShow, setLineChartToShow] = useState<topicBranch>();
-
-  console.log(isYear, currentBranch.id);
 
   return (
     isYear !== 0 &&
@@ -102,9 +127,19 @@ export default function GlobalTree({
       <section className={hasValue > 0 ? "global_tree" : "no_pie"}>
         {currentBranch.name !== "Welcome" && (
           <section className="branch_evolution">
-            <button
-              type="button"
+            <Button
+              variant="contained"
               className="branch_title"
+              sx={{
+                borderRadius: "8px",
+                backgroundColor: "var(--highligth-color)",
+                color: "var(--bg-color-ligth)",
+                padding: ".8em",
+                minWidth: "50%",
+                textTransform: "capitalize",
+                fontFamily: "var(--main-font)",
+                fontSize: "16px",
+              }}
               onClick={() => handleGoingBackOnce(currentBranch.parentId)}
             >
               <p>
@@ -112,16 +147,14 @@ export default function GlobalTree({
                 {currentBranch.name[0].toUpperCase() +
                   currentBranch.name.slice(1)}
               </p>
-            </button>
+            </Button>
             <article className="value_chart">
-              {isYear !== 10 && (
-                <ValueButton
-                  isYear={isYear}
-                  currentBranch={currentBranch}
-                  currentValue={currentValue}
-                  childValueTotalWithYear={childValueTotalWithYear}
-                />
-              )}
+              <ValuePanel
+                isYear={isYear}
+                currentBranch={currentBranch}
+                currentValue={currentValue}
+                childValueTotalWithYear={childValueTotalWithYear}
+              />
               {currentBranch.values.length !== 0 && (
                 <Button
                   variant="contained"
@@ -146,7 +179,9 @@ export default function GlobalTree({
           <section
             className={hasValue > 0 ? "linked_charted" : "linked_children"}
           >
-            {hasValue > 0 && childValueTotalWithYear > 0 ? (
+            {currentBranch.id.length > 15 &&
+            hasValue > 0 &&
+            childValueTotalWithYear > 0 ? (
               <article className="camembert_chart">
                 <PieCharts isYear={isYear} currentBranch={currentBranch} />
                 <div className="references">
@@ -173,15 +208,15 @@ export default function GlobalTree({
                 .sort((a, b) => b.amount[1] - a.amount[1])
                 .map((kid) => (
                   <DataButton
-                    information={kid}
+                    currentBranch={kid}
                     key={kid.id}
                     chosenPath={chosenPath}
                     setChosenPath={setChosenPath}
                     setCurrentBranch={setCurrentBranch}
                     childValueTotalWithYear={childValueTotalWithYear}
                     isYear={isYear}
+                    setIsYear={setIsYear}
                     previousBranchName={previousBranchName}
-                    setPreviousBranchName={setPreviousBranchName}
                     setShowLineChart={setShowLineChart}
                     setLineChartToShow={setLineChartToShow}
                   />
