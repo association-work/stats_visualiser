@@ -195,6 +195,9 @@ export default function GlobalTree({
               <p></p>
             )}
             <article className="listed_children">
+              {isYear === 10 && !currentBranch.id.includes("0_") && (
+                <p>Merci de choisir une année</p>
+              )}
               {currentBranch.children
                 .map((child) => ({
                   ...child,

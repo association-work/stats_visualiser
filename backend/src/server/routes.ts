@@ -33,8 +33,25 @@ router.get(
   validate(schema, (req) => req.query),
   async (req, resp, next) => {
     try {
-      const data = await serviceMap.locationRepo.findAllByTopic(
+      const data = await serviceMap.locationRepo.getTreeByTopic(
         req.query["topic"] as string
+      );
+
+      resp.set("Content-Type", "application/json").send(data);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+router.get(
+  "/location/:id",
+  validate(schema, (req) => req.query),
+  async (req, resp, next) => {
+    try {
+      const data = await serviceMap.locationRepo.getTreeById(
+        req.query["topic"] as string,
+        Number(req.params.id)
       );
 
       resp.set("Content-Type", "application/json").send(data);

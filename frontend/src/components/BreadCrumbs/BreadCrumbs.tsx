@@ -44,7 +44,6 @@ export default function BreadCrumbs({
           borderRadius: "16px",
           padding: "8px",
           width: "93%",
-          fontFamily: "var(--main-font)",
         }}
       >
         {chosenPath &&
@@ -73,7 +72,6 @@ export default function BreadCrumbs({
                   border: " 1px solid var(--bg-color-ligth-dark)",
                   borderRadius: "8px",
                   color: "var(--bg-color-ligth-dark)",
-                  fontFamily: "var(--main-font)",
                 }}
               >
                 <p>

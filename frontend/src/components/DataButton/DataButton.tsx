@@ -106,6 +106,7 @@ export default function DataButton({
           }
           key={nextBranch.id}
           onClick={handleChangingBranch}
+          disabled={isYear === 10 && !nextBranch.id.includes("1_")}
         >
           <p>{nextBranch.name[0].toUpperCase() + nextBranch.name.slice(1)}</p>
           <p>

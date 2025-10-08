@@ -42,6 +42,7 @@ export class SqlDataRepository extends DataRepository {
         value: new Decimal(v[1]),
         seriesId: dataSeries.id,
       })),
+      skipDuplicates: true,
     });
 
     return {
