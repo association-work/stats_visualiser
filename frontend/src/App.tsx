@@ -167,16 +167,22 @@ function App() {
 
   const [topicIsReady, setTopicIsReady] = useState(false);
 
+  const [topicOrLocation, setTopicOrLocation] = useState(true);
+
   return (
     <>
       <Navbar
         setIsYear={setIsYear}
         currentBranch={currentBranch}
         isYear={isYear}
+        topicOrLocation={topicOrLocation}
+        setTopicOrLocation={setTopicOrLocation}
       />
       <main>
         {!topicIsReady ? (
           <Loader />
+        ) : !topicOrLocation ? (
+          <p>Les datas en fonction des pays sont en construction</p>
         ) : (
           <GlobalTree
             isYear={isYear}

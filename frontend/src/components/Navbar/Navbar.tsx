@@ -16,15 +16,17 @@ interface NavBarProps {
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
   currentBranch: topicBranch;
+  topicOrLocation: boolean;
+  setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Navbar({
   isYear,
   setIsYear,
   currentBranch,
+  topicOrLocation,
+  setTopicOrLocation,
 }: NavBarProps) {
-  const [topicOrLocation, setTopicOrLocation] = useState(true);
-
   const changeParameter = () => {
     if (topicOrLocation === true) {
       setTopicOrLocation(false);
