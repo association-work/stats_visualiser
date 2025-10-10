@@ -38,14 +38,14 @@ export default function ValuePanel({
       ).toFixed(1) + " %";
   }
 
-  let Minus2YearsPercentage = "";
-  if (currentBranch.values.length > 0 && isYear - 2 >= minYearPossible) {
-    const currentMinus2Value = currentBranch.values.filter(
-      (info) => info[0] === isYear - 2
+  let minus1YearsPercentage = "";
+  if (currentBranch.values.length > 0 && isYear - 1 >= minYearPossible) {
+    const currentMinus1Value = currentBranch.values.filter(
+      (info) => info[0] === isYear - 1
     )[0][1];
-    Minus2YearsPercentage =
+    minus1YearsPercentage =
       (
-        ((currentValue[0][1] - currentMinus2Value) / currentMinus2Value) *
+        ((currentValue[0][1] - currentMinus1Value) / currentMinus1Value) *
         100
       ).toFixed(1) + " %";
   }
@@ -86,10 +86,10 @@ export default function ValuePanel({
                 <span>vs {isYear + 2} </span>
               </p>
             )}
-            {isYear - 2 >= minYearPossible && Minus2YearsPercentage && (
+            {isYear - 1 >= minYearPossible && minus1YearsPercentage && (
               <p>
-                {Minus2YearsPercentage}
-                <span>vs {isYear - 2} </span>
+                {minus1YearsPercentage}
+                <span>vs {isYear - 1} </span>
               </p>
             )}
             {isYear - 5 >= minYearPossible && Minus5YearsPercentage && (

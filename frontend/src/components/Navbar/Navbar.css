@@ -1,54 +1,33 @@
 .topNav {
   background-color: var(--bg-color-dark-ligth);
-  margin-bottom: 5px;
-  padding: 0.5em 2em;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
-  top: 0;
-  width: 100vw;
+  padding: 0.5em 2em;
 }
 
 /* CSS to filter the search */
 .navigation {
+  width: 100vw;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   padding: 0 1em;
   gap: 5%;
-  position: absolute;
-  width: 100vw;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .switch {
-    width: 57px;
-    height: 30px;
-  }
-  .slider:before {
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
-  }
   .navigation {
-    width: 70%;
+    padding: 0 2em;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .switch {
-    width: 57px;
-    height: 30px;
-  }
-  .slider:before {
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 4px;
+  .topNav {
+    padding: 0.5em 12em;
   }
   .navigation {
-    width: 50%;
+    padding: 0 12em;
   }
 }
