@@ -56,7 +56,7 @@ body {
 }
 
 main {
-  height: 77vh;
+  height: 84vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -64,15 +64,6 @@ main {
   justify-content: center;
   position: relative;
   top: 9em;
-}
-
-footer {
-  min-height: 5vh;
-  width: 100vw;
-  position: absolute;
-  bottom: 0;
-  background-color: var(--bg-color-ligth);
-  padding: 0 1em;
 }
 
 main h1 {
@@ -127,16 +118,10 @@ Pour un light et dark mode possible
   main h1 {
     margin: 0.4em 0;
   }
-  footer {
-    padding: 0 2em;
-  }
 }
 
 @media screen and (min-width: 1024px) {
   main h1 {
     margin: 0.6em 0;
-  }
-  footer {
-    padding: 0 12em;
   }
 }

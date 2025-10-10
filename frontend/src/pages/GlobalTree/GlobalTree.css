@@ -1,5 +1,5 @@
 .global_tree {
-  height: 74vh;
+  height: 84vh;
   width: 93%;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
 }
 
 .no_pie {
-  height: 77vh;
+  height: 84vh;
   width: 93%;
   display: flex;
   flex-direction: column;
@@ -125,7 +125,7 @@
 @media screen and (min-width: 1024px) {
   .global_tree {
     width: 70%;
-    height: 75vh;
+    height: 84vh;
   }
   .no_pie {
     width: 70%;

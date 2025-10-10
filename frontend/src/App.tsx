@@ -1,7 +1,7 @@
 // import { Outlet } from "react-router-dom"; // To unlock if other pages are needed
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import BreadCrumbs from "./components/BreadCrumbs/BreadCrumbs";
+// import BreadCrumbs from "./components/BreadCrumbs/BreadCrumbs";
 import type { topicBranch } from "./types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopics } from "./functions/GetTopic";
@@ -141,7 +141,7 @@ function App() {
     parentId: "",
   });
 
-  const [chosenPath, setChosenPath] = useState<topicBranch[]>([]);
+  const [chosenPath, setChosenPath] = useState<topicBranch[]>([currentBranch]);
 
   useEffect(() => {
     GetTopics().then((data) => {
@@ -178,6 +178,10 @@ function App() {
           isYear={isYear}
           topicOrLocation={topicOrLocation}
           setTopicOrLocation={setTopicOrLocation}
+          chosenPath={chosenPath}
+          setChosenPath={setChosenPath}
+          setCurrentBranch={setCurrentBranch}
+          setPreviousBranchName={setPreviousBranchName}
         />
       </nav>
       <main>
@@ -198,14 +202,6 @@ function App() {
           />
         )}
       </main>
-      <footer>
-        <BreadCrumbs
-          chosenPath={chosenPath}
-          setChosenPath={setChosenPath}
-          setCurrentBranch={setCurrentBranch}
-          setPreviousBranchName={setPreviousBranchName}
-        />
-      </footer>
     </>
   );
 }

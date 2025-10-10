@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
+import BrowsingDrawer from "../BrowsingDrawer/BrowsingDrawer";
 
 interface NavBarProps {
   isYear: number;
@@ -17,6 +18,10 @@ interface NavBarProps {
   currentBranch: topicBranch;
   topicOrLocation: boolean;
   setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
+  chosenPath: topicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function Navbar({
@@ -25,6 +30,10 @@ export default function Navbar({
   currentBranch,
   topicOrLocation,
   setTopicOrLocation,
+  chosenPath,
+  setChosenPath,
+  setCurrentBranch,
+  setPreviousBranchName,
 }: NavBarProps) {
   const changeParameter = () => {
     if (topicOrLocation === true) {
@@ -50,25 +59,33 @@ export default function Navbar({
         <Link to="/">
           <h1>Logo</h1>
         </Link>
-        {currentBranch.id.length > 15 && (
-          <ToggleButton
-            value="bold"
-            aria-label="bold"
-            onClick={() => changeParameter()}
-            disableRipple
-            sx={{
-              border: "none",
-              "&:hover": { bgcolor: "var(--bg-color-medium)" },
-            }}
-          >
-            {topicOrLocation ? (
-              <AccountTreeOutlinedIcon />
-            ) : (
-              <PublicSharpIcon />
-            )}
-          </ToggleButton>
-        )}
-        {/* function d'appel à l'API à mettre en place une fois les données géographiques ajouter à la BDD */}
+        <aside>
+          <BrowsingDrawer
+            chosenPath={chosenPath}
+            setChosenPath={setChosenPath}
+            setCurrentBranch={setCurrentBranch}
+            setPreviousBranchName={setPreviousBranchName}
+          />
+          {currentBranch.id.length > 15 && (
+            <ToggleButton
+              value="bold"
+              aria-label="bold"
+              onClick={() => changeParameter()}
+              disableRipple
+              sx={{
+                border: "none",
+                "&:hover": { bgcolor: "var(--bg-color-medium)" },
+              }}
+            >
+              {topicOrLocation ? (
+                <AccountTreeOutlinedIcon />
+              ) : (
+                <PublicSharpIcon />
+              )}
+            </ToggleButton>
+          )}
+          {/* function d'appel à l'API à mettre en place une fois les données géographiques ajouter à la BDD */}
+        </aside>
       </section>
       {currentBranch.id.length > 15 && (
         <section className="navigation">
