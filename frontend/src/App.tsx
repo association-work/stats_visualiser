@@ -171,13 +171,15 @@ function App() {
 
   return (
     <>
-      <Navbar
-        setIsYear={setIsYear}
-        currentBranch={currentBranch}
-        isYear={isYear}
-        topicOrLocation={topicOrLocation}
-        setTopicOrLocation={setTopicOrLocation}
-      />
+      <nav id="navigation">
+        <Navbar
+          setIsYear={setIsYear}
+          currentBranch={currentBranch}
+          isYear={isYear}
+          topicOrLocation={topicOrLocation}
+          setTopicOrLocation={setTopicOrLocation}
+        />
+      </nav>
       <main>
         {!topicIsReady ? (
           <Loader />
@@ -196,12 +198,14 @@ function App() {
           />
         )}
       </main>
-      <BreadCrumbs
-        chosenPath={chosenPath}
-        setChosenPath={setChosenPath}
-        setCurrentBranch={setCurrentBranch}
-        setPreviousBranchName={setPreviousBranchName}
-      />
+      <footer>
+        <BreadCrumbs
+          chosenPath={chosenPath}
+          setChosenPath={setChosenPath}
+          setCurrentBranch={setCurrentBranch}
+          setPreviousBranchName={setPreviousBranchName}
+        />
+      </footer>
     </>
   );
 }

@@ -21,3 +21,13 @@
   font-weight: 400;
   padding-left: 3px;
 }
+
+/* @media screen and (min-width: 768px) and (max-width: 1023px) {
+  .branch_value {
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .branch_value {
+  }
+} */

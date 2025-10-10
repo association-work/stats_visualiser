@@ -11,14 +11,24 @@ export default function LineChart({ currentBranch }: LineChartProps) {
   const [lineDataTreeValues, setLineDataTreeValues] = useState<number[]>([]);
   const [lineDataTreeLabels, setLineDataTreeLabels] = useState<string[]>([]);
 
+  let LineDataTreeLabel = "";
+  const [isValueInMillion, setIsValueInMillion] = useState(false);
+
   useEffect(() => {
+    setIsValueInMillion(false);
     if (currentBranch && currentBranch.values.length > 0) {
       let futureChartedDataValues: number[] = [];
       let futureChartedDataLabels: string[] = [];
       currentBranch.values
         .sort((a, b) => a[0] - b[0])
         .forEach((element) => {
-          futureChartedDataValues.push(element[1]);
+          if (element[1] > 1000000) {
+            const milionOf = element[1] / 1000000;
+            futureChartedDataValues.push(Number(milionOf.toFixed(0)));
+            setIsValueInMillion(true);
+          } else {
+            futureChartedDataValues.push(element[1]);
+          }
           futureChartedDataLabels.push(element[0].toString());
         });
       setLineDataTreeValues(futureChartedDataValues);
@@ -26,15 +36,24 @@ export default function LineChart({ currentBranch }: LineChartProps) {
     }
   }, []);
 
-  // yaxis a faire commencer à 0 et mettre une échelle en Million pour la population ... peut-être avant de faire le graff ?
+  if (isValueInMillion) {
+    LineDataTreeLabel = currentBranch.name + " (million)";
+  } else {
+    LineDataTreeLabel = currentBranch.name;
+  }
 
   return (
     <Box sx={{ width: "100%", height: "100%", fontFamily: "var(--main-font)" }}>
       <LineCharts
-        series={[{ data: lineDataTreeValues, label: currentBranch.name }]}
-        xAxis={[{ scaleType: "point", data: lineDataTreeLabels }]}
-        yAxis={[{ width: 50 }]}
-        margin={{ right: 24 }}
+        series={[
+          {
+            data: lineDataTreeValues,
+            label: LineDataTreeLabel,
+            showMark: false,
+          },
+        ]}
+        xAxis={[{ data: lineDataTreeLabels }]}
+        yAxis={[{ width: 50, min: 0 }]}
       />
     </Box>
   );
