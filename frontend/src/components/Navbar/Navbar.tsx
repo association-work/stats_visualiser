@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./Navbar.css";
 import type { topicBranch } from "../../types/dataTypes";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -56,9 +55,16 @@ export default function Navbar({
   return (
     <>
       <section className="topNav">
-        <Link to="/">
+        <button
+          type="button"
+          className="logo_style"
+          onClick={() => {
+            setChosenPath([chosenPath[0]]);
+            setCurrentBranch(chosenPath[0]);
+          }}
+        >
           <h1>Logo</h1>
-        </Link>
+        </button>
         <aside>
           <BrowsingDrawer
             chosenPath={chosenPath}

@@ -94,6 +94,14 @@ export default function DataButton({
     }
   }
 
+  const [unitIsRatio, setUnitIsRatio] = useState(false);
+
+  useEffect(() => {
+    if (nextBranch.unit.includes("/") || nextBranch.unit.includes("%")) {
+      setUnitIsRatio(true);
+    }
+  }, []);
+
   return (
     <>
       {nextBranch && nextBranch.children && nextBranch.children.length > 0 ? (
@@ -113,6 +121,7 @@ export default function DataButton({
             {nextBranch.parentId &&
               nextBranch.parentId.length > 15 &&
               percentage !== "0" &&
+              !unitIsRatio &&
               percentage + " %"}
             <ChevronRightOutlinedIcon />
           </p>
@@ -126,7 +135,11 @@ export default function DataButton({
             disabled
           >
             <p>{nextBranch.name}</p>
-            <p>{percentage + " %"}</p>
+            <p>
+              {!unitIsRatio
+                ? percentage + " %"
+                : nextBranchValue[1].toFixed(1) + nextBranch.unit}
+            </p>
           </button>
           <Button
             variant="contained"
