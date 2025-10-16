@@ -7,6 +7,12 @@
   padding: 0.5em 2em;
 }
 
+.logo_style {
+  background-color: var(--bg-color-dark-ligth);
+  border: none;
+  padding: 0;
+}
+
 /* CSS to filter the search */
 .navigation {
   width: 100vw;

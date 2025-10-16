@@ -181,7 +181,8 @@ export default function GlobalTree({
           >
             {currentBranch.id.length > 15 &&
             hasValue > 0 &&
-            childValueTotalWithYear > 0 ? (
+            childValueTotalWithYear > 0 &&
+            !currentBranch.children[0].unit.includes("/") ? (
               <article className="camembert_chart">
                 <PieCharts isYear={isYear} currentBranch={currentBranch} />
                 <div className="references">
