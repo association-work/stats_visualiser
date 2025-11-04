@@ -11,3 +11,8 @@ export type topicBranch = {
   hasChildren: boolean;
   parentId: string;
 };
+
+export interface geoTopicBranch extends topicBranch {
+  externalId: string;
+  topicId: string;
+}

@@ -2,11 +2,12 @@
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 // import BreadCrumbs from "./components/BreadCrumbs/BreadCrumbs";
-import type { topicBranch } from "./types/dataTypes";
+import type { geoTopicBranch, topicBranch } from "./types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopics } from "./functions/GetTopic";
 import GlobalTree from "./pages/GlobalTree/GlobalTree";
 import Loader from "./pages/Loader/Loader";
+import { GetLocalisationsByTopic } from "./functions/GetGeo";
 
 function App() {
   const [isYear, setIsYear] = useState<number>(10);
@@ -145,7 +146,6 @@ function App() {
 
   useEffect(() => {
     GetTopics().then((data) => {
-      // setCurrentBranch(data[0]); A remettre en place une fois la BDD mise à jour avec les nouvelles informations
       setTopicOriginEnvironment(data[0]);
       setTopicOriginHuman(data[1]);
       if (
@@ -169,6 +169,25 @@ function App() {
 
   const [topicOrLocation, setTopicOrLocation] = useState(true);
 
+  const [currentLocalisation, setCurrentLocalisation] =
+    useState<geoTopicBranch>();
+
+  useEffect(() => {
+    if (!topicOrLocation) {
+      console.log(currentBranch.id);
+      GetLocalisationsByTopic(currentBranch.id).then((data) => {
+        setCurrentLocalisation(data);
+        if (currentLocalisation) {
+          chosenPath.push(currentLocalisation);
+          setChosenPath(chosenPath);
+        }
+      });
+    }
+  }, [topicOrLocation]);
+
+  console.log(chosenPath);
+  console.log(currentLocalisation);
+
   return (
     <>
       <nav id="navigation">
@@ -188,7 +207,20 @@ function App() {
         {!topicIsReady ? (
           <Loader />
         ) : !topicOrLocation ? (
-          <p>Les datas en fonction des pays sont en construction</p>
+          currentLocalisation ? (
+            <GlobalTree
+              isYear={isYear}
+              setIsYear={setIsYear}
+              chosenPath={chosenPath}
+              setChosenPath={setChosenPath}
+              currentBranch={currentLocalisation}
+              setCurrentBranch={setCurrentLocalisation}
+              previousBranchName={previousBranchName}
+              setPreviousBranchName={setPreviousBranchName}
+            />
+          ) : (
+            <p>Les datas en fonction des pays sont en construction</p>
+          )
         ) : (
           <GlobalTree
             isYear={isYear}
