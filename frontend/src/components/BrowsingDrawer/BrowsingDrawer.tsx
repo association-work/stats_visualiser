@@ -15,6 +15,7 @@ interface BrowsingDrawerProps {
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
+  setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function BrowsingDrawer({
@@ -22,11 +23,13 @@ export default function BrowsingDrawer({
   setChosenPath,
   setCurrentBranch,
   setPreviousBranchName,
+  setShowLineChart,
 }: BrowsingDrawerProps) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
+    setShowLineChart(false);
   };
 
   const handleRewindBranch = (index: number) => {

@@ -19,6 +19,8 @@ interface GlobalTreeProps {
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   previousBranchName: string;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
+  showLineChart: boolean;
+  setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function GlobalTree({
@@ -30,6 +32,8 @@ export default function GlobalTree({
   setCurrentBranch,
   previousBranchName,
   setPreviousBranchName,
+  showLineChart,
+  setShowLineChart,
 }: GlobalTreeProps) {
   // permet de récupérer la valeur de la branche actuelle
   const currentValue = currentBranch.values.filter(
@@ -45,13 +49,31 @@ export default function GlobalTree({
     }
   }, [currentBranch]);
 
-  const [showLineChart, setShowLineChart] = useState(false);
-
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
+  const [childrenTotalValues, setChildrenTotalValues] = useState<
+    [number, number][]
+  >([]);
 
   useEffect(() => {
     if (currentBranch.children !== undefined) {
       let totalValue = 0;
+      const gatheringChildrenValue: [number, number][] = [];
+      for (let i = 0; i < currentBranch.children[0].values.length; i++) {
+        totalValue = 0;
+        const thatYear = currentBranch.children[0].values[i][0];
+        currentBranch.children.forEach((element) => {
+          const childValue = element.values.find(
+            (info) => info[0] === thatYear
+          );
+          if (childValue) {
+            totalValue = totalValue + childValue[1];
+          }
+        });
+        totalValue = Number(totalValue.toFixed(2));
+        gatheringChildrenValue.push([thatYear, totalValue]);
+      }
+      setChildrenTotalValues(gatheringChildrenValue);
+      // Ce qui suit est à supprimer quand aura été remplacé sans tout casser
       currentBranch.children.forEach((element) => {
         const childValue = element.values.find((info) => info[0] === isYear);
         if (childValue) {
@@ -115,7 +137,10 @@ export default function GlobalTree({
         >
           X
         </button>
-        <LineChart currentBranch={lineChartToShow} />
+        <LineChart
+          currentBranch={lineChartToShow}
+          childrenTotalValues={childrenTotalValues}
+        />
         <div className="references">
           <p>Source : </p>
           <a href={currentBranch.source.url} target="_blank">
@@ -155,23 +180,21 @@ export default function GlobalTree({
                 currentValue={currentValue}
                 childValueTotalWithYear={childValueTotalWithYear}
               />
-              {currentBranch.values.length !== 0 && (
-                <Button
-                  variant="contained"
-                  sx={{
-                    borderRadius: "8px",
-                    backgroundColor: "var(--highligth-color)",
-                    padding: "6px",
-                    minWidth: "3em",
-                  }}
-                  onClick={() => {
-                    setShowLineChart(true);
-                    setLineChartToShow(currentBranch);
-                  }}
-                >
-                  <ShowChartOutlinedIcon />
-                </Button>
-              )}
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: "8px",
+                  backgroundColor: "var(--highligth-color)",
+                  padding: "6px",
+                  minWidth: "3em",
+                }}
+                onClick={() => {
+                  setShowLineChart(true);
+                  setLineChartToShow(currentBranch);
+                }}
+              >
+                <ShowChartOutlinedIcon />
+              </Button>
             </article>
           </section>
         )}

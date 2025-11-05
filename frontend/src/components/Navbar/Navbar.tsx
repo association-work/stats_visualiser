@@ -21,6 +21,7 @@ interface NavBarProps {
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
+  setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Navbar({
@@ -33,6 +34,7 @@ export default function Navbar({
   setChosenPath,
   setCurrentBranch,
   setPreviousBranchName,
+  setShowLineChart,
 }: NavBarProps) {
   const changeParameter = () => {
     if (topicOrLocation === true) {
@@ -61,6 +63,7 @@ export default function Navbar({
           onClick={() => {
             setChosenPath([chosenPath[0]]);
             setCurrentBranch(chosenPath[0]);
+            setShowLineChart(false);
           }}
         >
           <h1>Logo</h1>
@@ -71,12 +74,16 @@ export default function Navbar({
             setChosenPath={setChosenPath}
             setCurrentBranch={setCurrentBranch}
             setPreviousBranchName={setPreviousBranchName}
+            setShowLineChart={setShowLineChart}
           />
           {currentBranch.id.length > 15 && (
             <ToggleButton
               value="bold"
               aria-label="bold"
-              onClick={() => changeParameter()}
+              onClick={() => {
+                changeParameter();
+                setShowLineChart(false);
+              }}
               disableRipple
               sx={{
                 border: "none",
@@ -115,6 +122,7 @@ export default function Navbar({
                 label="sujet montrer"
                 onChange={(event) => {
                   setIsYear(Number(event.target.value));
+                  setShowLineChart(false);
                 }}
                 value={isYear}
                 sx={{ borderRadius: "8px", fontFamily: "var(--main-font)" }}

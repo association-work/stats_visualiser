@@ -5,9 +5,13 @@ import Box from "@mui/material/Box";
 
 interface LineChartProps {
   currentBranch: topicBranch;
+  childrenTotalValues: [number, number][];
 }
 
-export default function LineChart({ currentBranch }: LineChartProps) {
+export default function LineChart({
+  currentBranch,
+  childrenTotalValues,
+}: LineChartProps) {
   const [lineDataTreeValues, setLineDataTreeValues] = useState<number[]>([]);
   const [lineDataTreeLabels, setLineDataTreeLabels] = useState<string[]>([]);
 
@@ -23,12 +27,23 @@ export default function LineChart({ currentBranch }: LineChartProps) {
         .sort((a, b) => a[0] - b[0])
         .forEach((element) => {
           if (element[1] > 1000000) {
-            const milionOf = element[1] / 1000000;
-            futureChartedDataValues.push(Number(milionOf.toFixed(0)));
             setIsValueInMillion(true);
-          } else {
-            futureChartedDataValues.push(element[1]);
           }
+          futureChartedDataValues.push(element[1]);
+          futureChartedDataLabels.push(element[0].toString());
+        });
+      setLineDataTreeValues(futureChartedDataValues);
+      setLineDataTreeLabels(futureChartedDataLabels);
+    } else {
+      let futureChartedDataValues: number[] = [];
+      let futureChartedDataLabels: string[] = [];
+      childrenTotalValues
+        .sort((a, b) => a[0] - b[0])
+        .forEach((element) => {
+          if (element[1] > 1000000) {
+            setIsValueInMillion(true);
+          }
+          futureChartedDataValues.push(element[1]);
           futureChartedDataLabels.push(element[0].toString());
         });
       setLineDataTreeValues(futureChartedDataValues);
@@ -52,8 +67,20 @@ export default function LineChart({ currentBranch }: LineChartProps) {
             showMark: false,
           },
         ]}
-        xAxis={[{ data: lineDataTreeLabels }]}
-        yAxis={[{ width: 50, min: 0 }]}
+        xAxis={[
+          {
+            data: lineDataTreeLabels,
+            dataKey: "year",
+            valueFormatter: (value: number) => value.toString(),
+          },
+        ]}
+        yAxis={[
+          {
+            width: 50,
+            min: 0,
+            valueFormatter: (value: number) => value.toString().slice(0, 2),
+          },
+        ]}
       />
     </Box>
   );

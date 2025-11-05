@@ -15,14 +15,6 @@ export default function ValuePanel({
   currentValue,
   childValueTotalWithYear,
 }: ValuePanelProps) {
-  let maxYearPossible = 0;
-  if (currentBranch.values.length > 0) {
-    maxYearPossible = currentBranch.values[0][0];
-  }
-  if (currentBranch.children && currentBranch.children[0].values.length > 0) {
-    maxYearPossible = currentBranch.children[0].values[0][0];
-  }
-
   let minYearPossible = 0;
   if (currentBranch.values.length > 0) {
     minYearPossible = currentBranch.values[currentBranch.values.length - 1][0];
@@ -35,50 +27,6 @@ export default function ValuePanel({
   }
 
   // taux d'évolution = (finale - initiale / initiale) * 100
-
-  let Plus2YearsPercentage = "";
-  if (currentBranch.values.length > 0 && isYear <= maxYearPossible - 2) {
-    const currentPlus2Value = currentBranch.values.filter(
-      (info) => info[0] === isYear + 2
-    )[0][1];
-
-    const percentage = (
-      ((currentPlus2Value - currentValue[0][1]) / currentValue[0][1]) *
-      100
-    ).toFixed(1);
-    if (Number(percentage) > 0) {
-      Plus2YearsPercentage = "+" + percentage + " %";
-    } else {
-      Plus2YearsPercentage = percentage + " %";
-    }
-  }
-
-  const [childValueTotalYearPlus2, setChildValueTotalYearPlus2] = useState("");
-
-  useEffect(() => {
-    if (currentBranch.children && isYear <= maxYearPossible - 2) {
-      let totalValue = 0;
-      currentBranch.children.forEach((element) => {
-        const childValue = element.values.find(
-          (info) => info[0] === isYear + 2
-        );
-        if (childValue) {
-          totalValue = totalValue + childValue[1];
-        }
-      });
-      totalValue = Number(totalValue.toFixed(2));
-
-      const percentage = (
-        ((totalValue - childValueTotalWithYear) / childValueTotalWithYear) *
-        100
-      ).toFixed(1);
-      if (Number(percentage) > 0) {
-        setChildValueTotalYearPlus2("+" + percentage + " %");
-      } else {
-        setChildValueTotalYearPlus2(percentage + " %");
-      }
-    }
-  }, [currentBranch, isYear, childValueTotalWithYear]);
 
   let minus1YearsPercentage = "";
   if (currentBranch.values.length > 0 && isYear - 1 >= minYearPossible) {
@@ -197,19 +145,6 @@ export default function ValuePanel({
             <></>
           )}
           <div className="value_evolution">
-            {isYear <= maxYearPossible - 2 && Plus2YearsPercentage ? (
-              <p>
-                {Plus2YearsPercentage}
-                <span>vs {isYear + 2} </span>
-              </p>
-            ) : childValueTotalYearPlus2 ? (
-              <p>
-                {childValueTotalYearPlus2}
-                <span>vs {isYear + 2} </span>
-              </p>
-            ) : (
-              <></>
-            )}
             {isYear - 1 >= minYearPossible && minus1YearsPercentage ? (
               <p>
                 {minus1YearsPercentage}
