@@ -167,6 +167,8 @@ function App() {
 
   const [topicIsReady, setTopicIsReady] = useState(false);
 
+  const [showLineChart, setShowLineChart] = useState(false);
+
   const [topicOrLocation, setTopicOrLocation] = useState(true);
 
   const [currentLocalisation, setCurrentLocalisation] =
@@ -201,6 +203,7 @@ function App() {
           setChosenPath={setChosenPath}
           setCurrentBranch={setCurrentBranch}
           setPreviousBranchName={setPreviousBranchName}
+          setShowLineChart={setShowLineChart}
         />
       </nav>
       <main>
@@ -231,6 +234,8 @@ function App() {
             setCurrentBranch={setCurrentBranch}
             previousBranchName={previousBranchName}
             setPreviousBranchName={setPreviousBranchName}
+            showLineChart={showLineChart}
+            setShowLineChart={setShowLineChart}
           />
         )}
       </main>
