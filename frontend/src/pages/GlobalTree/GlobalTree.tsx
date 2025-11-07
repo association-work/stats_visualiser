@@ -73,7 +73,7 @@ export default function GlobalTree({
         gatheringChildrenValue.push([thatYear, totalValue]);
       }
       setChildrenTotalValues(gatheringChildrenValue);
-      // Ce qui suit est à supprimer quand aura été remplacé sans tout casser
+      // Ce qui suit est à supprimer quand cela aura été remplacé sans tout casser
       currentBranch.children.forEach((element) => {
         const childValue = element.values.find((info) => info[0] === isYear);
         if (childValue) {
@@ -174,27 +174,39 @@ export default function GlobalTree({
               </p>
             </Button>
             <article className="value_chart">
-              <ValuePanel
-                isYear={isYear}
-                currentBranch={currentBranch}
-                currentValue={currentValue}
-                childValueTotalWithYear={childValueTotalWithYear}
-              />
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: "8px",
-                  backgroundColor: "var(--highligth-color)",
-                  padding: "6px",
-                  minWidth: "3em",
-                }}
-                onClick={() => {
-                  setShowLineChart(true);
-                  setLineChartToShow(currentBranch);
-                }}
-              >
-                <ShowChartOutlinedIcon />
-              </Button>
+              {!currentBranch.id.includes("0_") &&
+                !currentBranch.id.includes("1_") &&
+                currentBranch.children &&
+                !currentBranch.children[0].unit.includes("%") &&
+                !currentBranch.children[0].unit.includes("/") && (
+                  <ValuePanel
+                    isYear={isYear}
+                    currentBranch={currentBranch}
+                    currentValue={currentValue}
+                    childValueTotalWithYear={childValueTotalWithYear}
+                  />
+                )}
+              {!currentBranch.id.includes("0_") &&
+                !currentBranch.id.includes("1_") &&
+                currentBranch.children &&
+                !currentBranch.children[0].unit.includes("%") &&
+                !currentBranch.children[0].unit.includes("/") && (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      borderRadius: "8px",
+                      backgroundColor: "var(--highligth-color)",
+                      padding: "6px",
+                      minWidth: "3em",
+                    }}
+                    onClick={() => {
+                      setShowLineChart(true);
+                      setLineChartToShow(currentBranch);
+                    }}
+                  >
+                    <ShowChartOutlinedIcon />
+                  </Button>
+                )}
             </article>
           </section>
         )}
@@ -219,9 +231,9 @@ export default function GlobalTree({
               <p></p>
             )}
             <article className="listed_children">
-              {isYear === 10 && !currentBranch.id.includes("0_") && (
+              {/* {isYear === 10 && !currentBranch.id.includes("0_") && (
                 <p>Merci de choisir une année</p>
-              )}
+              )} */}
               {currentBranch.children
                 .map((child) => ({
                   ...child,
