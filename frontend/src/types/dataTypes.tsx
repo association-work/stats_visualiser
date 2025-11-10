@@ -12,7 +12,18 @@ export type topicBranch = {
   parentId: string;
 };
 
-export interface geoTopicBranch extends topicBranch {
+export type geoTopicBranch = {
+  id: number;
+  name: string;
+  source: {
+    name: string;
+    url: string;
+  };
+  unit: string;
+  children?: topicBranch[];
+  values: [number, number][];
+  hasChildren: boolean;
+  parentId?: number;
   externalId: string;
-  topicId: string;
-}
+  topicId?: string;
+};

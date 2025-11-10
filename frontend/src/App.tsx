@@ -39,7 +39,9 @@ function App() {
     parentId: "",
   });
 
-  const [currentBranch, setCurrentBranch] = useState<topicBranch>({
+  const [currentBranch, setCurrentBranch] = useState<
+    geoTopicBranch | topicBranch
+  >({
     id: "0_welcome",
     name: "Welcome",
     source: {
@@ -172,7 +174,20 @@ function App() {
   const [topicOrLocation, setTopicOrLocation] = useState(true);
 
   const [currentLocalisation, setCurrentLocalisation] =
-    useState<geoTopicBranch>();
+    useState<geoTopicBranch>({
+      id: 0,
+      name: "",
+      externalId: "",
+      children: [topicOriginLocalisation],
+      values: [],
+      source: {
+        name: "",
+        url: "",
+      },
+      hasChildren: true,
+      topicId: "",
+      unit: "",
+    });
 
   useEffect(() => {
     if (!topicOrLocation) {

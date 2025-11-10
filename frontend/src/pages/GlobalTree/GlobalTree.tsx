@@ -1,7 +1,7 @@
 import "./GlobalTree.css";
 import DataButton from "../../components/DataButton/DataButton";
 import PieCharts from "../../components/PieChart/PieChart";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch, topicBranch } from "../../types/dataTypes";
 import { useEffect, useState } from "react";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
@@ -15,8 +15,10 @@ interface GlobalTreeProps {
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
   chosenPath: topicBranch[];
   setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  currentBranch: topicBranch;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  currentBranch: geoTopicBranch | topicBranch;
+  setCurrentBranch: React.Dispatch<
+    React.SetStateAction<geoTopicBranch | topicBranch>
+  >;
   previousBranchName: string;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   showLineChart: boolean;
@@ -231,9 +233,6 @@ export default function GlobalTree({
               <p></p>
             )}
             <article className="listed_children">
-              {/* {isYear === 10 && !currentBranch.id.includes("0_") && (
-                <p>Merci de choisir une année</p>
-              )} */}
               {currentBranch.children
                 .map((child) => ({
                   ...child,
