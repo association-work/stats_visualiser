@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import "./ValuePanel.css";
 
 interface ValuePanelProps {
   isYear: number;
-  currentBranch: topicBranch;
+  currentBranch: geoTopicBranch;
   currentValue: [number, number][];
   childValueTotalWithYear: number;
 }

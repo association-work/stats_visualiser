@@ -64,6 +64,7 @@ export default function Navbar({
             setChosenPath([chosenPath[0]]);
             setCurrentBranch(chosenPath[0]);
             setShowLineChart(false);
+            setTopicOrLocation(true);
           }}
         >
           <h1>Logo</h1>
@@ -75,6 +76,7 @@ export default function Navbar({
             setCurrentBranch={setCurrentBranch}
             setPreviousBranchName={setPreviousBranchName}
             setShowLineChart={setShowLineChart}
+            setTopicOrLocation={setTopicOrLocation}
           />
           {currentBranch.id.length > 15 && (
             <ToggleButton

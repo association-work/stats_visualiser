@@ -1,5 +1,5 @@
 import "./DataButton.css";
-import type { topicBranch } from "./../../types/dataTypes";
+import type { geoTopicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
@@ -7,17 +7,17 @@ import { Button } from "@mui/material";
 import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
 
 interface DataButtonProps {
-  currentBranch: topicBranch;
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  currentBranch: geoTopicBranch;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   childValueTotalWithYear: number;
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
   previousBranchName: string;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
   setLineChartToShow: React.Dispatch<
-    React.SetStateAction<topicBranch | undefined>
+    React.SetStateAction<geoTopicBranch | undefined>
   >;
 }
 
@@ -33,7 +33,7 @@ export default function DataButton({
   setShowLineChart,
   setLineChartToShow,
 }: DataButtonProps) {
-  const [nextBranch, setNextBranch] = useState<topicBranch>(currentBranch);
+  const [nextBranch, setNextBranch] = useState<geoTopicBranch>(currentBranch);
 
   useEffect(() => {
     if (currentBranch.id.length > 35) {

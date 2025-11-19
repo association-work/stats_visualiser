@@ -1,7 +1,7 @@
 import "./GlobalTree.css";
 import DataButton from "../../components/DataButton/DataButton";
 import PieCharts from "../../components/PieChart/PieChart";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import { useEffect, useState } from "react";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
@@ -13,10 +13,10 @@ import ValuePanel from "../../components/ValuePanel/ValuePanel";
 interface GlobalTreeProps {
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  currentBranch: topicBranch;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  currentBranch: geoTopicBranch;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   previousBranchName: string;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   showLineChart: boolean;
@@ -89,7 +89,7 @@ export default function GlobalTree({
 
   const handleGoingBackOnce = (id: string) => {
     if (id && id.length > 35) {
-      GetTopic(id).then((data: topicBranch) => setCurrentBranch(data));
+      GetTopic(id).then((data: geoTopicBranch) => setCurrentBranch(data));
     } else {
       setCurrentBranch(chosenPath[chosenPath.length - 2]);
     }
@@ -123,7 +123,7 @@ export default function GlobalTree({
     }
   };
 
-  const [lineChartToShow, setLineChartToShow] = useState<topicBranch>();
+  const [lineChartToShow, setLineChartToShow] = useState<geoTopicBranch>();
 
   return (
     isYear !== 0 &&
@@ -216,7 +216,6 @@ export default function GlobalTree({
           >
             {currentBranch.id.length > 15 &&
             hasValue > 0 &&
-            // childValueTotalWithYear > 0 && >> à vérifier
             !currentBranch.children[0].unit.includes("/") ? (
               <article className="camembert_chart">
                 <PieCharts isYear={isYear} currentBranch={currentBranch} />
