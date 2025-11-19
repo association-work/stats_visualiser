@@ -49,15 +49,15 @@ export default function GlobalTree({
     }
   }, [currentBranch]);
 
-  const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
   const [childrenTotalValues, setChildrenTotalValues] = useState<
     [number, number][]
   >([]);
+  const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
 
   useEffect(() => {
-    if (currentBranch.children !== undefined) {
+    if (currentBranch.children) {
       let totalValue = 0;
-      const gatheringChildrenValue: [number, number][] = [];
+      let newChildrenTotalValues: [number, number][] = [];
       for (let i = 0; i < currentBranch.children[0].values.length; i++) {
         totalValue = 0;
         const thatYear = currentBranch.children[0].values[i][0];
@@ -70,18 +70,18 @@ export default function GlobalTree({
           }
         });
         totalValue = Number(totalValue.toFixed(2));
-        gatheringChildrenValue.push([thatYear, totalValue]);
+        newChildrenTotalValues.push([thatYear, totalValue]);
       }
-      setChildrenTotalValues(gatheringChildrenValue);
-      // Ce qui suit est à supprimer quand cela aura été remplacé sans tout casser
-      currentBranch.children.forEach((element) => {
-        const childValue = element.values.find((info) => info[0] === isYear);
-        if (childValue) {
-          totalValue = totalValue + childValue[1];
-        }
-      });
-      totalValue = Number(totalValue.toFixed(2));
-      setChildValueTotalWithYear(totalValue);
+      setChildrenTotalValues(newChildrenTotalValues);
+      //récupération d'une seule valeur pour l'année demandée
+      const childValue = newChildrenTotalValues.find(
+        (info) => info[0] === isYear
+      );
+      if (childValue) {
+        totalValue = 0;
+        totalValue = Number(childValue[1].toFixed(2));
+        setChildValueTotalWithYear(totalValue);
+      }
     }
   }, [currentBranch, isYear]);
 
@@ -216,7 +216,7 @@ export default function GlobalTree({
           >
             {currentBranch.id.length > 15 &&
             hasValue > 0 &&
-            childValueTotalWithYear > 0 &&
+            // childValueTotalWithYear > 0 && >> à vérifier
             !currentBranch.children[0].unit.includes("/") ? (
               <article className="camembert_chart">
                 <PieCharts isYear={isYear} currentBranch={currentBranch} />
@@ -231,9 +231,6 @@ export default function GlobalTree({
               <p></p>
             )}
             <article className="listed_children">
-              {/* {isYear === 10 && !currentBranch.id.includes("0_") && (
-                <p>Merci de choisir une année</p>
-              )} */}
               {currentBranch.children
                 .map((child) => ({
                   ...child,
