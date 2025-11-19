@@ -55,8 +55,9 @@ export default function GlobalTree({
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
 
   useEffect(() => {
-    if (currentBranch.children !== undefined) {
+    if (currentBranch.children) {
       let totalValue = 0;
+      let newChildrenTotalValues: [number, number][] = [];
       for (let i = 0; i < currentBranch.children[0].values.length; i++) {
         totalValue = 0;
         const thatYear = currentBranch.children[0].values[i][0];
@@ -69,12 +70,15 @@ export default function GlobalTree({
           }
         });
         totalValue = Number(totalValue.toFixed(2));
-        childrenTotalValues.push([thatYear, totalValue]);
+        newChildrenTotalValues.push([thatYear, totalValue]);
       }
-      setChildrenTotalValues(childrenTotalValues);
+      setChildrenTotalValues(newChildrenTotalValues);
       //récupération d'une seule valeur pour l'année demandée
-      const childValue = childrenTotalValues.find((info) => info[0] === isYear);
+      const childValue = newChildrenTotalValues.find(
+        (info) => info[0] === isYear
+      );
       if (childValue) {
+        totalValue = 0;
         totalValue = Number(childValue[1].toFixed(2));
         setChildValueTotalWithYear(totalValue);
       }
@@ -120,7 +124,6 @@ export default function GlobalTree({
   };
 
   const [lineChartToShow, setLineChartToShow] = useState<topicBranch>();
-  console.log(childValueTotalWithYear, childrenTotalValues);
 
   return (
     isYear !== 0 &&
