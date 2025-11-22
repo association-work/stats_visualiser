@@ -9,6 +9,7 @@ import LineChart from "../../components/LineChart/LineChart";
 import { GetTopic } from "../../functions/GetTopic";
 import { Button } from "@mui/material";
 import ValuePanel from "../../components/ValuePanel/ValuePanel";
+import { GetGeolocByGeoByTopic } from "../../functions/GetGeo";
 
 interface GlobalTreeProps {
   isYear: number;
@@ -21,6 +22,7 @@ interface GlobalTreeProps {
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   showLineChart: boolean;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
+  setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function GlobalTree({
@@ -34,6 +36,7 @@ export default function GlobalTree({
   setPreviousBranchName,
   showLineChart,
   setShowLineChart,
+  setTopicOrLocation,
 }: GlobalTreeProps) {
   // permet de récupérer la valeur de la branche actuelle
   const currentValue = currentBranch.values.filter(
@@ -87,10 +90,59 @@ export default function GlobalTree({
 
   // changement de branche après l'appuie sur le boutton parent
 
-  const handleGoingBackOnce = (id: string) => {
-    if (id && id.length > 35) {
-      GetTopic(id).then((data: geoTopicBranch) => setCurrentBranch(data));
-    } else {
+  const handleGoingBackOnce = (currentBranch: geoTopicBranch) => {
+    if (!currentBranch.parentId) {
+      setCurrentBranch(chosenPath[0]);
+      setTopicOrLocation(true);
+    }
+    if (currentBranch.parentId.length > 35) {
+      GetTopic(currentBranch.parentId).then((data: geoTopicBranch) =>
+        setCurrentBranch(data)
+      );
+    }
+    if (currentBranch.parentId.length < 6 && currentBranch.topicId) {
+      GetGeolocByGeoByTopic(currentBranch.topicId, currentBranch.parentId).then(
+        (data: geoTopicBranch) => {
+          console.log(data);
+          let localization;
+          if (data.parentId) {
+            localization = {
+              id: data.id.toString(),
+              name: data.name,
+              source: data.source,
+              unit: data.unit,
+              children: data.children,
+              values: data.values,
+              hasChildren: data.hasChildren,
+              parentId: data.parentId.toString(),
+              externalId: data.externalId,
+              topicId: data.topicId,
+            };
+          } else {
+            localization = {
+              id: data.id.toString(),
+              name: data.name,
+              source: data.source,
+              unit: data.unit,
+              children: data.children,
+              values: data.values,
+              hasChildren: data.hasChildren,
+              parentId: data.parentId,
+              externalId: data.externalId,
+              topicId: data.topicId,
+            };
+          }
+
+          if (localization) {
+            setCurrentBranch(localization);
+          }
+        }
+      );
+    }
+    if (
+      currentBranch.parentId.length < 35 &&
+      currentBranch.parentId.length > 6
+    ) {
       setCurrentBranch(chosenPath[chosenPath.length - 2]);
     }
     setPreviousBranchName(chosenPath[chosenPath.length - 1].name);
@@ -165,7 +217,7 @@ export default function GlobalTree({
                 fontFamily: "var(--main-font)",
                 fontSize: "16px",
               }}
-              onClick={() => handleGoingBackOnce(currentBranch.parentId)}
+              onClick={() => handleGoingBackOnce(currentBranch)}
             >
               <p>
                 <ChevronLeftOutlinedIcon />

@@ -22,9 +22,10 @@ export async function GetGeolocByGeoByTopic(
   topic_id: string,
   geo_id: string
 ): Promise<geoTopicBranch> {
+  const loc_id = parseInt(geo_id);
   try {
     const response = await fetch(
-      `https://stats-visualiser.onrender.com/location/${geo_id}?topic=${topic_id}`
+      `https://stats-visualiser.onrender.com/location/${loc_id}?topic=${topic_id}`
     );
     const data = await response.json();
     return data;

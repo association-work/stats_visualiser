@@ -165,6 +165,7 @@ function App() {
   }, []);
 
   const [previousBranchName, setPreviousBranchName] = useState<string>("");
+  console.log(previousBranchName);
 
   const [topicIsReady, setTopicIsReady] = useState(false);
 
@@ -213,7 +214,6 @@ function App() {
       );
     }
   }, [topicOrLocation]);
-  console.log(currentLocalisation);
 
   return (
     <>
@@ -247,6 +247,7 @@ function App() {
               setPreviousBranchName={setPreviousBranchName}
               showLineChart={showLineChart}
               setShowLineChart={setShowLineChart}
+              setTopicOrLocation={setTopicOrLocation}
             />
           ) : (
             <p>Les datas en fonction des pays sont en construction</p>
@@ -263,6 +264,7 @@ function App() {
             setPreviousBranchName={setPreviousBranchName}
             showLineChart={showLineChart}
             setShowLineChart={setShowLineChart}
+            setTopicOrLocation={setTopicOrLocation}
           />
         )}
       </main>
