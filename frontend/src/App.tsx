@@ -173,7 +173,7 @@ function App() {
 
   return (
     <>
-      <nav id="navigation">
+      <nav>
         <Navbar
           setIsYear={setIsYear}
           currentBranch={currentBranch}
