@@ -66,7 +66,7 @@ export default function Navbar({
             setShowLineChart(false);
           }}
         >
-          <h1>Logo</h1>
+          <h1>Numelis</h1>
         </button>
         <aside>
           <BrowsingDrawer
