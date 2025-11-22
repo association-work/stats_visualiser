@@ -2,3 +2,9 @@
   height: 16px;
   width: 16px;
 }
+
+.css-pkh84c-MuiChartsWrapper-root {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+}

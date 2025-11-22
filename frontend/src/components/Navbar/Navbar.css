@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5em 2em;
+  padding: 0.6em 2em;
 }
 
 .logo_style {
@@ -19,13 +19,17 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 0 1em;
+  padding: 0.5em 1em;
   gap: 5%;
+  background-color: var(--bg-color-ligth);
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
+  .topNav {
+    padding: 1em 2em;
+  }
   .navigation {
-    padding: 0 2em;
+    padding: 0.7em 2em;
   }
 }
 
@@ -34,6 +38,6 @@
     padding: 0.5em 12em;
   }
   .navigation {
-    padding: 0 12em;
+    padding: 0.7em 12em;
   }
 }
