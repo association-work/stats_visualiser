@@ -199,7 +199,7 @@ function App() {
             source: data.source,
             unit: data.unit,
             children: data.children,
-            values: data.values,
+            values: data.values.sort((a, b) => b[0] - a[0]),
             hasChildren: data.hasChildren,
             parentId: data.parentId.toString(),
             externalId: data.externalId,

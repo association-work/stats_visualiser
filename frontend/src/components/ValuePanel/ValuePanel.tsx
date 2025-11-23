@@ -32,8 +32,6 @@ export default function ValuePanel({
       ][0];
   }
 
-  console.log(minYearPossible);
-
   // taux d'évolution = (finale - initiale / initiale) * 100
 
   let minus1YearsPercentage = "";
@@ -132,7 +130,7 @@ export default function ValuePanel({
 
   return (
     <>
-      {currentBranch.id.length > 15 && (
+      {(currentBranch.id.length < 6 || currentBranch.id.length > 15) && (
         <div className="branch_value">
           {currentValue.length !== 0 ? (
             <p>
