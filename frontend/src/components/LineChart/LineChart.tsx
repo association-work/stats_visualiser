@@ -40,9 +40,6 @@ export default function LineChart({
       childrenTotalValues
         .sort((a, b) => a[0] - b[0])
         .forEach((element) => {
-          // if (element[1] > 1000000) {
-          //   setIsValueInMillion(true);
-          // }
           futureChartedDataValues.push(element[1]);
           futureChartedDataLabels.push(element[0].toString());
         });
@@ -51,11 +48,7 @@ export default function LineChart({
     }
   }, []);
 
-  // if (isValueInMillion) {
-  //   LineDataTreeLabel = currentBranch.name + " (millier)";
-  // } else {
   LineDataTreeLabel = currentBranch.name + " (" + currentBranch.unit + ")";
-  // }
 
   return (
     <Box sx={{ width: "100%", height: "100%", fontFamily: "var(--main-font)" }}>

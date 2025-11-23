@@ -7,6 +7,7 @@ interface ValuePanelProps {
   currentBranch: geoTopicBranch;
   currentValue: [number, number][];
   childValueTotalWithYear: number;
+  childrenTotalValues: [number, number][];
 }
 
 export default function ValuePanel({
@@ -14,17 +15,24 @@ export default function ValuePanel({
   currentBranch,
   currentValue,
   childValueTotalWithYear,
+  childrenTotalValues,
 }: ValuePanelProps) {
   let minYearPossible = 0;
   if (currentBranch.values.length > 0) {
     minYearPossible = currentBranch.values[currentBranch.values.length - 1][0];
   }
-  if (currentBranch.children && currentBranch.children[0].values.length > 0) {
+  if (
+    currentBranch.values.length === 0 &&
+    currentBranch.children &&
+    currentBranch.children[0].values.length > 0
+  ) {
     minYearPossible =
       currentBranch.children[0].values[
         currentBranch.children[0].values.length - 1
       ][0];
   }
+
+  console.log(minYearPossible);
 
   // taux d'évolution = (finale - initiale / initiale) * 100
 
@@ -49,20 +57,19 @@ export default function ValuePanel({
     useState("");
 
   useEffect(() => {
-    if (currentBranch.children && isYear - 1 >= minYearPossible) {
+    if (currentBranch.values.length === 0 && isYear - 1 >= minYearPossible) {
       let totalValue = 0;
-      currentBranch.children.forEach((element) => {
-        const childValue = element.values.find(
-          (info) => info[0] === isYear - 1
-        );
-        if (childValue) {
-          totalValue = totalValue + childValue[1];
-        }
-      });
+
+      const childValue = childrenTotalValues.find(
+        (info) => info[0] === isYear - 1
+      );
+      if (childValue) {
+        totalValue = childValue[1];
+      }
       totalValue = Number(totalValue.toFixed(2));
 
       const percentage = (
-        ((totalValue - childValueTotalWithYear) / childValueTotalWithYear) *
+        ((childValueTotalWithYear - totalValue) / totalValue) *
         100
       ).toFixed(1);
       if (Number(percentage) > 0) {
@@ -71,7 +78,7 @@ export default function ValuePanel({
         setChildValueTotalYearMinus1(percentage + " %");
       }
     }
-  }, [currentBranch, isYear, childValueTotalWithYear]);
+  }, [childrenTotalValues, isYear, childValueTotalWithYear]);
 
   let Minus5YearsPercentage = "";
   if (currentBranch.values.length > 0 && isYear - 5 >= minYearPossible) {
@@ -94,20 +101,19 @@ export default function ValuePanel({
     useState("");
 
   useEffect(() => {
-    if (currentBranch.children && isYear - 5 >= minYearPossible) {
+    if (currentBranch.values.length === 0 && isYear - 5 >= minYearPossible) {
       let totalValue = 0;
-      currentBranch.children.forEach((element) => {
-        const childValue = element.values.find(
-          (info) => info[0] === isYear - 5
-        );
-        if (childValue) {
-          totalValue = totalValue + childValue[1];
-        }
-      });
+
+      const childValue = childrenTotalValues.find(
+        (info) => info[0] === isYear - 5
+      );
+      if (childValue) {
+        totalValue = childValue[1];
+      }
       totalValue = Number(totalValue.toFixed(2));
 
       const percentage = (
-        ((totalValue - childValueTotalWithYear) / childValueTotalWithYear) *
+        ((childValueTotalWithYear - totalValue) / totalValue) *
         100
       ).toFixed(1);
       if (Number(percentage) > 0) {
@@ -116,7 +122,7 @@ export default function ValuePanel({
         setChildValueTotalYearMinus5(percentage + " %");
       }
     }
-  }, [currentBranch, isYear, childValueTotalWithYear]);
+  }, [childrenTotalValues, isYear, childValueTotalWithYear]);
 
   function numberWithSpaces(x: number) {
     var parts = x.toString().split(".");

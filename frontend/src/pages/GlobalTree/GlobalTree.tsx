@@ -77,17 +77,16 @@ export default function GlobalTree({
       }
       setChildrenTotalValues(newChildrenTotalValues);
       //récupération d'une seule valeur pour l'année demandée
-      const childValue = newChildrenTotalValues.find(
+      const newChildValue = newChildrenTotalValues.find(
         (info) => info[0] === isYear
       );
-      if (childValue) {
+      if (newChildValue) {
         totalValue = 0;
-        totalValue = Number(childValue[1].toFixed(2));
+        totalValue = Number(newChildValue[1].toFixed(2));
         setChildValueTotalWithYear(totalValue);
       }
     }
   }, [currentBranch, isYear]);
-
   // changement de branche après l'appuie sur le boutton parent
 
   const handleGoingBackOnce = (currentBranch: geoTopicBranch) => {
@@ -236,6 +235,7 @@ export default function GlobalTree({
                     currentBranch={currentBranch}
                     currentValue={currentValue}
                     childValueTotalWithYear={childValueTotalWithYear}
+                    childrenTotalValues={childrenTotalValues}
                   />
                 )}
               {!currentBranch.id.includes("0_") &&
