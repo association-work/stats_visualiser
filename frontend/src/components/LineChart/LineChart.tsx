@@ -54,7 +54,7 @@ export default function LineChart({
   // if (isValueInMillion) {
   //   LineDataTreeLabel = currentBranch.name + " (millier)";
   // } else {
-  LineDataTreeLabel = currentBranch.name;
+  LineDataTreeLabel = currentBranch.name + " (" + currentBranch.unit + ")";
   // }
 
   return (
