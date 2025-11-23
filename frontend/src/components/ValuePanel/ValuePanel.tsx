@@ -21,12 +21,18 @@ export default function ValuePanel({
   if (currentBranch.values.length > 0) {
     minYearPossible = currentBranch.values[currentBranch.values.length - 1][0];
   }
-  if (currentBranch.children && currentBranch.children[0].values.length > 0) {
+  if (
+    currentBranch.values.length === 0 &&
+    currentBranch.children &&
+    currentBranch.children[0].values.length > 0
+  ) {
     minYearPossible =
       currentBranch.children[0].values[
         currentBranch.children[0].values.length - 1
       ][0];
   }
+
+  console.log(minYearPossible);
 
   // taux d'évolution = (finale - initiale / initiale) * 100
 
