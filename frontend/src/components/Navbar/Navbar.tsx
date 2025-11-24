@@ -67,7 +67,7 @@ export default function Navbar({
             setTopicOrLocation(true);
           }}
         >
-          <h1>Numelys</h1>
+          <h1>Wikidata</h1>
         </button>
         <aside>
           <BrowsingDrawer
