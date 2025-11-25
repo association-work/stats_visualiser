@@ -16,6 +16,7 @@ interface BrowsingDrawerProps {
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
+  setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function BrowsingDrawer({
@@ -24,6 +25,7 @@ export default function BrowsingDrawer({
   setCurrentBranch,
   setPreviousBranchName,
   setShowLineChart,
+  setTopicOrLocation,
 }: BrowsingDrawerProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -54,7 +56,9 @@ export default function BrowsingDrawer({
             index === 0 ? (
               <ListItem key={index} disablePadding>
                 <ListItemButton
-                  onClick={() => handleRewindBranch(index)}
+                  onClick={() => {
+                    handleRewindBranch(index), setTopicOrLocation(true);
+                  }}
                   sx={{
                     padding: "7px 10px",
                   }}

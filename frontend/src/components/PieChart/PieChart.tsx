@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./PieChart.css";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import { PieChart } from "@mui/x-charts/PieChart";
 
 interface PieChartProps {
   isYear: number;
-  currentBranch: topicBranch;
+  currentBranch: geoTopicBranch;
 }
 
 export default function PieCharts({ isYear, currentBranch }: PieChartProps) {
