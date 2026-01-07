@@ -17,8 +17,8 @@ interface NavBarProps {
   currentBranch: topicBranch;
   topicOrLocation: boolean;
   setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
+  chosenPathStats: topicBranch[];
+  setChosenPathStats: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,8 +30,8 @@ export default function Navbar({
   currentBranch,
   topicOrLocation,
   setTopicOrLocation,
-  chosenPath,
-  setChosenPath,
+  chosenPathStats,
+  setChosenPathStats,
   setCurrentBranch,
   setPreviousBranchName,
   setShowLineChart,
@@ -61,20 +61,22 @@ export default function Navbar({
           type="button"
           className="logo_style"
           onClick={() => {
-            setChosenPath([chosenPath[0]]);
-            setCurrentBranch(chosenPath[0]);
+            setChosenPathStats([chosenPathStats[0]]);
+            setCurrentBranch(chosenPathStats[0]);
             setShowLineChart(false);
+            setTopicOrLocation(true);
           }}
         >
           <h1>Wikidata</h1>
         </button>
         <aside>
           <BrowsingDrawer
-            chosenPath={chosenPath}
-            setChosenPath={setChosenPath}
+            chosenPathStats={chosenPathStats}
+            setChosenPathStats={setChosenPathStats}
             setCurrentBranch={setCurrentBranch}
             setPreviousBranchName={setPreviousBranchName}
             setShowLineChart={setShowLineChart}
+            setTopicOrLocation={setTopicOrLocation}
           />
           {currentBranch.id.length > 15 && (
             <ToggleButton
