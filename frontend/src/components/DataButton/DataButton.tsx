@@ -5,11 +5,12 @@ import { GetTopic } from "../../functions/GetTopic";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { Button } from "@mui/material";
 import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
+import { GetGeolocByGeoByTopic } from "../../functions/GetGeo";
 
 interface DataButtonProps {
   currentBranch: geoTopicBranch;
-  chosenPath: geoTopicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  chosenPathStats: geoTopicBranch[];
+  setChosenPathStats: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   childValueTotalWithYear: number;
   isYear: number;
@@ -19,12 +20,13 @@ interface DataButtonProps {
   setLineChartToShow: React.Dispatch<
     React.SetStateAction<geoTopicBranch | undefined>
   >;
+  topicOrLocation: boolean;
 }
 
 export default function DataButton({
   currentBranch,
-  chosenPath,
-  setChosenPath,
+  chosenPathStats,
+  setChosenPathStats,
   setCurrentBranch,
   childValueTotalWithYear,
   isYear,
@@ -32,22 +34,48 @@ export default function DataButton({
   previousBranchName,
   setShowLineChart,
   setLineChartToShow,
+  topicOrLocation,
 }: DataButtonProps) {
   const [nextBranch, setNextBranch] = useState<geoTopicBranch>(currentBranch);
 
   useEffect(() => {
-    if (currentBranch.id.length > 35) {
+    if (topicOrLocation && currentBranch.id.length > 35) {
       GetTopic(currentBranch.id).then((data) => setNextBranch(data));
-    } else {
+    }
+    if (
+      !topicOrLocation &&
+      currentBranch.id.toString().length < 6 &&
+      currentBranch.topicId
+    ) {
+      GetGeolocByGeoByTopic(currentBranch.topicId, currentBranch.id).then(
+        (data) => {
+          const localization = {
+            id: data.id.toString(),
+            name: data.name,
+            source: data.source,
+            unit: data.unit,
+            children: data.children,
+            values: data.values.sort((a, b) => b[0] - a[0]),
+            hasChildren: data.hasChildren,
+            parentId: data.parentId.toString(),
+            externalId: data.externalId,
+            topicId: data.topicId,
+          };
+          setNextBranch(localization);
+        }
+      );
+    }
+    if (currentBranch.id.length < 35 && currentBranch.id.length > 6) {
       setNextBranch(currentBranch);
     }
-  }, []);
+  }, [topicOrLocation, currentBranch]);
 
   const nextBranchValue = nextBranch.values.find((info) => info[0] === isYear);
 
+  // A FAIRE pour la géolocalisation !!!
   const handleChangingBranch = () => {
-    setChosenPath(chosenPath);
-    chosenPath.push(nextBranch);
+    setChosenPathStats(chosenPathStats);
+    chosenPathStats.push(nextBranch);
     setCurrentBranch(nextBranch);
     // prend en compte les années possible sur le topic en question
     if (currentBranch.values.length > 0) {
@@ -102,6 +130,13 @@ export default function DataButton({
     }
   }, []);
 
+  console.log(
+    nextBranch.parentId,
+    nextBranch.parentId.length > 15 || nextBranch.parentId.length < 6,
+    percentage !== "0",
+    !unitIsRatio
+  );
+
   return (
     <>
       {nextBranch && nextBranch.children && nextBranch.children.length > 0 ? (
@@ -119,7 +154,8 @@ export default function DataButton({
           <p>{nextBranch.name[0].toUpperCase() + nextBranch.name.slice(1)}</p>
           <p>
             {nextBranch.parentId &&
-              nextBranch.parentId.length > 15 &&
+              (nextBranch.parentId.length > 15 ||
+                nextBranch.parentId.length < 6) &&
               percentage !== "0" &&
               !unitIsRatio &&
               percentage + " %"}

@@ -11,8 +11,8 @@ import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import type { topicBranch } from "../../types/dataTypes";
 
 interface BrowsingDrawerProps {
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
+  chosenPathStats: topicBranch[];
+  setChosenPathStats: React.Dispatch<React.SetStateAction<topicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,8 +20,8 @@ interface BrowsingDrawerProps {
 }
 
 export default function BrowsingDrawer({
-  chosenPath,
-  setChosenPath,
+  chosenPathStats,
+  setChosenPathStats,
   setCurrentBranch,
   setPreviousBranchName,
   setShowLineChart,
@@ -35,24 +35,24 @@ export default function BrowsingDrawer({
   };
 
   const handleRewindBranch = (index: number) => {
-    setPreviousBranchName(chosenPath[chosenPath.length - 1].name);
-    chosenPath.forEach((choice) => {
+    setPreviousBranchName(chosenPathStats[chosenPathStats.length - 1].name);
+    chosenPathStats.forEach((choice) => {
       setCurrentBranch(choice);
-      let i = chosenPath.length - 1;
+      let i = chosenPathStats.length - 1;
       while (i > index) {
-        chosenPath.pop();
+        chosenPathStats.pop();
         i--;
       }
-      setChosenPath(chosenPath);
+      setChosenPathStats(chosenPathStats);
     });
   };
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {chosenPath &&
-          chosenPath.length > 0 &&
-          chosenPath.map((choice, index) =>
+        {chosenPathStats &&
+          chosenPathStats.length > 0 &&
+          chosenPathStats.map((choice, index) =>
             index === 0 ? (
               <ListItem key={index} disablePadding>
                 <ListItemButton

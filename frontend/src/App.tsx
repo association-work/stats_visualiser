@@ -140,9 +140,37 @@ function App() {
     parentId: "",
   });
 
-  const [chosenPath, setChosenPath] = useState<geoTopicBranch[]>([
+  const [chosenPathStats, setChosenPathStats] = useState<geoTopicBranch[]>([
     currentBranch,
   ]);
+
+  const [chosenPathGeo, setChosenPathGeo] = useState<geoTopicBranch[]>([
+    currentBranch,
+  ]);
+
+  const [previousBranchName, setPreviousBranchName] = useState<string>("");
+
+  const [topicIsReady, setTopicIsReady] = useState(false);
+
+  const [showLineChart, setShowLineChart] = useState(false);
+
+  const [topicOrLocation, setTopicOrLocation] = useState(true);
+
+  const [currentLocalisation, setCurrentLocalisation] =
+    useState<geoTopicBranch>({
+      id: "12",
+      name: "Simulation",
+      parentId: "1",
+      unit: "",
+      externalId: "G0.2",
+      topicId: "",
+      values: [],
+      source: {
+        name: "Banque Mondiale",
+        url: "https://databank.worldbank.org/source/population-estimates-and-projections#",
+      },
+      hasChildren: true,
+    });
 
   useEffect(() => {
     GetTopics().then((data) => {
@@ -157,40 +185,15 @@ function App() {
         currentBranch.children[1].children[0] = data[0];
         currentBranch.children[0].children[0] = data[1];
         setCurrentBranch(currentBranch);
-        setChosenPath([currentBranch]);
+        setChosenPathStats([currentBranch]);
       }
       setTopicIsReady(true);
     });
     setIsYear(currentBranch.values[0][0]);
   }, []);
 
-  const [previousBranchName, setPreviousBranchName] = useState<string>("");
-  console.log(previousBranchName);
-
-  const [topicIsReady, setTopicIsReady] = useState(false);
-
-  const [showLineChart, setShowLineChart] = useState(false);
-
-  const [topicOrLocation, setTopicOrLocation] = useState(true);
-
-  const [currentLocalisation, setCurrentLocalisation] =
-    useState<geoTopicBranch>({
-      id: "12",
-      name: "Europe et Asie Centrale - simulation",
-      parentId: "1",
-      unit: "",
-      externalId: "G0.2",
-      topicId: "",
-      values: [],
-      source: {
-        name: "Banque Mondiale",
-        url: "https://databank.worldbank.org/source/population-estimates-and-projections#",
-      },
-      hasChildren: true,
-    });
-
   useEffect(() => {
-    if (!topicOrLocation) {
+    if (topicOrLocation === false) {
       GetGeolocByGeoByTopic(currentBranch.id, currentLocalisation.id).then(
         (data) => {
           const localization = {
@@ -207,8 +210,8 @@ function App() {
           };
           setCurrentLocalisation(localization);
           if (currentLocalisation) {
-            chosenPath.push(currentLocalisation);
-            setChosenPath(chosenPath);
+            chosenPathGeo.push(currentLocalisation);
+            setChosenPathGeo(chosenPathGeo);
           }
         }
       );
@@ -224,8 +227,8 @@ function App() {
           isYear={isYear}
           topicOrLocation={topicOrLocation}
           setTopicOrLocation={setTopicOrLocation}
-          chosenPath={chosenPath}
-          setChosenPath={setChosenPath}
+          chosenPathStats={chosenPathStats}
+          setChosenPathStats={setChosenPathStats}
           setCurrentBranch={setCurrentBranch}
           setPreviousBranchName={setPreviousBranchName}
           setShowLineChart={setShowLineChart}
@@ -235,12 +238,12 @@ function App() {
         {!topicIsReady ? (
           <Loader />
         ) : !topicOrLocation ? (
-          currentLocalisation ? (
+          currentLocalisation.name !== "Simulation" ? (
             <GlobalTree
               isYear={isYear}
               setIsYear={setIsYear}
-              chosenPath={chosenPath}
-              setChosenPath={setChosenPath}
+              chosenPathStats={chosenPathStats}
+              setChosenPathStats={setChosenPathStats}
               currentBranch={currentLocalisation}
               setCurrentBranch={setCurrentLocalisation}
               previousBranchName={previousBranchName}
@@ -248,6 +251,7 @@ function App() {
               showLineChart={showLineChart}
               setShowLineChart={setShowLineChart}
               setTopicOrLocation={setTopicOrLocation}
+              topicOrLocation={topicOrLocation}
             />
           ) : (
             <p>Les datas en fonction des pays sont en construction</p>
@@ -256,8 +260,8 @@ function App() {
           <GlobalTree
             isYear={isYear}
             setIsYear={setIsYear}
-            chosenPath={chosenPath}
-            setChosenPath={setChosenPath}
+            chosenPathStats={chosenPathStats}
+            setChosenPathStats={setChosenPathStats}
             currentBranch={currentBranch}
             setCurrentBranch={setCurrentBranch}
             previousBranchName={previousBranchName}
@@ -265,6 +269,7 @@ function App() {
             showLineChart={showLineChart}
             setShowLineChart={setShowLineChart}
             setTopicOrLocation={setTopicOrLocation}
+            topicOrLocation={topicOrLocation}
           />
         )}
       </main>

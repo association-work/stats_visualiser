@@ -14,8 +14,8 @@ import { GetGeolocByGeoByTopic } from "../../functions/GetGeo";
 interface GlobalTreeProps {
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  chosenPath: geoTopicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  chosenPathStats: geoTopicBranch[];
+  setChosenPathStats: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
   currentBranch: geoTopicBranch;
   setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   previousBranchName: string;
@@ -23,13 +23,14 @@ interface GlobalTreeProps {
   showLineChart: boolean;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
   setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
+  topicOrLocation: boolean;
 }
 
 export default function GlobalTree({
   isYear,
   setIsYear,
-  chosenPath,
-  setChosenPath,
+  chosenPathStats,
+  setChosenPathStats,
   currentBranch,
   setCurrentBranch,
   previousBranchName,
@@ -37,6 +38,7 @@ export default function GlobalTree({
   showLineChart,
   setShowLineChart,
   setTopicOrLocation,
+  topicOrLocation,
 }: GlobalTreeProps) {
   // permet de récupérer la valeur de la branche actuelle
   const currentValue = currentBranch.values.filter(
@@ -58,6 +60,8 @@ export default function GlobalTree({
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
 
   useEffect(() => {
+    setChildValueTotalWithYear(0);
+    setChildrenTotalValues([]);
     if (currentBranch.children) {
       let totalValue = 0;
       let newChildrenTotalValues: [number, number][] = [];
@@ -91,7 +95,7 @@ export default function GlobalTree({
 
   const handleGoingBackOnce = (currentBranch: geoTopicBranch) => {
     if (!currentBranch.parentId) {
-      setCurrentBranch(chosenPath[0]);
+      setCurrentBranch(chosenPathStats[0]);
       setTopicOrLocation(true);
     }
     if (currentBranch.parentId.length > 35) {
@@ -99,7 +103,7 @@ export default function GlobalTree({
         setCurrentBranch(data)
       );
     }
-    if (currentBranch.parentId.length < 6 && currentBranch.topicId) {
+    if (!topicOrLocation && currentBranch.topicId) {
       GetGeolocByGeoByTopic(currentBranch.topicId, currentBranch.parentId).then(
         (data: geoTopicBranch) => {
           console.log(data);
@@ -142,13 +146,13 @@ export default function GlobalTree({
       currentBranch.parentId.length < 35 &&
       currentBranch.parentId.length > 6
     ) {
-      setCurrentBranch(chosenPath[chosenPath.length - 2]);
+      setCurrentBranch(chosenPathStats[chosenPathStats.length - 2]);
     }
-    setPreviousBranchName(chosenPath[chosenPath.length - 1].name);
-    chosenPath.pop();
-    setChosenPath(chosenPath);
+    setPreviousBranchName(chosenPathStats[chosenPathStats.length - 1].name);
+    chosenPathStats.pop();
+    setChosenPathStats(chosenPathStats);
     // prend en compte les années possible sur le topic en question
-    const lastElementOfPath = chosenPath[chosenPath.length - 1];
+    const lastElementOfPath = chosenPathStats[chosenPathStats.length - 1];
     if (lastElementOfPath.values.length > 0) {
       const isYearSelected = lastElementOfPath.values.filter(
         (info) => info[0] === isYear
@@ -175,6 +179,8 @@ export default function GlobalTree({
   };
 
   const [lineChartToShow, setLineChartToShow] = useState<geoTopicBranch>();
+
+  console.log(currentBranch);
 
   return (
     isYear !== 0 &&
@@ -294,8 +300,8 @@ export default function GlobalTree({
                   <DataButton
                     currentBranch={kid}
                     key={kid.id}
-                    chosenPath={chosenPath}
-                    setChosenPath={setChosenPath}
+                    chosenPathStats={chosenPathStats}
+                    setChosenPathStats={setChosenPathStats}
                     setCurrentBranch={setCurrentBranch}
                     childValueTotalWithYear={childValueTotalWithYear}
                     isYear={isYear}
@@ -303,6 +309,7 @@ export default function GlobalTree({
                     previousBranchName={previousBranchName}
                     setShowLineChart={setShowLineChart}
                     setLineChartToShow={setLineChartToShow}
+                    topicOrLocation={topicOrLocation}
                   />
                 ))}
             </article>
