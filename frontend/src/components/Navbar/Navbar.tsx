@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import ToggleButton from "@mui/material/ToggleButton";
 import PublicSharpIcon from "@mui/icons-material/PublicSharp";
 import AccountTreeOutlinedIcon from "@mui/icons-material/AccountTreeOutlined";
@@ -14,12 +14,12 @@ import BrowsingDrawer from "../BrowsingDrawer/BrowsingDrawer";
 interface NavBarProps {
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  currentBranch: topicBranch;
+  currentBranch: geoTopicBranch;
   topicOrLocation: boolean;
   setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -61,6 +61,7 @@ export default function Navbar({
           type="button"
           className="logo_style"
           onClick={() => {
+            setTopicOrLocation(true);
             setChosenPath([chosenPath[0]]);
             setCurrentBranch(chosenPath[0]);
             setShowLineChart(false);
@@ -75,6 +76,7 @@ export default function Navbar({
             setCurrentBranch={setCurrentBranch}
             setPreviousBranchName={setPreviousBranchName}
             setShowLineChart={setShowLineChart}
+            setTopicOrLocation={setTopicOrLocation}
           />
           {currentBranch.id.length > 15 && (
             <ToggleButton

@@ -8,14 +8,15 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 
 interface BrowsingDrawerProps {
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
+  setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function BrowsingDrawer({
@@ -24,6 +25,7 @@ export default function BrowsingDrawer({
   setCurrentBranch,
   setPreviousBranchName,
   setShowLineChart,
+  setTopicOrLocation,
 }: BrowsingDrawerProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -54,7 +56,9 @@ export default function BrowsingDrawer({
             index === 0 ? (
               <ListItem key={index} disablePadding>
                 <ListItemButton
-                  onClick={() => handleRewindBranch(index)}
+                  onClick={() => {
+                    handleRewindBranch(index), setTopicOrLocation(true);
+                  }}
                   sx={{
                     padding: "7px 10px",
                   }}

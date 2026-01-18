@@ -1,24 +1,26 @@
 import "./DataButton.css";
-import type { topicBranch } from "./../../types/dataTypes";
+import type { geoTopicBranch } from "./../../types/dataTypes";
 import { useEffect, useState } from "react";
 import { GetTopic } from "../../functions/GetTopic";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { Button } from "@mui/material";
 import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
+import { GetGeolocByGeoByTopic } from "../../functions/GetGeo";
 
 interface DataButtonProps {
-  currentBranch: topicBranch;
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  currentBranch: geoTopicBranch;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   childValueTotalWithYear: number;
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
   previousBranchName: string;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
   setLineChartToShow: React.Dispatch<
-    React.SetStateAction<topicBranch | undefined>
+    React.SetStateAction<geoTopicBranch | undefined>
   >;
+  topicOrLocation: boolean;
 }
 
 export default function DataButton({
@@ -32,16 +34,41 @@ export default function DataButton({
   previousBranchName,
   setShowLineChart,
   setLineChartToShow,
+  topicOrLocation,
 }: DataButtonProps) {
-  const [nextBranch, setNextBranch] = useState<topicBranch>(currentBranch);
+  const [nextBranch, setNextBranch] = useState<geoTopicBranch>(currentBranch);
 
   useEffect(() => {
-    if (currentBranch.id.length > 35) {
+    if (topicOrLocation && currentBranch.id.length > 35) {
       GetTopic(currentBranch.id).then((data) => setNextBranch(data));
-    } else {
+    }
+    if (
+      !topicOrLocation &&
+      currentBranch.id.toString().length < 6 &&
+      currentBranch.topicId
+    ) {
+      GetGeolocByGeoByTopic(currentBranch.topicId, currentBranch.id).then(
+        (data) => {
+          const localization = {
+            id: data.id.toString(),
+            name: data.name,
+            source: data.source,
+            unit: data.unit,
+            children: data.children,
+            values: data.values.sort((a, b) => b[0] - a[0]),
+            hasChildren: data.hasChildren,
+            parentId: data.parentId.toString(),
+            externalId: data.externalId,
+            topicId: data.topicId,
+          };
+          setNextBranch(localization);
+        }
+      );
+    }
+    if (currentBranch.id.length < 35 && currentBranch.id.length > 6) {
       setNextBranch(currentBranch);
     }
-  }, []);
+  }, [topicOrLocation, currentBranch]);
 
   const nextBranchValue = nextBranch.values.find((info) => info[0] === isYear);
 
@@ -119,7 +146,8 @@ export default function DataButton({
           <p>{nextBranch.name[0].toUpperCase() + nextBranch.name.slice(1)}</p>
           <p>
             {nextBranch.parentId &&
-              nextBranch.parentId.length > 15 &&
+              (nextBranch.parentId.length > 15 ||
+                nextBranch.parentId.length < 6) &&
               percentage !== "0" &&
               !unitIsRatio &&
               percentage + " %"}

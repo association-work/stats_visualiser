@@ -1,7 +1,7 @@
 import "./GlobalTree.css";
 import DataButton from "../../components/DataButton/DataButton";
 import PieCharts from "../../components/PieChart/PieChart";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import { useEffect, useState } from "react";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
@@ -9,18 +9,21 @@ import LineChart from "../../components/LineChart/LineChart";
 import { GetTopic } from "../../functions/GetTopic";
 import { Button } from "@mui/material";
 import ValuePanel from "../../components/ValuePanel/ValuePanel";
+import { GetGeolocByGeoByTopic } from "../../functions/GetGeo";
 
 interface GlobalTreeProps {
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  currentBranch: topicBranch;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  currentBranch: geoTopicBranch;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   previousBranchName: string;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   showLineChart: boolean;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
+  setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
+  topicOrLocation: boolean;
 }
 
 export default function GlobalTree({
@@ -34,6 +37,8 @@ export default function GlobalTree({
   setPreviousBranchName,
   showLineChart,
   setShowLineChart,
+  setTopicOrLocation,
+  topicOrLocation,
 }: GlobalTreeProps) {
   // permet de récupérer la valeur de la branche actuelle
   const currentValue = currentBranch.values.filter(
@@ -44,7 +49,11 @@ export default function GlobalTree({
   const [hasValue, setHasValue] = useState(0);
 
   useEffect(() => {
-    if (currentBranch && currentBranch.children) {
+    if (
+      currentBranch &&
+      currentBranch.children &&
+      currentBranch.children?.length > 0
+    ) {
       setHasValue(currentBranch.children[0].values.length);
     }
   }, [currentBranch]);
@@ -55,7 +64,9 @@ export default function GlobalTree({
   const [childValueTotalWithYear, setChildValueTotalWithYear] = useState(0);
 
   useEffect(() => {
-    if (currentBranch.children) {
+    setChildValueTotalWithYear(0);
+    setChildrenTotalValues([]);
+    if (currentBranch.children && currentBranch.children?.length > 0) {
       let totalValue = 0;
       let newChildrenTotalValues: [number, number][] = [];
       for (let i = 0; i < currentBranch.children[0].values.length; i++) {
@@ -84,19 +95,55 @@ export default function GlobalTree({
       }
     }
   }, [currentBranch, isYear]);
-  // changement de branche après l'appuie sur le boutton parent
 
-  const handleGoingBackOnce = (id: string) => {
-    if (id && id.length > 35) {
-      GetTopic(id).then((data: topicBranch) => setCurrentBranch(data));
+  // changement de branche après l'appuie sur le boutton parent
+  const handleGoingBackOnce = (currentBranch: geoTopicBranch) => {
+    // évaluation de la branche actuelle qui est montré
+    if (topicOrLocation) {
+      if (!currentBranch.parentId && chosenPath.length === 3) {
+        setCurrentBranch(chosenPath[1]);
+      } else if (chosenPath.length === 2) {
+        setCurrentBranch(chosenPath[0]);
+      } else if (chosenPath.length > 3 && currentBranch.parentId.length > 35) {
+        GetTopic(currentBranch.parentId).then((data: geoTopicBranch) =>
+          setCurrentBranch(data)
+        );
+      }
     } else {
-      setCurrentBranch(chosenPath[chosenPath.length - 2]);
+      if (currentBranch.topicId) {
+        GetGeolocByGeoByTopic(
+          currentBranch.topicId,
+          currentBranch.parentId
+        ).then((data: geoTopicBranch) => {
+          let localization;
+          localization = {
+            id: data.id.toString(),
+            name: data.name,
+            source: data.source,
+            unit: data.unit,
+            children: data.children,
+            values: data.values.sort((a, b) => b[0] - a[0]),
+            hasChildren: data.hasChildren,
+            parentId: data.parentId ? data.parentId.toString() : data.parentId,
+            externalId: data.externalId,
+            topicId: data.topicId,
+          };
+
+          if (localization) {
+            setCurrentBranch(localization);
+          }
+        });
+      }
     }
+
+    // retour en arrière dans le BrowsingDrawer
     setPreviousBranchName(chosenPath[chosenPath.length - 1].name);
     chosenPath.pop();
     setChosenPath(chosenPath);
+
     // prend en compte les années possible sur le topic en question
     const lastElementOfPath = chosenPath[chosenPath.length - 1];
+    console.log(lastElementOfPath);
     if (lastElementOfPath.values.length > 0) {
       const isYearSelected = lastElementOfPath.values.filter(
         (info) => info[0] === isYear
@@ -122,7 +169,9 @@ export default function GlobalTree({
     }
   };
 
-  const [lineChartToShow, setLineChartToShow] = useState<topicBranch>();
+  console.log(chosenPath);
+
+  const [lineChartToShow, setLineChartToShow] = useState<geoTopicBranch>();
 
   return (
     isYear !== 0 &&
@@ -151,33 +200,57 @@ export default function GlobalTree({
       <section className={hasValue > 0 ? "global_tree" : "no_pie"}>
         {currentBranch.name !== "Welcome" && (
           <section className="branch_evolution">
-            <Button
-              variant="contained"
-              className="branch_title"
-              sx={{
-                borderRadius: "8px",
-                backgroundColor: "var(--highligth-color)",
-                color: "var(--bg-color-ligth)",
-                padding: ".8em",
-                minWidth: "50%",
-                textTransform: "capitalize",
-                fontFamily: "var(--main-font)",
-                fontSize: "16px",
-              }}
-              onClick={() => handleGoingBackOnce(currentBranch.parentId)}
-            >
-              <p>
-                <ChevronLeftOutlinedIcon />
-                {currentBranch.name[0].toUpperCase() +
-                  currentBranch.name.slice(1)}
-              </p>
-            </Button>
+            {!topicOrLocation && chosenPath.length === 2 ? (
+              <Button
+                variant="contained"
+                className="branch_title"
+                sx={{
+                  borderRadius: "8px",
+                  backgroundColor: "var(--highligth-color)",
+                  color: "var(--bg-color-ligth)",
+                  padding: ".8em",
+                  minWidth: "50%",
+                  textTransform: "capitalize",
+                  fontFamily: "var(--main-font)",
+                  fontSize: "16px",
+                }}
+              >
+                <p>
+                  {currentBranch.name[0].toUpperCase() +
+                    currentBranch.name.slice(1)}
+                </p>
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                className="branch_title"
+                sx={{
+                  borderRadius: "8px",
+                  backgroundColor: "var(--highligth-color)",
+                  color: "var(--bg-color-ligth)",
+                  padding: ".8em",
+                  minWidth: "50%",
+                  textTransform: "capitalize",
+                  fontFamily: "var(--main-font)",
+                  fontSize: "16px",
+                }}
+                onClick={() => handleGoingBackOnce(currentBranch)}
+              >
+                <p>
+                  <ChevronLeftOutlinedIcon />
+                  {currentBranch.name[0].toUpperCase() +
+                    currentBranch.name.slice(1)}
+                </p>
+              </Button>
+            )}
             <article className="value_chart">
               {!currentBranch.id.includes("0_") &&
                 !currentBranch.id.includes("1_") &&
                 currentBranch.children &&
+                currentBranch.children.length > 0 &&
                 !currentBranch.children[0].unit.includes("%") &&
-                !currentBranch.children[0].unit.includes("/") && (
+                !currentBranch.children[0].unit.includes("/") &&
+                currentValue.length > 0 && (
                   <ValuePanel
                     isYear={isYear}
                     currentBranch={currentBranch}
@@ -189,6 +262,7 @@ export default function GlobalTree({
               {!currentBranch.id.includes("0_") &&
                 !currentBranch.id.includes("1_") &&
                 currentBranch.children &&
+                currentBranch.children.length > 0 &&
                 !currentBranch.children[0].unit.includes("%") &&
                 !currentBranch.children[0].unit.includes("/") && (
                   <Button
@@ -216,7 +290,6 @@ export default function GlobalTree({
           >
             {currentBranch.id.length > 15 &&
             hasValue > 0 &&
-            // childValueTotalWithYear > 0 && >> à vérifier
             !currentBranch.children[0].unit.includes("/") ? (
               <article className="camembert_chart">
                 <PieCharts isYear={isYear} currentBranch={currentBranch} />
@@ -252,6 +325,7 @@ export default function GlobalTree({
                     previousBranchName={previousBranchName}
                     setShowLineChart={setShowLineChart}
                     setLineChartToShow={setLineChartToShow}
+                    topicOrLocation={topicOrLocation}
                   />
                 ))}
             </article>
