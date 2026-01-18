@@ -8,20 +8,20 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 
 interface BrowsingDrawerProps {
-  chosenPathStats: topicBranch[];
-  setChosenPathStats: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
   setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function BrowsingDrawer({
-  chosenPathStats,
-  setChosenPathStats,
+  chosenPath,
+  setChosenPath,
   setCurrentBranch,
   setPreviousBranchName,
   setShowLineChart,
@@ -35,24 +35,24 @@ export default function BrowsingDrawer({
   };
 
   const handleRewindBranch = (index: number) => {
-    setPreviousBranchName(chosenPathStats[chosenPathStats.length - 1].name);
-    chosenPathStats.forEach((choice) => {
+    setPreviousBranchName(chosenPath[chosenPath.length - 1].name);
+    chosenPath.forEach((choice) => {
       setCurrentBranch(choice);
-      let i = chosenPathStats.length - 1;
+      let i = chosenPath.length - 1;
       while (i > index) {
-        chosenPathStats.pop();
+        chosenPath.pop();
         i--;
       }
-      setChosenPathStats(chosenPathStats);
+      setChosenPath(chosenPath);
     });
   };
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {chosenPathStats &&
-          chosenPathStats.length > 0 &&
-          chosenPathStats.map((choice, index) =>
+        {chosenPath &&
+          chosenPath.length > 0 &&
+          chosenPath.map((choice, index) =>
             index === 0 ? (
               <ListItem key={index} disablePadding>
                 <ListItemButton

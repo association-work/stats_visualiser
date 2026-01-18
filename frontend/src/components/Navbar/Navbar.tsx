@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import ToggleButton from "@mui/material/ToggleButton";
 import PublicSharpIcon from "@mui/icons-material/PublicSharp";
 import AccountTreeOutlinedIcon from "@mui/icons-material/AccountTreeOutlined";
@@ -14,12 +14,12 @@ import BrowsingDrawer from "../BrowsingDrawer/BrowsingDrawer";
 interface NavBarProps {
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  currentBranch: topicBranch;
+  currentBranch: geoTopicBranch;
   topicOrLocation: boolean;
   setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
-  chosenPathStats: topicBranch[];
-  setChosenPathStats: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -30,8 +30,8 @@ export default function Navbar({
   currentBranch,
   topicOrLocation,
   setTopicOrLocation,
-  chosenPathStats,
-  setChosenPathStats,
+  chosenPath,
+  setChosenPath,
   setCurrentBranch,
   setPreviousBranchName,
   setShowLineChart,
@@ -61,18 +61,18 @@ export default function Navbar({
           type="button"
           className="logo_style"
           onClick={() => {
-            setChosenPathStats([chosenPathStats[0]]);
-            setCurrentBranch(chosenPathStats[0]);
-            setShowLineChart(false);
             setTopicOrLocation(true);
+            setChosenPath([chosenPath[0]]);
+            setCurrentBranch(chosenPath[0]);
+            setShowLineChart(false);
           }}
         >
           <h1>Wikidata</h1>
         </button>
         <aside>
           <BrowsingDrawer
-            chosenPathStats={chosenPathStats}
-            setChosenPathStats={setChosenPathStats}
+            chosenPath={chosenPath}
+            setChosenPath={setChosenPath}
             setCurrentBranch={setCurrentBranch}
             setPreviousBranchName={setPreviousBranchName}
             setShowLineChart={setShowLineChart}

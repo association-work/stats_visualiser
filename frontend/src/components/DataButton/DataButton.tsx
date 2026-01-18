@@ -9,8 +9,8 @@ import { GetGeolocByGeoByTopic } from "../../functions/GetGeo";
 
 interface DataButtonProps {
   currentBranch: geoTopicBranch;
-  chosenPathStats: geoTopicBranch[];
-  setChosenPathStats: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  chosenPath: geoTopicBranch[];
+  setChosenPath: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
   setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
   childValueTotalWithYear: number;
   isYear: number;
@@ -25,8 +25,8 @@ interface DataButtonProps {
 
 export default function DataButton({
   currentBranch,
-  chosenPathStats,
-  setChosenPathStats,
+  chosenPath,
+  setChosenPath,
   setCurrentBranch,
   childValueTotalWithYear,
   isYear,
@@ -72,10 +72,9 @@ export default function DataButton({
 
   const nextBranchValue = nextBranch.values.find((info) => info[0] === isYear);
 
-  // A FAIRE pour la géolocalisation !!!
   const handleChangingBranch = () => {
-    setChosenPathStats(chosenPathStats);
-    chosenPathStats.push(nextBranch);
+    setChosenPath(chosenPath);
+    chosenPath.push(nextBranch);
     setCurrentBranch(nextBranch);
     // prend en compte les années possible sur le topic en question
     if (currentBranch.values.length > 0) {
@@ -129,13 +128,6 @@ export default function DataButton({
       setUnitIsRatio(true);
     }
   }, []);
-
-  console.log(
-    nextBranch.parentId,
-    nextBranch.parentId.length > 15 || nextBranch.parentId.length < 6,
-    percentage !== "0",
-    !unitIsRatio
-  );
 
   return (
     <>

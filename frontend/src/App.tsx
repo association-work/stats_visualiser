@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { GetTopics } from "./functions/GetTopic";
 import GlobalTree from "./pages/GlobalTree/GlobalTree";
 import Loader from "./pages/Loader/Loader";
-import { GetGeolocByGeoByTopic } from "./functions/GetGeo";
+import { GetGeolocByGeoByTopic, GetGeolocToCountry } from "./functions/GetGeo";
 
 function App() {
   const [isYear, setIsYear] = useState<number>(10);
@@ -158,7 +158,7 @@ function App() {
 
   const [currentLocalisation, setCurrentLocalisation] =
     useState<geoTopicBranch>({
-      id: "12",
+      id: "29",
       name: "Simulation",
       parentId: "1",
       unit: "",
@@ -193,7 +193,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (topicOrLocation === false) {
+    if (topicOrLocation === false && chosenPathGeo.length === 1) {
+      // récupération du lieu puis de son chemin
       GetGeolocByGeoByTopic(currentBranch.id, currentLocalisation.id).then(
         (data) => {
           const localization = {
@@ -209,10 +210,17 @@ function App() {
             topicId: data.topicId,
           };
           setCurrentLocalisation(localization);
-          if (currentLocalisation) {
-            chosenPathGeo.push(currentLocalisation);
-            setChosenPathGeo(chosenPathGeo);
-          }
+
+          //recherche du chemin entre monde et destination actuelle :
+          let geolocatingCountry: geoTopicBranch[] = [];
+          GetGeolocToCountry(localization).then((data) => {
+            geolocatingCountry = data;
+            if (geolocatingCountry.length > 0) {
+              geolocatingCountry.push(localization);
+              geolocatingCountry.forEach((loc) => chosenPathGeo.push(loc));
+              setChosenPathGeo(chosenPathGeo);
+            }
+          });
         }
       );
     }
@@ -223,13 +231,17 @@ function App() {
       <nav>
         <Navbar
           setIsYear={setIsYear}
-          currentBranch={currentBranch}
           isYear={isYear}
           topicOrLocation={topicOrLocation}
           setTopicOrLocation={setTopicOrLocation}
-          chosenPathStats={chosenPathStats}
-          setChosenPathStats={setChosenPathStats}
-          setCurrentBranch={setCurrentBranch}
+          chosenPath={topicOrLocation ? chosenPathStats : chosenPathGeo}
+          setChosenPath={
+            topicOrLocation ? setChosenPathStats : setChosenPathGeo
+          }
+          currentBranch={topicOrLocation ? currentBranch : currentLocalisation}
+          setCurrentBranch={
+            topicOrLocation ? setCurrentBranch : setCurrentLocalisation
+          }
           setPreviousBranchName={setPreviousBranchName}
           setShowLineChart={setShowLineChart}
         />
@@ -242,8 +254,8 @@ function App() {
             <GlobalTree
               isYear={isYear}
               setIsYear={setIsYear}
-              chosenPathStats={chosenPathStats}
-              setChosenPathStats={setChosenPathStats}
+              chosenPath={chosenPathGeo}
+              setChosenPath={setChosenPathGeo}
               currentBranch={currentLocalisation}
               setCurrentBranch={setCurrentLocalisation}
               previousBranchName={previousBranchName}
@@ -260,8 +272,8 @@ function App() {
           <GlobalTree
             isYear={isYear}
             setIsYear={setIsYear}
-            chosenPathStats={chosenPathStats}
-            setChosenPathStats={setChosenPathStats}
+            chosenPath={chosenPathStats}
+            setChosenPath={setChosenPathStats}
             currentBranch={currentBranch}
             setCurrentBranch={setCurrentBranch}
             previousBranchName={previousBranchName}
