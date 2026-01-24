@@ -62,7 +62,7 @@ export default function DataButton({
             topicId: data.topicId,
           };
           setNextBranch(localization);
-        }
+        },
       );
     }
     if (currentBranch.id.length < 35 && currentBranch.id.length > 6) {
@@ -79,7 +79,7 @@ export default function DataButton({
     // prend en compte les années possible sur le topic en question
     if (currentBranch.values.length > 0) {
       const isYearSelected = currentBranch.values.filter(
-        (info) => info[0] === isYear
+        (info) => info[0] === isYear,
       );
       if (isYearSelected.length === 0) {
         setIsYear(currentBranch.values[0][0]);
@@ -92,11 +92,11 @@ export default function DataButton({
       } else {
         if (nextBranch.children && nextBranch.children[0].values.length > 0) {
           const grandChildValue = nextBranch.children[0].values.find(
-            (info) => info[0] === isYear
+            (info) => info[0] === isYear,
           );
           if (!grandChildValue) {
             const sortedValues = nextBranch.children[0].values.sort(
-              (a, b) => b[0] - a[0]
+              (a, b) => b[0] - a[0],
             );
             setIsYear(sortedValues[0][0]);
           }

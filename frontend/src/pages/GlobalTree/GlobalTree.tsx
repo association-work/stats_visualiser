@@ -22,7 +22,6 @@ interface GlobalTreeProps {
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   showLineChart: boolean;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
-  setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
   topicOrLocation: boolean;
 }
 
@@ -37,12 +36,11 @@ export default function GlobalTree({
   setPreviousBranchName,
   showLineChart,
   setShowLineChart,
-  setTopicOrLocation,
   topicOrLocation,
 }: GlobalTreeProps) {
   // permet de récupérer la valeur de la branche actuelle
   const currentValue = currentBranch.values.filter(
-    (info) => info[0] === isYear
+    (info) => info[0] === isYear,
   );
 
   //contrôle de l'affichage de certain éléments
@@ -74,7 +72,7 @@ export default function GlobalTree({
         const thatYear = currentBranch.children[0].values[i][0];
         currentBranch.children.forEach((element) => {
           const childValue = element.values.find(
-            (info) => info[0] === thatYear
+            (info) => info[0] === thatYear,
           );
           if (childValue) {
             totalValue = totalValue + childValue[1];
@@ -86,7 +84,7 @@ export default function GlobalTree({
       setChildrenTotalValues(newChildrenTotalValues);
       //récupération d'une seule valeur pour l'année demandée
       const newChildValue = newChildrenTotalValues.find(
-        (info) => info[0] === isYear
+        (info) => info[0] === isYear,
       );
       if (newChildValue) {
         totalValue = 0;
@@ -106,14 +104,14 @@ export default function GlobalTree({
         setCurrentBranch(chosenPath[0]);
       } else if (chosenPath.length > 3 && currentBranch.parentId.length > 35) {
         GetTopic(currentBranch.parentId).then((data: geoTopicBranch) =>
-          setCurrentBranch(data)
+          setCurrentBranch(data),
         );
       }
     } else {
       if (currentBranch.topicId) {
         GetGeolocByGeoByTopic(
           currentBranch.topicId,
-          currentBranch.parentId
+          currentBranch.parentId,
         ).then((data: geoTopicBranch) => {
           let localization;
           localization = {
@@ -136,17 +134,16 @@ export default function GlobalTree({
       }
     }
 
-    // retour en arrière dans le BrowsingDrawer
+    // modification de la route dans le BrowsingDrawer
     setPreviousBranchName(chosenPath[chosenPath.length - 1].name);
     chosenPath.pop();
     setChosenPath(chosenPath);
 
     // prend en compte les années possible sur le topic en question
     const lastElementOfPath = chosenPath[chosenPath.length - 1];
-    console.log(lastElementOfPath);
     if (lastElementOfPath.values.length > 0) {
       const isYearSelected = lastElementOfPath.values.filter(
-        (info) => info[0] === isYear
+        (info) => info[0] === isYear,
       );
       if (isYearSelected.length === 0) {
         setIsYear(lastElementOfPath.values[0][0]);
@@ -157,19 +154,17 @@ export default function GlobalTree({
         lastElementOfPath.children[0].values.length > 0
       ) {
         const childValue = lastElementOfPath.children[0].values.find(
-          (info) => info[0] === isYear
+          (info) => info[0] === isYear,
         );
         if (!childValue) {
           const sortedValues = lastElementOfPath.children[0].values.sort(
-            (a, b) => b[0] - a[0]
+            (a, b) => b[0] - a[0],
           );
           setIsYear(sortedValues[0][0]);
         }
       }
     }
   };
-
-  console.log(chosenPath);
 
   const [lineChartToShow, setLineChartToShow] = useState<geoTopicBranch>();
 

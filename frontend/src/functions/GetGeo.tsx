@@ -4,11 +4,11 @@
 import type { geoTopicBranch } from "../types/dataTypes";
 
 export async function GetLocalisationsByTopic(
-  topic_id: string
+  topic_id: string,
 ): Promise<geoTopicBranch> {
   try {
     const response = await fetch(
-      `https://stats-visualiser.onrender.com/location?topic=${topic_id}`
+      `https://stats-visualiser.onrender.com/location?topic=${topic_id}`,
     );
     const data = await response.json();
     return data[0];
@@ -20,12 +20,12 @@ export async function GetLocalisationsByTopic(
 
 export async function GetGeolocByGeoByTopic(
   topic_id: string,
-  geo_id: string
+  geo_id: string,
 ): Promise<geoTopicBranch> {
   const loc_id = parseInt(geo_id);
   try {
     const response = await fetch(
-      `https://stats-visualiser.onrender.com/location/${loc_id}?topic=${topic_id}`
+      `https://stats-visualiser.onrender.com/location/${loc_id}?topic=${topic_id}`,
     );
     const data = await response.json();
     return data;
@@ -36,7 +36,7 @@ export async function GetGeolocByGeoByTopic(
 }
 
 export async function GetGeolocToCountry(
-  localization: geoTopicBranch
+  localization: geoTopicBranch,
 ): Promise<geoTopicBranch[]> {
   let localTopic = {
     id: parseInt(localization.id),
@@ -54,14 +54,14 @@ export async function GetGeolocToCountry(
     const resultingData: geoTopicBranch[] = [];
     while (localTopic.id !== 1) {
       const response = await fetch(
-        `https://stats-visualiser.onrender.com/location/${localTopic.parentId}?topic=${localTopic.topicId}`
+        `https://stats-visualiser.onrender.com/location/${localTopic.parentId}?topic=${localTopic.topicId}`,
       );
-      const data = await response.json();
+      const data = await response
+        .json()
+        .catch(() => console.log("There is no parents."));
       if (!data) {
-        console.error("Database Error. Check your ids :", data);
-        throw new Error(
-          "Failed to fetch geo and loc's details. Check your ids"
-        );
+        console.log("Database Error. Check your ids :", data);
+        return [];
       }
       const localization: geoTopicBranch = {
         id: data.id.toString(),
@@ -70,7 +70,7 @@ export async function GetGeolocToCountry(
         unit: data.unit,
         children: data.children,
         values: data.values.sort(
-          (a: [number, number], b: [number, number]) => b[0] - a[0]
+          (a: [number, number], b: [number, number]) => b[0] - a[0],
         ),
         hasChildren: data.hasChildren,
         parentId: data.parentId ? data.parentId.toString() : data.parentId,
