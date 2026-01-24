@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import "./ValuePanel.css";
 
 interface ValuePanelProps {
   isYear: number;
-  currentBranch: topicBranch;
+  currentBranch: geoTopicBranch;
   currentValue: [number, number][];
   childValueTotalWithYear: number;
   childrenTotalValues: [number, number][];
@@ -31,8 +31,6 @@ export default function ValuePanel({
         currentBranch.children[0].values.length - 1
       ][0];
   }
-
-  console.log(minYearPossible);
 
   // taux d'évolution = (finale - initiale / initiale) * 100
 
@@ -132,7 +130,7 @@ export default function ValuePanel({
 
   return (
     <>
-      {currentBranch.id.length > 15 && (
+      {(currentBranch.id.length < 6 || currentBranch.id.length > 15) && (
         <div className="branch_value">
           {currentValue.length !== 0 ? (
             <p>

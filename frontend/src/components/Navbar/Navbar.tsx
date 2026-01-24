@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import ToggleButton from "@mui/material/ToggleButton";
 import PublicSharpIcon from "@mui/icons-material/PublicSharp";
 import AccountTreeOutlinedIcon from "@mui/icons-material/AccountTreeOutlined";
@@ -14,12 +14,16 @@ import BrowsingDrawer from "../BrowsingDrawer/BrowsingDrawer";
 interface NavBarProps {
   isYear: number;
   setIsYear: React.Dispatch<React.SetStateAction<number>>;
-  currentBranch: topicBranch;
   topicOrLocation: boolean;
   setTopicOrLocation: React.Dispatch<React.SetStateAction<boolean>>;
-  chosenPath: topicBranch[];
-  setChosenPath: React.Dispatch<React.SetStateAction<topicBranch[]>>;
-  setCurrentBranch: React.Dispatch<React.SetStateAction<topicBranch>>;
+  currentBranch: geoTopicBranch;
+  setCurrentBranch: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
+  currentLocalisation: geoTopicBranch;
+  setCurrentLocalisation: React.Dispatch<React.SetStateAction<geoTopicBranch>>;
+  chosenPathStats: geoTopicBranch[];
+  setChosenPathStats: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
+  chosenPathGeo: geoTopicBranch[];
+  setChosenPathGeo: React.Dispatch<React.SetStateAction<geoTopicBranch[]>>;
   setPreviousBranchName: React.Dispatch<React.SetStateAction<string>>;
   setShowLineChart: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -27,32 +31,72 @@ interface NavBarProps {
 export default function Navbar({
   isYear,
   setIsYear,
-  currentBranch,
   topicOrLocation,
   setTopicOrLocation,
-  chosenPath,
-  setChosenPath,
+  currentBranch,
   setCurrentBranch,
+  currentLocalisation,
+  setCurrentLocalisation,
+  chosenPathStats,
+  setChosenPathStats,
+  chosenPathGeo,
+  setChosenPathGeo,
   setPreviousBranchName,
   setShowLineChart,
 }: NavBarProps) {
+  // changement entre localisation et Topic par le toggle bouton
   const changeParameter = () => {
     if (topicOrLocation === true) {
       setTopicOrLocation(false);
     } else {
       setTopicOrLocation(true);
+      setChosenPathGeo([chosenPathGeo[0]]);
     }
   };
 
+  // récupération de l'année des datas recherchée
   let years: [number, number][] = [];
 
-  if (currentBranch.values.length > 0) {
-    years = currentBranch.values;
-  } else {
-    if (currentBranch.children && currentBranch.children[0].values.length > 0) {
+  if (topicOrLocation) {
+    if (currentBranch.values.length > 0) {
+      years = currentBranch.values;
+    } else if (
+      currentBranch.children &&
+      currentBranch.children[0].values.length > 0
+    ) {
       years = currentBranch.children[0].values;
     }
+  } else {
+    if (
+      currentBranch.values.length > 0 ||
+      currentLocalisation.values.length > 0
+    ) {
+      years = currentBranch.values;
+    } else if (
+      currentLocalisation.children &&
+      currentLocalisation.children[0] &&
+      currentLocalisation.children[0].values.length > 0
+    ) {
+      years = currentLocalisation.children[0].values;
+    }
   }
+
+  // retour vers la branche initial
+  const handleBackHome = () => {
+    setCurrentBranch(chosenPathStats[0]);
+    setChosenPathStats([chosenPathStats[0]]);
+    setCurrentLocalisation(chosenPathGeo[0]);
+    setChosenPathGeo([chosenPathGeo[0]]);
+    setShowLineChart(false);
+
+    if (!topicOrLocation) {
+      setTopicOrLocation(true);
+    }
+
+    console.log(topicOrLocation);
+  };
+
+  console.log(topicOrLocation);
 
   return (
     <>
@@ -61,22 +105,26 @@ export default function Navbar({
           type="button"
           className="logo_style"
           onClick={() => {
-            setChosenPath([chosenPath[0]]);
-            setCurrentBranch(chosenPath[0]);
-            setShowLineChart(false);
+            handleBackHome();
           }}
         >
           <h1>Wikidata</h1>
         </button>
         <aside>
           <BrowsingDrawer
-            chosenPath={chosenPath}
-            setChosenPath={setChosenPath}
+            chosenPathStats={chosenPathStats}
+            setChosenPathStats={setChosenPathStats}
+            chosenPathGeo={chosenPathGeo}
+            setChosenPathGeo={setChosenPathGeo}
             setCurrentBranch={setCurrentBranch}
+            setCurrentLocalisation={setCurrentLocalisation}
             setPreviousBranchName={setPreviousBranchName}
             setShowLineChart={setShowLineChart}
+            topicOrLocation={topicOrLocation}
+            setTopicOrLocation={setTopicOrLocation}
           />
-          {currentBranch.id.length > 15 && (
+          {((topicOrLocation && currentBranch.id.length > 15) ||
+            (!topicOrLocation && currentLocalisation.id.length < 6)) && (
             <ToggleButton
               value="bold"
               aria-label="bold"
@@ -100,7 +148,8 @@ export default function Navbar({
           {/* function d'appel à l'API à mettre en place une fois les données géographiques ajouter à la BDD */}
         </aside>
       </section>
-      {currentBranch.id.length > 15 && (
+      {((topicOrLocation && currentBranch.id.length > 15) ||
+        (!topicOrLocation && currentLocalisation.id.length < 6)) && (
         <section className="navigation">
           <Button
             disabled
@@ -111,7 +160,11 @@ export default function Navbar({
               fontFamily: "var(--main-font)",
             }}
           >
-            {topicOrLocation ? "FRANCE" : currentBranch.name}
+            {!topicOrLocation
+              ? currentBranch.name
+              : chosenPathGeo.length > 1
+                ? currentLocalisation.name
+                : "FRANCE"}
           </Button>
           <Box sx={{ width: "30%" }}>
             <FormControl fullWidth>

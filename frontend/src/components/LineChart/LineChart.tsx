@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import type { topicBranch } from "../../types/dataTypes";
+import type { geoTopicBranch } from "../../types/dataTypes";
 import { LineChart as LineCharts } from "@mui/x-charts";
 import Box from "@mui/material/Box";
 
 interface LineChartProps {
-  currentBranch: topicBranch;
+  currentBranch: geoTopicBranch;
   childrenTotalValues: [number, number][];
 }
 
